@@ -1,5 +1,5 @@
 /**
- * FitMaster AI - Global UI Interactions & Micro-Animations
+ * FitMaster - Global UI Interactions & Micro-Animations
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else if (bmi >= 30) {
                     category = 'Obese';
                     color = '#ff4d6d';
-                    tip = 'Consult with a certified FitMaster AI trainer for a personalized low-impact program.';
+                    tip = 'Consult with a certified FitMaster trainer for a personalized low-impact program.';
                 }
 
                 if (catEl) {

@@ -1,5 +1,5 @@
 /**
- * FitMaster AI — Internationalization, Multi-Currency, Microsoft AI Voice & Kinetic Cursor Engine
+ * FitMaster — Internationalization, Multi-Currency, Microsoft AI Voice & Kinetic Cursor Engine
  */
 
 (function () {
@@ -49,7 +49,7 @@
                 "Start Your Free Trial": "फ्री ट्रायल शुरू करें",
                 "View Pricing": "प्राइसिंग देखें",
                 "Explore Protocols": "प्रोटोकॉल देखें",
-                "Why FitMaster AI?": "FitMaster AI क्यों चुनें?",
+                "Why FitMaster?": "FitMaster क्यों चुनें?",
                 "Smart Telemetry": "स्मार्ट टेलीमेट्री",
                 "Adaptive Nutrition": "अनुकूलित पोषण",
                 "Pro Coach Access": "प्रो कोच एक्सेस",

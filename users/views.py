@@ -132,8 +132,8 @@ def signup(request):
             
         # Send Welcome Email
         EmailService.send_notification(
-            subject=f"Welcome to FitMaster AI, {username}!",
-            message=f"Hi {username},\n\nYour {role} account has been created successfully.\nWelcome to the FitMaster AI family!\n\nBest,\nFitMaster AI Team",
+            subject=f"Welcome to FitMaster, {username}!",
+            message=f"Hi {username},\n\nYour {role} account has been created successfully.\nWelcome to the FitMaster family!\n\nBest,\nFitMaster Team",
             recipient_email=email,
             recipient_user=user,
             notification_type="Welcome"
@@ -228,8 +228,8 @@ def forgot_password(request):
         # Send Email Alert
         if user.email:
             EmailService.send_notification(
-                subject="FitMaster AI — Password Changed Successfully",
-                message=f"Hi {user.username},\n\nYour FitMaster AI account password was reset successfully.\nIf you did not perform this request, please contact support immediately.\n\nBest,\nFitMaster Team",
+                subject="FitMaster — Password Changed Successfully",
+                message=f"Hi {user.username},\n\nYour FitMaster account password was reset successfully.\nIf you did not perform this request, please contact support immediately.\n\nBest,\nFitMaster Team",
                 recipient_email=user.email,
                 recipient_user=user,
                 notification_type="Security"
@@ -245,7 +245,7 @@ def forgot_password(request):
 
 def microsoft_login(request):
     """
-    Microsoft 365 / Azure AD 1-Click SSO Authentication for FitMaster AI.
+    Microsoft 365 / Azure AD 1-Click SSO Authentication for FitMaster.
     Seamlessly authenticates or provisions accounts via Microsoft identity.
     """
     email = request.GET.get("email") or "athlete@microsoft.fitmaster.ai"
@@ -1142,7 +1142,7 @@ def chatbot_api(request):
         
         # System prompt to ensure fitness focus
         system_prompt = (
-            f"You are FitMaster AI, a world-class kinetic fitness coach and sports nutritionist for {user_name} ({user_role}). "
+            f"You are FitMaster, a world-class kinetic fitness coach and sports nutritionist for {user_name} ({user_role}). "
             "Provide structured, inspiring, highly actionable advice with workout sets/reps, macro targets, or recovery tips. "
             "Keep replies clean, concise (3-5 bullet points), and well-formatted."
         )
@@ -1172,12 +1172,12 @@ def chatbot_api(request):
             except Exception:
                 pass
 
-        # Intelligent Built-in FitMaster AI Knowledge Engine
+        # Intelligent Built-in FitMaster Knowledge Engine
         msg = user_message.lower()
         
         if any(w in msg for w in ["chest", "bench", "push", "pec"]):
             reply = (
-                "💪 **FitMaster AI Kinetic Chest Protocol:**\n\n"
+                "💪 **FitMaster Kinetic Chest Protocol:**\n\n"
                 "1. **Incline Dumbbell Press**: 4 sets × 8-10 reps (Focus on deep stretch & 2-sec eccentric)\n"
                 "2. **Barbell Flat Bench**: 3 sets × 6-8 reps (Kinetic power drive)\n"
                 "3. **Cable Chest Flyes**: 3 sets × 12-15 reps (Peak continuous tension)\n"
@@ -1186,7 +1186,7 @@ def chatbot_api(request):
             )
         elif any(w in msg for w in ["back", "pull", "lat", "deadlift", "row"]):
             reply = (
-                "🦅 **FitMaster AI V-Taper Back Protocol:**\n\n"
+                "🦅 **FitMaster V-Taper Back Protocol:**\n\n"
                 "1. **Conventional Deadlift / Rack Pulls**: 4 sets × 5 reps (Max central force)\n"
                 "2. **Wide-Grip Lat Pulldowns**: 4 sets × 10-12 reps (Drive with elbows)\n"
                 "3. **Chest-Supported T-Bar Rows**: 3 sets × 8-10 reps (Mid-back density)\n"
@@ -1195,7 +1195,7 @@ def chatbot_api(request):
             )
         elif any(w in msg for w in ["leg", "squat", "quad", "hamstring", "glute", "calves"]):
             reply = (
-                "🔥 **FitMaster AI Kinetic Leg Protocol:**\n\n"
+                "🔥 **FitMaster Kinetic Leg Protocol:**\n\n"
                 "1. **Barbell Back / Front Squats**: 4 sets × 6-8 reps (Parallel depth or deeper)\n"
                 "2. **Romanian Deadlifts (RDLs)**: 4 sets × 8-10 reps (Hamstring loaded stretch)\n"
                 "3. **Bulgarian Split Squats**: 3 sets × 10 reps/leg (Unilateral stability)\n"
@@ -1204,7 +1204,7 @@ def chatbot_api(request):
             )
         elif any(w in msg for w in ["arm", "bicep", "tricep", "curl"]):
             reply = (
-                "⚡ **FitMaster AI Arm Hypertrophy Stack:**\n\n"
+                "⚡ **FitMaster Arm Hypertrophy Stack:**\n\n"
                 "1. **EZ-Bar Preacher Curls**: 3 sets × 10-12 reps (Strict form)\n"
                 "2. **Incline Dumbbell Hammer Curls**: 3 sets × 12 reps (Brachialis growth)\n"
                 "3. **Overhead Cable Triceps Extensions**: 4 sets × 12-15 reps (Long head focus)\n"
@@ -1213,7 +1213,7 @@ def chatbot_api(request):
             )
         elif any(w in msg for w in ["diet", "food", "eat", "meal", "nutrition", "calories"]):
             reply = (
-                "🥗 **FitMaster AI Precision Nutrition Architecture:**\n\n"
+                "🥗 **FitMaster Precision Nutrition Architecture:**\n\n"
                 "• **Protein Target**: 1.8g - 2.2g per kg of body weight (Chicken, Eggs, Paneer, Whey, Fish, Tofu)\n"
                 "• **Complex Carbs**: Oats, Brown Rice, Sweet Potatoes, Quinoa (Fuel workouts)\n"
                 "• **Healthy Fats**: Avocado, Almonds, Olive Oil, Chia Seeds (Hormone balance)\n"
@@ -1222,7 +1222,7 @@ def chatbot_api(request):
             )
         elif any(w in msg for w in ["weight loss", "fat loss", "cut", "burn", "slim", "belly"]):
             reply = (
-                "🎯 **FitMaster AI Accelerated Fat Loss Strategy:**\n\n"
+                "🎯 **FitMaster Accelerated Fat Loss Strategy:**\n\n"
                 "1. **Caloric Deficit**: Eat 300-500 kcal below your maintenance TDEE.\n"
                 "2. **High Protein**: Keep protein at 2.0g/kg to preserve lean muscle while losing fat.\n"
                 "3. **Strength Training**: Lift heavy 3-5 days/week to prevent metabolic slowdown.\n"
@@ -1231,7 +1231,7 @@ def chatbot_api(request):
             )
         elif any(w in msg for w in ["muscle", "bulk", "gain", "hypertrophy", "mass"]):
             reply = (
-                "🚀 **FitMaster AI Clean Bulking & Muscle Gain Blueprint:**\n\n"
+                "🚀 **FitMaster Clean Bulking & Muscle Gain Blueprint:**\n\n"
                 "1. **Lean Caloric Surplus**: +250 to +400 kcal above maintenance daily.\n"
                 "2. **Progressive Overload**: Add weight or reps to your main compound lifts each week.\n"
                 "3. **Sleep Optimization**: 7.5 - 9 hours of quality sleep for peak growth hormone release.\n"
@@ -1239,7 +1239,7 @@ def chatbot_api(request):
             )
         elif any(w in msg for w in ["yoga", "stretch", "mobility", "flexibility"]):
             reply = (
-                "🧘 **FitMaster AI Kinetic Mobility & Yoga Routine:**\n\n"
+                "🧘 **FitMaster Kinetic Mobility & Yoga Routine:**\n\n"
                 "1. **Cat-Cow Flow**: 10 cycles for thoracic spine articulation\n"
                 "2. **Downward Facing Dog to Cobra**: 5 slow transitions\n"
                 "3. **World's Greatest Stretch**: 8 reps per side (Opens hips, thoracic, hamstrings)\n"
@@ -1247,7 +1247,7 @@ def chatbot_api(request):
             )
         elif any(w in msg for w in ["supplement", "creatine", "whey", "preworkout", "bcaa"]):
             reply = (
-                "💊 **FitMaster AI Evidence-Based Supplement Stack:**\n\n"
+                "💊 **FitMaster Evidence-Based Supplement Stack:**\n\n"
                 "• **Whey Protein Isolate**: Convenient post-workout protein synthesis.\n"
                 "• **Creatine Monohydrate (5g/day)**: Most researched compound for strength & power.\n"
                 "• **Omega-3 Fish Oil (2-3g)**: Reduces joint inflammation and boosts heart health.\n"
@@ -1255,7 +1255,7 @@ def chatbot_api(request):
             )
         elif any(w in msg for w in ["hello", "hi", "hey", "start"]):
             reply = (
-                f"👋 Hello {user_name}! I am **FitMaster AI**, your 24/7 Kinetic Coach.\n\n"
+                f"👋 Hello {user_name}! I am **FitMaster**, your 24/7 Kinetic Coach.\n\n"
                 "I can assist you with:\n"
                 "• 🏋️ Customized workout splits (Push/Pull/Legs, Upper/Lower, Full Body)\n"
                 "• 🥗 Targeted nutrition plans & calorie calculation\n"
@@ -1264,7 +1264,7 @@ def chatbot_api(request):
             )
         else:
             reply = (
-                f"🤖 **FitMaster AI Coach:** I'm here to optimize your training & nutrition!\n\n"
+                f"🤖 **FitMaster Coach:** I'm here to optimize your training & nutrition!\n\n"
                 "You can ask me about:\n"
                 "• *'Chest workout for size'*\n"
                 "• *'Best diet for fat loss'*\n"
@@ -1691,7 +1691,7 @@ def assign_trainer(request):
             if trainer.email:
                 EmailService.send_notification(
                     subject=f"New Client Assignment: {customer.username}",
-                    message=f"Hi {trainer.username},\n\nYou have been assigned a new client: {customer.username}.\nGoal: {goal}\n\nPlease check your dashboard to create their workout and diet plans.\n\nBest,\nFitMaster AI Team",
+                    message=f"Hi {trainer.username},\n\nYou have been assigned a new client: {customer.username}.\nGoal: {goal}\n\nPlease check your dashboard to create their workout and diet plans.\n\nBest,\nFitMaster Team",
                     recipient_email=trainer.email,
                     recipient_user=trainer,
                     notification_type="Assignment"
@@ -1701,7 +1701,7 @@ def assign_trainer(request):
             if customer.email:
                 EmailService.send_notification(
                     subject=f"Trainer Assigned: {trainer.username}",
-                    message=f"Hi {customer.username},\n\nGood news! You have been assigned to your new personal trainer: {trainer.username}.\nYour trainer will create your customized plans shortly.\n\nBest,\nFitMaster AI Team",
+                    message=f"Hi {customer.username},\n\nGood news! You have been assigned to your new personal trainer: {trainer.username}.\nYour trainer will create your customized plans shortly.\n\nBest,\nFitMaster Team",
                     recipient_email=customer.email,
                     recipient_user=customer,
                     notification_type="Assignment"
@@ -1735,7 +1735,7 @@ def health_check(request):
     """
     health_status = {
         "status": "healthy",
-        "service": "FitMaster AI",
+        "service": "FitMaster",
         "timestamp": timezone.now().isoformat(),
         "database": "connected",
     }
@@ -1774,7 +1774,7 @@ def csrf_failure(request, reason=""):
 
 def download_credentials_pdf(request):
     """
-    Serves the FitMaster AI User Credentials PDF document.
+    Serves the FitMaster User Credentials PDF document.
     Generates the PDF dynamically if not present on disk.
     """
     from django.http import FileResponse, Http404

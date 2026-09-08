@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class EmailService:
     """
-    Central email service for FitMaster AI.
+    Central email service for FitMaster.
 
     This service:
     1. Sends emails using Django's email system.

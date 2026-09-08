@@ -1,5 +1,5 @@
 /**
- * FitMaster AI — Light / Dark Theme Toggle Engine
+ * FitMaster — Light / Dark Theme Toggle Engine
  * Stores preference in localStorage.
  * Works for base.html, dashboard_base.html, and all pages.
  */

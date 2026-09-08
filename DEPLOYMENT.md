@@ -1,6 +1,6 @@
-# FitMaster AI - Production Deployment Guide
+# FitMaster - Production Deployment Guide
 
-This guide outlines step-by-step instructions to deploy **FitMaster AI** in a secure, scalable, enterprise production environment.
+This guide outlines step-by-step instructions to deploy **FitMaster** in a secure, scalable, enterprise production environment.
 
 ---
 
@@ -46,7 +46,7 @@ This guide outlines step-by-step instructions to deploy **FitMaster AI** in a se
 
 ## 🐳 2. Docker & Docker Compose Deployment
 
-FitMaster AI comes pre-configured with multi-stage Docker build and Docker Compose orchestrating PostgreSQL and Django.
+FitMaster comes pre-configured with multi-stage Docker build and Docker Compose orchestrating PostgreSQL and Django.
 
 ### Run with Docker Compose:
 ```bash
@@ -85,13 +85,13 @@ gunicorn FitMaster.wsgi:application
 
 ## 🏥 Health Monitoring
 
-FitMaster AI provides a built-in health check route for load balancers and container orchestrators:
+FitMaster provides a built-in health check route for load balancers and container orchestrators:
 - **Endpoint**: `GET /health/`
 - **Success Response (`200 OK`)**:
   ```json
   {
     "status": "healthy",
-    "service": "FitMaster AI",
+    "service": "FitMaster",
     "timestamp": "2026-07-30T22:30:00+05:30",
     "database": "connected"
   }

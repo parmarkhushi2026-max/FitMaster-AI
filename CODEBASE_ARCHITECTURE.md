@@ -1,4 +1,4 @@
-# 📁 FitMaster AI — Codebase & Directory Architecture Guide
+# 📁 FitMaster — Codebase & Directory Architecture Guide
 
 **PDF Document**: [FitMaster_AI_Codebase_and_Architecture_Guide.pdf](file:///d:/FitMaster%20AI/FitMaster_AI_Codebase_and_Architecture_Guide.pdf)
 
@@ -32,7 +32,7 @@
 | **`.env.example`** | Env Template | Production configuration template. |
 | **`.gitignore`** | Git Rules | Excludes `.env`, `db.sqlite3`, `media/`, `staticfiles/`, `logs/`, and `venv/`. |
 | **`Dockerfile`** | Docker Build | Multi-stage Docker container definition optimized for production. |
-| **`docker-compose.yml`** | Docker Compose | Orchestrates FitMaster AI web service, PostgreSQL database container, persistent volumes, and health checks. |
+| **`docker-compose.yml`** | Docker Compose | Orchestrates FitMaster web service, PostgreSQL database container, persistent volumes, and health checks. |
 | **`db.sqlite3`** | Database | Local development SQLite database storing user records, memberships, plans, and store products. |
 | **`DEPLOYMENT.md`** | Markdown Guide | Comprehensive production deployment manual covering Docker, Render, Railway, AWS, and DigitalOcean. |
 | **`USER_MANUAL.md`** | Markdown Guide | Complete User Manual for Customers, Trainers, and Administrators. |

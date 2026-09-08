@@ -1,5 +1,5 @@
 /**
- * FitMaster AI — Universal Chatbot Controller
+ * FitMaster — Universal Chatbot Controller
  * Handles real-time intelligent conversations across all pages
  */
 

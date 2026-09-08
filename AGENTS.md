@@ -1,12 +1,12 @@
-# AGENTS.md — FitMaster AI Repository Guide
+# AGENTS.md — FitMaster Repository Guide
 
-Welcome to the **FitMaster AI** repository. This document serves as the primary technical specification, architectural blueprint, and agent operational guide for developing, maintaining, and extending the FitMaster AI fitness platform.
+Welcome to the **FitMaster** repository. This document serves as the primary technical specification, architectural blueprint, and agent operational guide for developing, maintaining, and extending the FitMaster fitness platform.
 
 ---
 
 ## 📌 1. Project Overview
 
-**FitMaster AI** is a full-stack, enterprise-grade AI-powered fitness and gym management SaaS platform built with **Django** and a modern, high-contrast, dual-theme frontend (Dark & Light Mode).
+**FitMaster** is a full-stack, enterprise-grade AI-powered fitness and gym management SaaS platform built with **Django** and a modern, high-contrast, dual-theme frontend (Dark & Light Mode).
 
 ### Core Features:
 - **Role-Based Portals**:
@@ -25,7 +25,7 @@ Welcome to the **FitMaster AI** repository. This document serves as the primary 
 ## 🏗️ 2. Codebase Architecture
 
 ```
-FitMaster AI/
+FitMaster/
 ├── FitMaster/               # Main Django Configuration
 │   ├── settings.py          # Database, static files, auth, and app settings
 │   ├── urls.py              # Root routing & custom error handlers (403, 404, 500)

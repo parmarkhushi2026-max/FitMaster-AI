@@ -1,7 +1,7 @@
-# ⚡ FitMaster AI — Next-Gen Fitness & Gym Management Platform
+# ⚡ FitMaster — Next-Gen Fitness & Gym Management Platform
 
 <p align="center">
-  <img src="static/images/fitmaster_logo.svg" alt="FitMaster AI Logo" width="180">
+  <img src="static/images/fitmaster_logo.svg" alt="FitMaster Logo" width="180">
 </p>
 
 <p align="center">
@@ -22,37 +22,37 @@
 
 ### 1. 🌐 Landing Page & 3D Interactive Hero
 *Ultra-modern dark theme with Three.js particle dynamics, responsive navigation, and dynamic counters.*
-![FitMaster AI Landing Page](docs/screenshots/01_homepage.png)
+![FitMaster Landing Page](docs/screenshots/01_homepage.png)
 
 ---
 
 ### 2. 🏋️‍♂️ Dynamic Workout & Training Programs
 *Comprehensive catalog of Strength, Cardio, CrossFit, and Yoga programs with animated interactions.*
-![FitMaster AI Programs](docs/screenshots/02_programs.png)
+![FitMaster Programs](docs/screenshots/02_programs.png)
 
 ---
 
 ### 3. 💳 Membership Tiers & Razorpay / UPI Gateway
 *Flexible starter, pro, and elite memberships integrated with Razorpay Checkout, BHIM UPI QR scan, and instant invoice generation.*
-![FitMaster AI Memberships](docs/screenshots/03_memberships.png)
+![FitMaster Memberships](docs/screenshots/03_memberships.png)
 
 ---
 
 ### 4. 📞 Live 24/7 Support & Contact Center
 *Interactive contact system featuring instant WhatsApp chat (`wa.me`), one-click call (`tel:`), email support, and Google Maps GPS navigation.*
-![FitMaster AI Contact Support](docs/screenshots/04_contact_support.png)
+![FitMaster Contact Support](docs/screenshots/04_contact_support.png)
 
 ---
 
 ### 5. 📊 Admin Command Center (Live Platform Synchronization)
 *Executive analytics dashboard featuring real-time financial tracking, member management, package control, and live sync engine.*
-![FitMaster AI Admin Dashboard](docs/screenshots/05_admin_dashboard.png)
+![FitMaster Admin Dashboard](docs/screenshots/05_admin_dashboard.png)
 
 ---
 
 ### 6. 🏃 Athlete & Member Dashboard
 *Personalized progress metrics, assigned personal trainer routines, BMI tracking, nutrition plans, and workout logs.*
-![FitMaster AI Member Dashboard](docs/screenshots/06_customer_dashboard.png)
+![FitMaster Member Dashboard](docs/screenshots/06_customer_dashboard.png)
 
 ---
 
@@ -71,8 +71,8 @@
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/parmarkhushi2026-max/FitMaster-AI.git
-cd FitMaster-AI
+git clone https://github.com/parmarkhushi2026-max/FitMaster.git
+cd FitMaster
 ```
 
 ### 2. Create and Activate Virtual Environment

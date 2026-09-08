@@ -1,4 +1,4 @@
-# 🏋️ FitMaster AI — Complete User Manual & System Guide
+# 🏋️ FitMaster — Complete User Manual & System Guide
 
 **Version**: 1.0 (Production Ready)  
 **PDF Document**: [FitMaster_AI_User_Manual.pdf](file:///d:/FitMaster%20AI/FitMaster_AI_User_Manual.pdf)
@@ -7,7 +7,7 @@
 
 ## 📌 Executive Summary
 
-**FitMaster AI** is an enterprise-grade fitness management platform engineered using Django. It supports role-based workflows for **Customers**, **Trainers**, and **System Administrators**, featuring membership management, workout/diet plan creation, fitness tracking, e-commerce store, invoicing, mass broadcast messaging, and production containerization.
+**FitMaster** is an enterprise-grade fitness management platform engineered using Django. It supports role-based workflows for **Customers**, **Trainers**, and **System Administrators**, featuring membership management, workout/diet plan creation, fitness tracking, e-commerce store, invoicing, mass broadcast messaging, and production containerization.
 
 ---
 

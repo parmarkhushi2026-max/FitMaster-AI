@@ -4,10 +4,10 @@ from users.models import Package, Product, Profile, TrainerDetail, Client, Worko
 
 
 class Command(BaseCommand):
-    help = "Populate FitMaster AI database with initial demo data"
+    help = "Populate FitMaster database with initial demo data"
 
     def handle(self, *args, **options):
-        self.stdout.write("Seeding FitMaster AI database...")
+        self.stdout.write("Seeding FitMaster database...")
 
         # Default Packages (3 Months, 6 Months, 1 Year)
         packages_data = [

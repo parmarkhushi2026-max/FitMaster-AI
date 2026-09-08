@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Payment Portal | FitMaster AI</title>
+    <title>Secure Payment Portal | FitMaster</title>
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
     <link rel="alternate icon" href="{% static 'images/favicon.svg' %}">
@@ -318,7 +318,7 @@
 <!-- Navbar -->
 <nav style="background:rgba(0,0,0,0.92);border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 24px;position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between">
     <a href="{% url 'home' %}" style="font-size:18px;font-weight:800;color:#ffffff;text-decoration:none;display:flex;align-items:center;gap:6px;">
-        <span style="color:#ff5540;">💪</span> FitMaster AI
+        <span style="color:#ff5540;">💪</span> FitMaster
     </a>
     <div style="display:flex;align-items:center;gap:10px">
         <a href="{% url 'membership' %}" style="color:#a1a1aa;font-size:12.5px;text-decoration:none;background:#141418;border:1px solid rgba(255,255,255,0.08);padding:6px 12px;border-radius:8px">Plans</a>
@@ -801,7 +801,7 @@ function triggerRazorpayCheckout() {
         "key": "{{ razorpay_key_id }}",
         "amount": parseInt("{{ price }}") * 100, // Amount is in currency subunits
         "currency": "{{ razorpay_currency }}",
-        "name": "FitMaster AI",
+        "name": "FitMaster",
         "description": "{{ plan }}",
         "image": "{% static 'images/favicon.svg' %}",
         "handler": function (response){

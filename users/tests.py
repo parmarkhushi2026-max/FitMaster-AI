@@ -300,7 +300,7 @@ class FitMasterWorkflowTests(TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertEqual(data["status"], "healthy")
-        self.assertEqual(data["service"], "FitMaster AI")
+        self.assertEqual(data["service"], "FitMaster")
         self.assertEqual(data["database"], "connected")
 
     def test_forgot_password_workflow(self):
