@@ -1,0 +1,57 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Customers{% endblock %}
+{% block page_title %}Customers{% endblock %}
+{% block breadcrumb %}Admin / Customers{% endblock %}
+{% block user_role %}Administrator{% endblock %}
+{% block sidebar %}{% include "includes/admin_sidebar.html" %}{% endblock %}
+
+{% block content %}
+<div class="sec-hdr">
+    <div class="sec-hdr-left"><h2>All Customers</h2><p>{{ customers|length }} registered customers</p></div>
+    <a href="{% url 'assign_trainer' %}" class="btn btn-primary"><i class="fa-solid fa-link"></i> Assign Trainer</a>
+</div>
+
+<div class="card">
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>#</th><th>Username</th><th>Email</th><th>Trainer</th><th>Membership</th><th>Actions</th></tr></thead>
+            <tbody>
+            {% for c in customers %}
+            <tr>
+                <td class="text-muted">{{ forloop.counter }}</td>
+                <td class="fw-600">{{ c.username }}</td>
+                <td class="text-muted">{{ c.email|default:"—" }}</td>
+                <td>
+                    {% for assign in c.client_trainer.all %}
+                        <span class="badge badge-blue">{{ assign.trainer.username }}</span>
+                    {% empty %}
+                        <span class="text-muted">Unassigned</span>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for m in c.memberships.all %}
+                        {% if m.is_active %}<span class="badge badge-teal">{{ m.package.name }}</span>{% endif %}
+                    {% empty %}
+                        <span class="text-muted">None</span>
+                    {% endfor %}
+                </td>
+                <td>
+                    <div style="display:flex;gap:6px;align-items:center;">
+                        <a href="{% url 'edit_user' c.id %}" class="btn btn-secondary btn-sm"><i class="fa-solid fa-pen"></i> Edit</a>
+                        {% if c.id != request.user.id %}
+                        <form method="POST" action="{% url 'delete_user' c.id %}" style="display:inline" onsubmit="return confirm('Are you sure you want to delete customer {{ c.username }}?')">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6"><div class="empty-state"><i class="fa-solid fa-user"></i><p>No customers found</p></div></td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

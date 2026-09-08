@@ -1,0 +1,84 @@
+.payment{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:120px 20px;
+    background:transparent;
+}
+
+.payment .container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.payment-box{
+    width:480px;
+    padding:40px;
+    border-radius:25px;
+    background:rgba(20,30,48,.75);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(0,255,170,.3);
+    box-shadow:0 0 35px rgba(0,255,170,.2);
+    text-align:center;
+}
+
+.payment-box h2{
+    color:#fff;
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.payment-box h1{
+    color:#00ff99;
+    font-size:48px;
+    margin-bottom:20px;
+}
+
+.payment-box p{
+    color:#d7d7d7;
+    line-height:2;
+    margin-bottom:25px;
+}
+
+.payment-box input{
+    width:100%;
+    padding:15px;
+    margin:12px 0;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    background:#24364f;
+    color:white;
+    font-size:16px;
+}
+
+.row{
+    display:flex;
+    gap:15px;
+}
+
+.row input{
+    width:100%;
+}
+
+.payment-box button{
+    width:100%;
+    padding:16px;
+    margin-top:20px;
+    border:none;
+    border-radius:12px;
+    background:#00ff99;
+    color:#111;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.payment-box button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 20px #00ff99;
+}

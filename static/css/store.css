@@ -1,0 +1,115 @@
+/* ==========================
+   Fitness Store & E-Commerce
+========================== */
+
+.store {
+    padding: 85px 0;
+}
+
+.store-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 28px;
+}
+
+.product {
+    background: var(--dark-card, rgba(13, 27, 42, 0.78));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 85, 64, 0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 85, 64, 0.2);
+}
+
+.product-img-wrap {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.product img {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: contain;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product:hover img {
+    transform: scale(1.08);
+}
+
+.product h3 {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.product .product-desc {
+    font-size: 13px;
+    color: var(--text-muted, #94a3b8);
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.product p.price {
+    color: var(--primary, #ff5540);
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px rgba(255, 85, 64, 0.3);
+}
+
+.product a, .product button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, var(--primary, #ff5540) 0%, #e03e2a 100%);
+    color: #ffffff;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255, 85, 64, 0.3);
+}
+
+.product a:hover, .product button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 85, 64, 0.45);
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .store-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+    }
+    .product {
+        padding: 20px 16px;
+    }
+}

@@ -1,0 +1,406 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+
+    <!-- Theme: apply immediately to prevent flash of wrong theme -->
+    <script>
+      (function(){
+        var t = localStorage.getItem('fitmaster-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        FitMaster
+        {% endblock %}
+    </title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+    <link rel="alternate icon" href="{% static 'images/favicon.svg' %}">
+
+    <!-- Google Fonts: Inter & Poppins + Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'css/membership.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'css/theme_toggle.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'css/animations.css' %}?v=6">
+
+    {% block extra_css %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+<!-- ================= NEW FEATURES BANNER ================= -->
+<div class="features-banner" id="featuresBanner">
+    <div class="banner-content">
+        <i class="fa-solid fa-bolt"></i>
+        <span><strong>NEW:</strong> Mobile Menu &bull; Pauseable Energy Ticker &bull; Dark/Light Mode</span>
+        <button class="banner-close" onclick="document.getElementById('featuresBanner').style.display='none'" aria-label="Dismiss">×</button>
+    </div>
+</div>
+
+<!-- ================= HIGH ENERGY MOTIVATION TICKER ================= -->
+<div class="energy-ticker-bar" id="energyTickerBar" role="region" aria-label="Motivation ticker" aria-live="off">
+    <div class="energy-ticker-track">
+        ⚡ HIGH ENERGY MODE ACTIVE • 🔥 CRUSH YOUR LIMITS TODAY • 🏋️ 10,000+ CALORIES BURNED • 🦾 NO EXCUSES • 🥗 HEALTHY NUTRITION SYNC • ⚡ HIGH ENERGY MODE ACTIVE • 🔥 CRUSH YOUR LIMITS TODAY • 🏋️ 10,000+ CALORIES BURNED • 🦾 NO EXCUSES • 🥗 HEALTHY NUTRITION SYNC
+    </div>
+    <button class="energy-ticker-control" id="energyTickerControl" aria-label="Pause ticker" title="Pause/Resume ticker" type="button">
+        <i class="fa-solid fa-pause" id="energyTickerIcon"></i>
+        <span id="energyTickerText">Pause</span>
+    </button>
+</div>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+
+    <div class="container nav">
+
+        <!-- Logo -->
+        <div class="logo">
+            <a href="{% url 'home' %}" class="brand-link">
+                <div class="brand-icon-emblem">
+                    <img src="{% static 'images/fitmaster_logo.svg' %}" alt="FitMaster" style="width:30px;height:30px;display:block;">
+                </div>
+                <span class="brand-text-main">FitMaster</span>
+            </a>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks" title="Menu">
+            <i class="fa-solid fa-bars"></i>
+            <span class="menu-label">Menu</span>
+        </button>
+
+        <!-- Menu -->
+        <ul class="nav-links" id="navLinks">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'features' %}">Features</a></li>
+            <li><a href="{% url 'programs' %}">Programs</a></li>
+            <li><a href="{% url 'trainers' %}">Trainers</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        </ul>
+
+        <!-- Buttons -->
+        <div class="nav-btn">
+            <!-- 🌐 Language & 💱 Currency Toggle Selector -->
+            <div class="lang-currency-pill" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);padding:4px 10px;border-radius:20px;backdrop-filter:blur(8px);">
+                <!-- Language Toggle -->
+                <button type="button" class="lang-toggle-btn" onclick="window.FitMasterI18n.setLanguage(window.FitMasterI18n.currentLang === 'en' ? 'hi' : 'en')" title="Change Language (English / हिंदी)" style="background:none;border:none;color:#f8fafc;font-size:12px;font-weight:700;cursor:pointer;padding:2px 4px;">
+                    <span id="currentLangLabel">🇬🇧 EN</span>
+                </button>
+                <span style="color:rgba(255,255,255,0.25);font-size:11px;">|</span>
+                <!-- Currency Toggle (India INR / US USD) -->
+                <button type="button" class="currency-toggle-btn" onclick="window.FitMasterCurrency.setCurrency(window.FitMasterCurrency.currentCurrency === 'INR' ? 'USD' : 'INR')" title="Change Region & Currency (India ₹ / US $)" style="background:none;border:none;color:#ff8a7a;font-size:12px;font-weight:700;cursor:pointer;padding:2px 4px;">
+                    <span id="currentCurrencyLabel">🇮🇳 ₹ INR</span>
+                </button>
+            </div>
+
+            <!-- ☀️🌙 Theme Toggle Button -->
+            <div class="nav-theme-toggle">
+                <button class="theme-toggle-btn" id="navThemeToggle"
+                        aria-label="Switch to Light Mode"
+                        title="Switch to Light Mode">
+                    <span class="theme-toggle-knob">🌙</span>
+                </button>
+            </div>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="login">
+                    <i class="fa-solid fa-gauge-high"></i> <span data-i18n="Dashboard">Dashboard</span>
+                </a>
+                <a href="{% url 'logout' %}" class="signup" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); color: #ef4444;">
+                    <i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="Logout">Logout</span>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="login" data-i18n="Login">
+                    Login
+                </a>
+                <a href="{% url 'signup' %}" class="signup" data-i18n="Sign Up">
+                    Sign Up
+                </a>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" aria-hidden="true">
+    <div class="mobile-menu-panel">
+        <div class="mobile-menu-header">
+            <div class="logo">
+                <a href="{% url 'home' %}" class="brand-link">
+                    <div class="brand-icon-emblem">
+                        <i class="fa-solid fa-dumbbell"></i>
+                    </div>
+                    <span class="brand-text-main">FitMaster</span>
+                </a>
+            </div>
+            <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <nav class="mobile-nav">
+            <ul class="mobile-nav-links">
+                <li><a href="{% url 'home' %}"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="{% url 'features' %}"><i class="fa-solid fa-star"></i> Features</a></li>
+                <li><a href="{% url 'programs' %}"><i class="fa-solid fa-dumbbell"></i> Programs</a></li>
+                <li><a href="{% url 'trainers' %}"><i class="fa-solid fa-user-tie"></i> Trainers</a></li>
+                <li><a href="{% url 'contact' %}"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+                <li><a href="{% url 'dashboard' %}"><i class="fa-solid fa-gauge-high"></i> Dashboard</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-menu-actions">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn btn-primary mobile-btn">Dashboard</a>
+                <a href="{% url 'logout' %}" class="btn btn-danger mobile-btn" style="background: #ef4444; color: white; border: none;">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline mobile-btn">Login</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary mobile-btn">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- ================= PAGE CONTENT ================= -->
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid" style="grid-template-columns: 1.6fr 1fr 1.4fr;">
+            <!-- Col 1: Brand & Socials -->
+            <div class="footer-col">
+                <div class="footer-brand">
+                    💪 FitMaster
+                </div>
+                <p class="footer-bio">
+                    Empowering your strength, health, and physique transformation with certified personal trainers and personalized workout plans.
+                </p>
+                <div class="footer-status-badge">
+                    <span class="dot"></span>
+                    <span>Certified Trainers Online</span>
+                </div>
+                <div class="footer-socials">
+                    <a href="https://instagram.com" target="_blank" class="social-pill" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://youtube.com" target="_blank" class="social-pill" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://twitter.com" target="_blank" class="social-pill" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://linkedin.com" target="_blank" class="social-pill" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://github.com" target="_blank" class="social-pill" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+
+            <!-- Col 2: Quick Navigation -->
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <ul class="footer-col-links">
+                    <li><a href="{% url 'home' %}"><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i> Home</a></li>
+                    <li><a href="{% url 'features' %}"><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i> Features</a></li>
+                    <li><a href="{% url 'programs' %}"><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i> Programs</a></li>
+                    <li><a href="{% url 'trainers' %}"><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i> Trainers</a></li>
+                    <li><a href="{% url 'contact' %}"><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i> Contact</a></li>
+                    <li><a href="{% url 'dashboard' %}"><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i> Dashboard</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Newsletter & Community -->
+            <div class="footer-col newsletter-box">
+                <h4>Stay Fit Newsletter</h4>
+                <p>Subscribe for weekly workout routines, healthy nutrition tips, and exclusive membership offers.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing to FitMaster!'); this.reset();">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Join</button>
+                </form>
+                <div class="payment-badges" title="Click to Pay Online via UPI, Cards, GPay">
+                    <a href="{% url 'membership' %}" title="Pay with Google Pay" style="color:inherit;text-decoration:none;"><i class="fa-brands fa-google-pay" style="font-size:22px;"></i></a>
+                    <a href="{% url 'membership' %}" title="Pay with Visa" style="color:inherit;text-decoration:none;"><i class="fa-brands fa-cc-visa"></i></a>
+                    <a href="{% url 'membership' %}" title="Pay with Mastercard" style="color:inherit;text-decoration:none;"><i class="fa-brands fa-cc-mastercard"></i></a>
+                    <a href="{% url 'contact' %}" title="Scan UPI QR Code & Direct Pay" style="color:#ff5540;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;margin-left:6px;"><i class="fa-solid fa-qrcode"></i> UPI QR</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom Bar -->
+        <div class="footer-bottom">
+            <p class="footer-bottom-copy">
+                © 2026 FitMaster | Fitness Platform. All Rights Reserved.
+            </p>
+            <ul class="footer-bottom-links">
+                <li><a href="{% url 'contact' %}">Privacy Policy</a></li>
+                <li><a href="{% url 'contact' %}">Terms of Service</a></li>
+                <li><a href="{% url 'contact' %}">Cookie Settings</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<!-- Back to Top Floating Button -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">
+    <i class="fa-solid fa-chevron-up"></i>
+</button>
+
+<script>
+// Back to Top Functionality
+(function() {
+    const btn = document.getElementById('backToTop');
+    if (btn) {
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 400) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+        btn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+})();
+
+// Energy Ticker Control
+(function() {
+    const tickerBar = document.getElementById('energyTickerBar');
+    const controlBtn = document.getElementById('energyTickerControl');
+    const icon = document.getElementById('energyTickerIcon');
+    const text = document.getElementById('energyTickerText');
+    const track = tickerBar?.querySelector('.energy-ticker-track');
+
+    if (controlBtn && track) {
+        controlBtn.addEventListener('click', function() {
+            const isPaused = tickerBar.classList.toggle('paused');
+            
+            if (isPaused) {
+                icon.classList.replace('fa-pause', 'fa-play');
+                text.textContent = 'Resume';
+                controlBtn.setAttribute('aria-label', 'Resume ticker');
+            } else {
+                icon.classList.replace('fa-play', 'fa-pause');
+                text.textContent = 'Pause';
+                controlBtn.setAttribute('aria-label', 'Pause ticker');
+            }
+        });
+
+        // Pause on hover
+        tickerBar.addEventListener('mouseenter', function() {
+            track.style.animationPlayState = 'paused';
+        });
+
+        tickerBar.addEventListener('mouseleave', function() {
+            if (!tickerBar.classList.contains('paused')) {
+                track.style.animationPlayState = 'running';
+            }
+        });
+
+        // Keyboard support
+        controlBtn.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                controlBtn.click();
+            }
+        });
+    }
+})();
+</script>
+
+
+
+<!-- UI Interaction Scripts -->
+<script src="{% static 'js/ui_interactions.js' %}"></script>
+<script src="{% static 'js/theme_toggle.js' %}"></script>
+
+<script>
+// Mobile Menu Toggle
+(function() {
+    const toggleBtn = document.getElementById('mobileMenuToggle');
+    const closeBtn = document.getElementById('mobileMenuClose');
+    const overlay = document.getElementById('mobileMenuOverlay');
+    const navLinks = document.getElementById('navLinks');
+
+    function openMenu() {
+        overlay.classList.add('active');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        toggleBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    }
+
+    function closeMenu() {
+        overlay.classList.remove('active');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        toggleBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    }
+
+    toggleBtn.addEventListener('click', function() {
+        if (overlay.classList.contains('active')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+
+    closeBtn.addEventListener('click', closeMenu);
+
+    // Close on overlay click
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+            closeMenu();
+        }
+    });
+
+    // Close on link click
+    overlay.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+})();
+</script>
+
+
+<!-- Global Kinetic Animations Script -->
+<script src="{% static 'js/animations.js' %}"></script>
+<!-- FitMaster Internationalization, Multi-Currency, Microsoft AI Voice & Cursor Engine -->
+<script src="{% static 'js/i18n_currency_voice.js' %}?v=2"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<ul>
+    <li class="nav-section">Overview</li>
+    <li class="{% if request.resolver_match.url_name == 'trainer_dashboard' %}active{% endif %}">
+        <a href="{% url 'trainer_dashboard' %}"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
+    </li>
+
+    <li class="nav-section">Clients</li>
+    <li class="{% if request.resolver_match.url_name == 'my_clients' %}active{% endif %}">
+        <a href="{% url 'my_clients' %}"><i class="fa-solid fa-users"></i><span>My Clients</span></a>
+    </li>
+    <li class="{% if request.resolver_match.url_name == 'add_client' %}active{% endif %}">
+        <a href="{% url 'add_client' %}"><i class="fa-solid fa-user-plus"></i><span>Add Client</span></a>
+    </li>
+
+    <li class="nav-section">Plans</li>
+    <li class="{% if request.resolver_match.url_name == 'workout_plans' %}active{% endif %}">
+        <a href="{% url 'workout_plans' %}"><i class="fa-solid fa-dumbbell"></i><span>Workout Plans</span></a>
+    </li>
+    <li class="{% if request.resolver_match.url_name == 'diet_plans' %}active{% endif %}">
+        <a href="{% url 'diet_plans' %}"><i class="fa-solid fa-utensils"></i><span>Diet Plans</span></a>
+    </li>
+    <li class="{% if request.resolver_match.url_name == 'schedule' %}active{% endif %}">
+        <a href="{% url 'schedule' %}"><i class="fa-solid fa-calendar-check"></i><span>Schedule</span></a>
+    </li>
+    <li class="{% if request.resolver_match.url_name == 'progress' %}active{% endif %}">
+        <a href="{% url 'progress' %}"><i class="fa-solid fa-chart-line"></i><span>Progress</span></a>
+    </li>
+
+    <li class="nav-section">Account</li>
+    <li class="{% if request.resolver_match.url_name == 'settings' %}active{% endif %}">
+        <a href="{% url 'settings' %}"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+    </li>
+    <li>
+        <a href="{% url 'home' %}"><i class="fa-solid fa-globe"></i><span>Go to Site</span></a>
+    </li>
+</ul>

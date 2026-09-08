@@ -1,0 +1,194 @@
+/* ===========================
+   ADMIN DASHBOARD
+=========================== */
+
+body{
+    background:#0b1120;
+    font-family:'Poppins',sans-serif;
+}
+
+/* ===========================
+   CONTAINER
+=========================== */
+
+.dashboard-container{
+    width:95%;
+    margin:auto;
+    padding:20px;
+}
+
+/* ===========================
+   WELCOME BOX
+=========================== */
+
+.welcome-box{
+    background:linear-gradient(135deg,#1e293b,#0f172a);
+    border-radius:20px;
+    padding:30px;
+    margin-bottom:30px;
+    color:#fff;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.welcome-box h1{
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.welcome-box p{
+    color:#cbd5e1;
+}
+
+/* ===========================
+   DASHBOARD CARDS
+=========================== */
+
+.dashboard-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+    border-radius:18px;
+    padding:30px;
+    text-align:center;
+    transition:.3s;
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 35px rgba(0,0,0,.4);
+}
+
+.card i{
+    font-size:42px;
+    margin-bottom:18px;
+}
+
+.card h4{
+    color:#ddd;
+    margin-bottom:10px;
+}
+
+.card h2{
+    font-size:38px;
+    color:#fff;
+}
+
+/* Card Colors */
+
+.users-card{
+    border-left:5px solid #00d4ff;
+}
+
+.users-card i{
+    color:#00d4ff;
+}
+
+.trainer-card{
+    border-left:5px solid #22c55e;
+}
+
+.trainer-card i{
+    color:#22c55e;
+}
+
+.customer-card{
+    border-left:5px solid #f59e0b;
+}
+
+.customer-card i{
+    color:#f59e0b;
+}
+
+.payment-card{
+    border-left:5px solid #ec4899;
+}
+
+.payment-card i{
+    color:#ec4899;
+}
+
+/* ===========================
+   TABLE
+=========================== */
+
+.table-box{
+    margin-top:35px;
+    background:#111827;
+    border-radius:20px;
+    padding:25px;
+}
+
+.table-title{
+    margin-bottom:20px;
+}
+
+.table-title h2{
+    color:white;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#00d4ff;
+    color:white;
+    padding:15px;
+}
+
+td{
+    padding:15px;
+    color:white;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+tr:hover{
+    background:#1f2937;
+}
+
+/* ===========================
+   BADGES
+=========================== */
+
+.badge{
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:13px;
+    color:white;
+}
+
+.badge.admin{
+    background:#22c55e;
+}
+
+.badge.user{
+    background:#3b82f6;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:768px){
+
+.dashboard-cards{
+grid-template-columns:1fr;
+}
+
+.welcome-box h1{
+font-size:24px;
+}
+
+table{
+display:block;
+overflow-x:auto;
+}
+
+}

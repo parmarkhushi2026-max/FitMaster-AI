@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice #{{ payment.id }} | FitMaster AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        :root { --accent: #00d4aa; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #0d1117; color: #1a1a2e; padding: 40px 20px; }
+        .invoice-page { max-width: 720px; margin: 0 auto; }
+        .top-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .top-actions a { color: #8b949e; font-size: 13px; text-decoration: none; background: #161b22; border: 1px solid rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 8px; display: flex; align-items: center; gap: 6px; }
+        .top-actions a:hover { color: var(--accent); }
+        .invoice-card { background: #fff; border-radius: 16px; padding: 48px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .inv-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; padding-bottom: 30px; border-bottom: 2px solid #f0f0f0; }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .brand-logo { width: 48px; height: 48px; background: linear-gradient(135deg, #00d4aa, #6366f1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #fff; }
+        .brand-name { font-size: 20px; font-weight: 700; color: #0d1117; }
+        .brand-tagline { font-size: 11px; color: #888; }
+        .inv-meta { text-align: right; }
+        .inv-title { font-size: 28px; font-weight: 800; color: #0d1117; letter-spacing: -0.5px; }
+        .inv-num { font-size: 13px; color: #666; margin-top: 4px; }
+        .inv-status { display: inline-block; background: #d1fae5; color: #065f46; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 8px; }
+        .inv-body { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+        .inv-section h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 10px; }
+        .inv-section p { font-size: 14px; color: #333; line-height: 1.7; }
+        .inv-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        .inv-table thead th { background: #0d1117; color: #fff; padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .inv-table thead th:first-child { border-radius: 8px 0 0 8px; }
+        .inv-table thead th:last-child { border-radius: 0 8px 8px 0; text-align: right; }
+        .inv-table tbody td { padding: 16px; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+        .inv-table tbody td:last-child { text-align: right; font-weight: 600; }
+        .inv-total { background: #f8fffe; border: 2px solid var(--accent); border-radius: 12px; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; }
+        .inv-total .label { font-size: 16px; font-weight: 600; color: #333; }
+        .inv-total .amount { font-size: 28px; font-weight: 800; color: var(--accent); }
+        .inv-footer { margin-top: 32px; padding-top: 24px; border-top: 1px solid #f0f0f0; text-align: center; font-size: 12px; color: #888; }
+        .print-btn { background: linear-gradient(135deg, var(--accent), #00b894); color: #0d1117; border: none; border-radius: 8px; padding: 9px 18px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .top-actions { display: none; }
+            .invoice-card { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="invoice-page">
+    <div class="top-actions">
+        <a href="{% url 'transactions' %}"><i class="fa-solid fa-arrow-left"></i> Back to Transactions</a>
+        <button class="print-btn" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Invoice</button>
+    </div>
+
+    <div class="invoice-card">
+        <!-- Header -->
+        <div class="inv-header">
+            <div class="brand">
+                <div class="brand-logo">💪</div>
+                <div>
+                    <div class="brand-name">FitMaster AI</div>
+                    <div class="brand-tagline">Professional Fitness Platform</div>
+                </div>
+            </div>
+            <div class="inv-meta">
+                <div class="inv-title">INVOICE</div>
+                <div class="inv-num">#{{ payment.id|stringformat:"06d" }}</div>
+                <div class="inv-status">✓ PAID</div>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="inv-body">
+            <div class="inv-section">
+                <h4>Billed To</h4>
+                <p>
+                    <strong>{% if payment.name %}{{ payment.name }}{% elif payment.user %}{{ payment.user.username }}{% else %}Customer{% endif %}</strong><br>
+                    {% if payment.user %}{{ payment.user.email|default:"—" }}{% endif %}
+                </p>
+            </div>
+            <div class="inv-section">
+                <h4>Invoice Details</h4>
+                <p>
+                    Date: <strong>{{ payment.created_at|date:"d M Y" }}</strong><br>
+                    Card: **** **** **** {{ payment.card }}<br>
+                    Type: {{ payment.get_transaction_type_display }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <table class="inv-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Plan / Item</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {% if payment.transaction_type == "membership" %}
+                        🏋️ Fitness Membership
+                        {% else %}
+                        🛍️ Product Purchase
+                        {% endif %}
+                    </td>
+                    <td>{{ payment.plan }}</td>
+                    <td>₹{{ payment.amount }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Total -->
+        <div class="inv-total">
+            <span class="label">Total Paid</span>
+            <span class="amount">₹{{ payment.amount }}</span>
+        </div>
+
+        <!-- Footer -->
+        <div class="inv-footer">
+            <p>Thank you for choosing FitMaster AI! 💪</p>
+            <p style="margin-top:6px">For support, contact us at support@fitmaster.ai</p>
+            <p style="margin-top:6px;color:#aaa">This is a computer-generated invoice. No signature required.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

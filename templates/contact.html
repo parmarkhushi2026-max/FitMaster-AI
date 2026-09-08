@@ -1,0 +1,812 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Contact Support & Online Payments | FitMaster
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}?v=5">
+<style>
+/* Enhanced Contact & Payment Styling - Cyber Green Theme */
+.payment-methods-section {
+    margin-top: 24px;
+    background: #0e0e11;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+    text-align: center;
+}
+
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.pay-btn-card {
+    background: #141418;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.pay-btn-card:hover {
+    transform: translateY(-3px);
+    border-color: #ff5540;
+    background: #1a1a22;
+    box-shadow: 0 8px 20px rgba(255, 85, 64, 0.2);
+}
+
+.pay-icon-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 85, 64, 0.12);
+    color: #ff5540;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.25s ease;
+}
+
+.pay-btn-card:hover .pay-icon-circle {
+    background: #ff5540;
+    color: #ffffff;
+    transform: scale(1.06);
+}
+
+.pay-btn-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.pay-btn-sub {
+    font-size: 10px;
+    color: #a1a1aa;
+}
+
+/* Payment Modal */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999999;
+    padding: 20px;
+}
+
+.modal-box {
+    background: #0e0e11;
+    border: 1px solid rgba(255, 85, 64, 0.3);
+    border-radius: 24px;
+    max-width: 480px;
+    width: 100%;
+    padding: 30px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 85, 64, 0.2);
+    position: relative;
+    text-align: center;
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.upi-qr-box {
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 16px;
+    display: inline-block;
+    margin: 18px 0;
+}
+
+.copy-upi-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #141418;
+    border: 1px dashed rgba(255, 85, 64, 0.4);
+    border-radius: 12px;
+    padding: 10px 16px;
+    margin: 14px 0;
+}
+
+/* Enhanced Interactive Contact Cards */
+.interactive-contact-card {
+    position: relative;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.interactive-contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 20px rgba(255, 85, 64, 0.18);
+    border-color: rgba(255, 85, 64, 0.45);
+}
+
+.interactive-contact-card.whatsapp-card:hover {
+    border-color: rgba(37, 211, 102, 0.45);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 20px rgba(37, 211, 102, 0.2);
+}
+
+.contact-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.contact-icon-box {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+}
+
+.phone-icon-box {
+    background: rgba(255, 85, 64, 0.14);
+    color: #ff5540;
+    border: 1px solid rgba(255, 85, 64, 0.25);
+}
+
+.email-icon-box {
+    background: rgba(56, 189, 248, 0.14);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.whatsapp-icon-box {
+    background: rgba(37, 211, 102, 0.14);
+    color: #25d366;
+    border: 1px solid rgba(37, 211, 102, 0.25);
+}
+
+.location-icon-box {
+    background: rgba(168, 85, 247, 0.14);
+    color: #a855f7;
+    border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+.contact-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.live-badge {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+}
+
+.response-badge {
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
+}
+
+.whatsapp-badge {
+    background: rgba(37, 211, 102, 0.12);
+    border: 1px solid rgba(37, 211, 102, 0.3);
+    color: #25d366;
+}
+
+.location-badge {
+    background: rgba(168, 85, 247, 0.12);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    color: #c084fc;
+}
+
+.contact-primary-val {
+    font-size: 14.5px !important;
+    font-weight: 700;
+    margin-bottom: 4px !important;
+}
+
+.contact-primary-val a {
+    color: var(--text, #ffffff) !important;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-primary-val a:hover {
+    color: #ff5540 !important;
+}
+
+.contact-sub-text {
+    font-size: 11.5px;
+    color: var(--text-muted, #94a3b8);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+.contact-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.contact-btn-primary {
+    flex: 1;
+    background: linear-gradient(135deg, #ff5540, #e03e2a);
+    color: #ffffff !important;
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: none;
+    box-shadow: 0 3px 10px rgba(255, 85, 64, 0.3);
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.contact-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(255, 85, 64, 0.45);
+}
+
+.contact-btn-secondary {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+    color: var(--text, #ffffff);
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.contact-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #ff5540;
+}
+
+.contact-btn-whatsapp {
+    width: 100%;
+    background: #25d366;
+    color: #ffffff !important;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+    transition: all 0.25s ease;
+}
+
+.contact-btn-whatsapp:hover {
+    background: #1eb956;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.5);
+}
+
+/* Toast Floating Box */
+.contact-toast {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #111116;
+    border: 1px solid rgba(16, 185, 129, 0.5);
+    color: #ffffff;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 18px rgba(16, 185, 129, 0.25);
+    display: none;
+    align-items: center;
+    gap: 10px;
+    z-index: 9999999;
+    animation: toastSlideUp 0.3s ease;
+}
+
+.contact-toast i {
+    color: #10b981;
+    font-size: 16px;
+}
+
+@keyframes toastSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+[data-theme="light"] .contact-toast {
+    background: #ffffff;
+    color: #0f172a;
+    border-color: #10b981;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .contact-btn-secondary {
+    background: #f1f5f9;
+    border-color: #e2e8f0;
+    color: #0f172a;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="contact-page">
+
+    <div class="contact-container">
+
+        <!-- Contact Details -->
+        <div class="contact-info">
+
+            <!-- 1. Phone Support -->
+            <div class="info-card interactive-contact-card" id="cardPhoneSupport">
+                <div class="contact-card-top">
+                    <div class="contact-icon-box phone-icon-box">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <span class="contact-status-badge live-badge" title="Phone support lines currently operational">
+                        <span class="live-dot-green"></span> Line Active
+                    </span>
+                </div>
+                <h3>Phone Support</h3>
+                <p class="contact-primary-val">
+                    <a href="tel:+919876543210" title="Click to call">+91 98765 43210</a>
+                </p>
+                <span class="contact-sub-text"><i class="fa-regular fa-clock"></i> Mon - Sat (7:00 AM - 10:00 PM)</span>
+                
+                <div class="contact-card-actions">
+                    <a href="tel:+919876543210" class="contact-btn-primary" title="Direct Phone Call">
+                        <i class="fa-solid fa-phone"></i> Call Now
+                    </a>
+                    <button type="button" class="contact-btn-secondary" onclick="copyContactText('+919876543210', 'Phone number +91 98765 43210 copied!')" title="Copy Number">
+                        <i class="fa-regular fa-copy"></i> Copy
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. Email Support -->
+            <div class="info-card interactive-contact-card" id="cardEmailSupport">
+                <div class="contact-card-top">
+                    <div class="contact-icon-box email-icon-box">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <span class="contact-status-badge response-badge" title="Guaranteed Fast SLA">
+                        <i class="fa-solid fa-bolt"></i> &lt; 2hr Response
+                    </span>
+                </div>
+                <h3>Email Support</h3>
+                <p class="contact-primary-val">
+                    <a href="mailto:support@fitmaster.com?subject=FitMaster%20Support%20Inquiry" title="Compose email">support@fitmaster.com</a>
+                </p>
+                <span class="contact-sub-text"><i class="fa-solid fa-shield-halved"></i> Guaranteed response in under 2 hours</span>
+                
+                <div class="contact-card-actions">
+                    <a href="mailto:support@fitmaster.com?subject=FitMaster%20Support%20Inquiry" class="contact-btn-primary" title="Compose an email">
+                        <i class="fa-solid fa-paper-plane"></i> Send Email
+                    </a>
+                    <button type="button" class="contact-btn-secondary" onclick="copyContactText('support@fitmaster.com', 'Email support@fitmaster.com copied!')" title="Copy Email">
+                        <i class="fa-regular fa-copy"></i> Copy
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3. Live WhatsApp -->
+            <div class="info-card interactive-contact-card whatsapp-card" id="cardWhatsAppSupport">
+                <div class="contact-card-top">
+                    <div class="contact-icon-box whatsapp-icon-box">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <span class="contact-status-badge whatsapp-badge" title="Coaches ready on WhatsApp">
+                        <span class="live-dot-green"></span> Online 24/7
+                    </span>
+                </div>
+                <h3>Live WhatsApp</h3>
+                <p class="contact-primary-val">
+                    <a href="https://wa.me/919876543210?text=Hi%20FitMaster%20Team!%20I%20want%20to%20know%20more%20about%20your%20coaching%20and%20memberships." target="_blank" style="color:#25d366 !important;" title="Chat on WhatsApp">
+                        +91 98765 43210
+                    </a>
+                </p>
+                <span class="contact-sub-text"><i class="fa-solid fa-comments"></i> Instant trainer &amp; payment onboarding</span>
+                
+                <div class="contact-card-actions">
+                    <a href="https://wa.me/919876543210?text=Hi%20FitMaster%20Team!%20I%20want%20to%20know%20more%20about%20your%20coaching%20and%20memberships." target="_blank" class="contact-btn-whatsapp" title="Open WhatsApp Chat">
+                        <i class="fa-brands fa-whatsapp"></i> Chat with Us on WhatsApp &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. Main Center (Google Maps Directions) -->
+            <div class="info-card interactive-contact-card" id="cardLocationSupport">
+                <div class="contact-card-top">
+                    <div class="contact-icon-box location-icon-box">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <span class="contact-status-badge location-badge" title="Flagship Training Center">
+                        <i class="fa-solid fa-building"></i> Flagship Gym
+                    </span>
+                </div>
+                <h3>Main Center</h3>
+                <p class="contact-primary-val" style="font-size:13.5px !important;line-height:1.45;">
+                    FitMaster Pro Center, SG Highway, Ahmedabad, Gujarat, India
+                </p>
+                <span class="contact-sub-text"><i class="fa-solid fa-map-pin"></i> SG Highway, Ahmedabad &bull; Open 7 Days</span>
+                
+                <div class="contact-card-actions">
+                    <a href="https://www.google.com/maps/search/?api=1&query=FitMaster+Pro+Center+SG+Highway+Ahmedabad+Gujarat+India" target="_blank" class="contact-btn-primary" title="Open Google Maps Directions">
+                        <i class="fa-solid fa-diamond-turn-right"></i> Get Directions
+                    </a>
+                    <button type="button" class="contact-btn-secondary" onclick="copyContactText('FitMaster Pro Center, SG Highway, Ahmedabad, Gujarat, India', 'Center address copied to clipboard!')" title="Copy Address">
+                        <i class="fa-regular fa-copy"></i> Copy
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form" style="background:#0e0e11;border:1px solid rgba(255,255,255,0.08);border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,0.75);">
+            <h2 style="color:#ffffff;font-weight:800;">Send Direct Message</h2>
+            <form id="contactSupportForm" onsubmit="handleContactSubmit(event)">
+                <input type="text" id="contactName" placeholder="Your Full Name" required style="background:#141418;border:1px solid rgba(255,255,255,0.08);">
+                <input type="email" id="contactEmail" placeholder="Your Email Address" required style="background:#141418;border:1px solid rgba(255,255,255,0.08);">
+                <input type="text" id="contactSubject" placeholder="Subject / Query" required style="background:#141418;border:1px solid rgba(255,255,255,0.08);">
+                <textarea id="contactMessage" placeholder="How can our coaches help you today?" required style="background:#141418;border:1px solid rgba(255,255,255,0.08);"></textarea>
+                <button type="submit" style="background:linear-gradient(135deg, #ff5540 0%, #e03e2a 100%);color:#ffffff;font-weight:800;border-radius:30px;box-shadow:0 4px 15px rgba(255,85,64,0.4);">
+                    <i class="fa-solid fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- ================= ONLINE PAYMENT GATEWAY & GPAY / PHONEPE / UPI ================= -->
+    <div class="payment-methods-section">
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:4px 14px;border-radius:20px;background:rgba(255,85,64,0.12);color:#ff5540;font-size:12px;font-weight:700;margin-bottom:10px;">
+            <i class="fa-solid fa-bolt"></i> 100% SECURE INSTANT CHECKOUT
+        </div>
+        <h2 style="font-size:28px;font-weight:800;color:#ffffff;margin-bottom:6px;">Supported Online Payment Methods</h2>
+        <p style="color:#a1a1aa;max-width:650px;margin:0 auto;font-size:14px;">Click any payment method below to initiate direct UPI checkout, scan QR, or complete instant card payment.</p>
+
+        <div class="payment-methods-grid">
+            
+            <!-- GPay -->
+            <div class="pay-btn-card" onclick="openPaymentModal('Google Pay (GPay)', 'gpay')">
+                <div class="pay-icon-circle">
+                    <i class="fa-brands fa-google-pay" style="font-size:24px;"></i>
+                </div>
+                <div class="pay-btn-title">Google Pay</div>
+                <div class="pay-btn-sub">UPI & Instant Pay</div>
+            </div>
+
+            <!-- PhonePe -->
+            <div class="pay-btn-card" onclick="openPaymentModal('PhonePe UPI', 'phonepe')">
+                <div class="pay-icon-circle" style="background:rgba(129,140,248,0.15);color:#818cf8;">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                </div>
+                <div class="pay-btn-title">PhonePe</div>
+                <div class="pay-btn-sub">Direct UPI App</div>
+            </div>
+
+            <!-- Paytm -->
+            <div class="pay-btn-card" onclick="openPaymentModal('Paytm Wallet & UPI', 'paytm')">
+                <div class="pay-icon-circle" style="background:rgba(255,85,64,0.15);color:#ff5540;">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+                <div class="pay-btn-title">Paytm</div>
+                <div class="pay-btn-sub">Wallet / UPI</div>
+            </div>
+
+            <!-- BHIM UPI / QR -->
+            <div class="pay-btn-card" onclick="openPaymentModal('Instant BHIM UPI QR Code', 'upi')">
+                <div class="pay-icon-circle" style="background:rgba(251,191,36,0.15);color:#fbbf24;">
+                    <i class="fa-solid fa-qrcode"></i>
+                </div>
+                <div class="pay-btn-title">UPI QR Scan</div>
+                <div class="pay-btn-sub">Scan Any UPI App</div>
+            </div>
+
+            <!-- Debit / Credit Cards -->
+            <div class="pay-btn-card" onclick="openPaymentModal('Debit & Credit Cards (Visa/Mastercard/RuPay)', 'cards')">
+                <div class="pay-icon-circle">
+                    <i class="fa-solid fa-credit-card"></i>
+                </div>
+                <div class="pay-btn-title">Cards</div>
+                <div class="pay-btn-sub">Visa, MC, RuPay</div>
+            </div>
+
+            <!-- Net Banking -->
+            <div class="pay-btn-card" onclick="openPaymentModal('Net Banking (All Indian Banks)', 'netbanking')">
+                <div class="pay-icon-circle">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <div class="pay-btn-title">Net Banking</div>
+                <div class="pay-btn-sub">50+ Banks Supported</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Map -->
+    <div class="map-section" style="background:#0e0e11;border:1px solid rgba(255,255,255,0.08);border-radius:24px;">
+        <iframe
+            src="https://www.google.com/maps?q=Ahmedabad,Gujarat&output=embed"
+            width="100%"
+            height="350"
+            style="border:0;"
+            loading="lazy">
+        </iframe>
+    </div>
+
+    <!-- Follow Us Social Links -->
+    <div class="social-section" style="margin-top:60px;text-align:center;">
+        <h2 style="font-size:28px;font-weight:800;color:#ffffff;margin-bottom:12px;">Follow FitMaster Community</h2>
+        <p style="color:#a1a1aa;margin-bottom:24px;font-size:14px;">Connect with our coaches and athletes across social platforms for daily fitness motivation.</p>
+
+        <div class="social-icons" style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">
+            <a href="https://instagram.com" target="_blank" title="Follow on Instagram" style="background:#141418;border:1px solid rgba(255,255,255,0.1);color:#e1306c;">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://facebook.com" target="_blank" title="Follow on Facebook" style="background:#141418;border:1px solid rgba(255,255,255,0.1);color:#1877f2;">
+                <i class="fa-brands fa-facebook"></i>
+            </a>
+            <a href="https://youtube.com" target="_blank" title="Subscribe on YouTube" style="background:#141418;border:1px solid rgba(255,255,255,0.1);color:#ff0000;">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a href="https://x.com" target="_blank" title="Follow on Twitter / X" style="background:#141418;border:1px solid rgba(255,255,255,0.1);color:#ffffff;">
+                <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="https://linkedin.com" target="_blank" title="Connect on LinkedIn" style="background:#141418;border:1px solid rgba(255,255,255,0.1);color:#0a66c2;">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="https://wa.me/919876543210" target="_blank" title="Chat on WhatsApp" style="background:#141418;border:1px solid rgba(255,255,255,0.1);color:#25d366;">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+    </div>
+
+</section>
+
+<!-- ================= INTERACTIVE PAYMENT MODAL ================= -->
+<div class="modal-overlay" id="paymentModalOverlay" onclick="closePaymentModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()" style="max-width:460px;">
+        <button class="modal-close-btn" onclick="closePaymentModalDirect()">&times;</button>
+        
+        <div id="modalIconBox" style="width:52px;height:52px;border-radius:50%;background:rgba(255,85,64,0.15);color:#ff5540;display:inline-flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:12px;">
+            <i id="modalIcon" class="fa-solid fa-shield-halved"></i>
+        </div>
+
+        <h3 id="modalPaymentTitle" style="font-size:20px;font-weight:800;color:#ffffff;margin-bottom:6px;">Instant Payment Gateway</h3>
+        <p id="modalPaymentDesc" style="font-size:13px;color:#a1a1aa;margin-bottom:14px;">Select your desired fitness protocol to pay instantly using this method.</p>
+
+        <!-- Plan Selector in Modal -->
+        <div style="text-align:left;margin-bottom:14px;">
+            <label style="font-size:11.5px;color:#a1a1aa;font-weight:700;display:block;margin-bottom:6px;">CHOOSE MEMBERSHIP PLAN:</label>
+            <select id="modalPlanSelect" onchange="updateModalAmount()" style="width:100%;background:#141418;border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 12px;color:#ffffff;font-family:'Poppins',sans-serif;font-size:13.5px;outline:none;">
+                <option value="Starter Protocol" data-price="999">Starter Protocol (3 Months) — ₹999</option>
+                <option value="Pro Athlete Protocol" data-price="1999" selected>Pro Athlete Protocol (6 Months) — ₹1,999</option>
+                <option value="Elite Master Protocol" data-price="3999">Elite Master Protocol (12 Months) — ₹3,999</option>
+            </select>
+        </div>
+
+        <!-- Dynamic QR Display -->
+        <div class="upi-qr-box" id="modalQrBox">
+            <img id="modalQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=fitmaster@okaxis&pn=FitMaster%20Fitness&am=1999&cu=INR" alt="UPI QR Code" style="width:140px;height:140px;display:block;margin:0 auto;">
+            <span id="modalQrLabel" style="font-size:11px;color:#0f172a;font-weight:700;display:block;margin-top:6px;">SCAN WITH SELECTED APP</span>
+        </div>
+
+        <!-- Copy UPI Bar -->
+        <div class="copy-upi-bar" id="modalUpiBar">
+            <span id="modalUpiText" style="font-size:13px;font-weight:700;color:#ff5540;font-family:monospace;">fitmaster@okaxis</span>
+            <button type="button" onclick="copyModalUPI()" style="background:#ff5540;color:#ffffff;border:none;padding:5px 12px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;">
+                <i class="fa-regular fa-copy"></i> Copy
+            </button>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:16px;">
+            <button type="button" onclick="proceedToCheckout()" class="btn btn-primary" style="width:100%;background:linear-gradient(135deg, #ff5540 0%, #e03e2a 100%);color:#ffffff;font-weight:800;padding:12px;border-radius:30px;border:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;">
+                <i class="fa-solid fa-lock"></i> Proceed to Checkout (<span id="modalBtnPrice">₹1,999</span>) →
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentPaymentMode = 'gpay';
+const upiMap = {
+    'gpay': { vpa: 'fitmaster@okaxis', label: 'Google Pay (GPay)', icon: 'fa-brands fa-google-pay', color: '#ff5540' },
+    'phonepe': { vpa: 'fitmaster@ybl', label: 'PhonePe UPI', icon: 'fa-solid fa-mobile-screen-button', color: '#818cf8' },
+    'paytm': { vpa: 'fitmaster@paytm', label: 'Paytm Wallet & UPI', icon: 'fa-solid fa-wallet', color: '#38bdf8' },
+    'upi': { vpa: 'fitmaster@upi', label: 'BHIM UPI QR Scan', icon: 'fa-solid fa-qrcode', color: '#fbbf24' },
+    'cards': { vpa: 'fitmaster@upi', label: 'Credit & Debit Cards', icon: 'fa-solid fa-credit-card', color: '#f43f5e' },
+    'netbanking': { vpa: 'fitmaster@upi', label: 'Net Banking (All Banks)', icon: 'fa-solid fa-building-columns', color: '#a855f7' }
+};
+
+function openPaymentModal(title, mode) {
+    currentPaymentMode = mode || 'gpay';
+    const cfg = upiMap[mode] || upiMap['gpay'];
+    
+    document.getElementById('modalPaymentTitle').textContent = cfg.label;
+    document.getElementById('modalUpiText').textContent = cfg.vpa;
+    document.getElementById('modalIcon').className = cfg.icon;
+    document.getElementById('modalIconBox').style.color = cfg.color;
+    document.getElementById('modalIconBox').style.background = cfg.color + '22';
+    
+    updateModalAmount();
+    document.getElementById('paymentModalOverlay').style.display = 'flex';
+}
+
+function updateModalAmount() {
+    const sel = document.getElementById('modalPlanSelect');
+    const opt = sel.options[sel.selectedIndex];
+    const price = opt.getAttribute('data-price') || '1999';
+    const cfg = upiMap[currentPaymentMode] || upiMap['gpay'];
+    
+    document.getElementById('modalBtnPrice').textContent = '₹' + Number(price).toLocaleString('en-IN');
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=${cfg.vpa}&pn=FitMaster%20Fitness&am=${price}&cu=INR`;
+    document.getElementById('modalQrImg').src = qrUrl;
+}
+
+function proceedToCheckout() {
+    const sel = document.getElementById('modalPlanSelect');
+    const opt = sel.options[sel.selectedIndex];
+    const plan = encodeURIComponent(opt.value);
+    const price = opt.getAttribute('data-price') || '1999';
+    window.location.href = `{% url 'payment' %}?plan=${plan}&price=${price}&method=${currentPaymentMode}`;
+}
+
+function closePaymentModal(e) {
+    if (e.target.id === 'paymentModalOverlay') {
+        document.getElementById('paymentModalOverlay').style.display = 'none';
+    }
+}
+
+function closePaymentModalDirect() {
+    document.getElementById('paymentModalOverlay').style.display = 'none';
+}
+
+function copyModalUPI() {
+    const vpa = document.getElementById('modalUpiText').textContent;
+    copyContactText(vpa, 'UPI ID copied: ' + vpa);
+}
+
+/* ── Interactive Contact Helpers ── */
+function copyContactText(text, msg) {
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            showContactToast(msg || 'Copied to clipboard!');
+        }).catch(() => {
+            fallbackCopyText(text, msg);
+        });
+    } else {
+        fallbackCopyText(text, msg);
+    }
+}
+
+function fallbackCopyText(text, msg) {
+    const tempInput = document.createElement('input');
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    try {
+        document.execCommand('copy');
+        showContactToast(msg || 'Copied to clipboard!');
+    } catch (e) {
+        prompt('Copy to clipboard: Ctrl+C, Enter', text);
+    }
+    document.body.removeChild(tempInput);
+}
+
+let contactToastTimeout = null;
+function showContactToast(msg) {
+    const toast = document.getElementById('contactToast');
+    const msgEl = document.getElementById('contactToastMsg');
+    if (!toast || !msgEl) {
+        alert(msg);
+        return;
+    }
+    
+    msgEl.textContent = msg;
+    toast.style.display = 'flex';
+    
+    if (contactToastTimeout) clearTimeout(contactToastTimeout);
+    contactToastTimeout = setTimeout(() => {
+        toast.style.display = 'none';
+    }, 3500);
+}
+
+function handleContactSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    const origHtml = btn ? btn.innerHTML : '';
+    const name = document.getElementById('contactName').value.trim();
+    
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Sending Message...';
+    }
+    
+    setTimeout(() => {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Message Dispatched!';
+            btn.style.background = '#10b981';
+        }
+        
+        showContactToast(`Thank you, ${name}! Your inquiry has been routed to our coaches.`);
+        document.getElementById('contactSupportForm').reset();
+        
+        setTimeout(() => {
+            if (btn) {
+                btn.innerHTML = origHtml;
+                btn.style.background = '';
+            }
+        }, 3500);
+    }, 750);
+}
+</script>
+
+<!-- Floating Notification Toast -->
+<div id="contactToast" class="contact-toast" role="alert">
+    <i class="fa-solid fa-circle-check" id="contactToastIcon"></i>
+    <span id="contactToastMsg">Copied!</span>
+</div>
+{% endblock %}

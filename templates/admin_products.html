@@ -1,0 +1,68 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Products{% endblock %}
+{% block page_title %}Product Management{% endblock %}
+{% block breadcrumb %}Admin / Products{% endblock %}
+{% block user_role %}Administrator{% endblock %}
+{% block sidebar %}{% include "includes/admin_sidebar.html" %}{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+    <!-- Add Product -->
+    <div class="form-card">
+        <div class="form-title"><i class="fa-solid fa-plus text-accent"></i> Add Product</div>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="">
+            <div class="form-grid" style="grid-template-columns:1fr">
+                <div class="form-group"><label>Product Name</label><input type="text" name="name" placeholder="e.g. Whey Protein" required></div>
+                <div class="form-group"><label>Price (₹)</label><input type="number" name="price" step="0.01" min="0" placeholder="e.g. 2499" required></div>
+                <div class="form-group"><label>Image URL / Path (optional)</label><input type="text" name="image" placeholder="https://... or images/product.png"></div>
+                <div class="form-group"><label>Description</label><textarea name="description" placeholder="Product details..."></textarea></div>
+            </div>
+            <div class="form-actions"><button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Product</button></div>
+        </form>
+    </div>
+
+    <!-- Product List -->
+    <div>
+        <div class="sec-hdr"><div class="sec-hdr-left"><h2>Products ({{ products|length }})</h2></div></div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+        {% for p in products %}
+        <div class="card">
+            <div class="card-hdr">
+                <div>
+                    <div class="fw-600">{{ p.name }}</div>
+                    <div style="font-size:18px;font-weight:700;color:var(--accent);margin-top:3px">₹{{ p.price }}</div>
+                </div>
+                <form method="POST" style="display:inline" onsubmit="return confirm('Delete this product?')">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ p.id }}">
+                    <input type="hidden" name="action" value="delete">
+                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
+                </form>
+            </div>
+            {% if p.description %}
+            <div style="padding:10px 18px;font-size:13px;color:var(--text-muted)">{{ p.description|truncatechars:100 }}</div>
+            {% endif %}
+            <details style="padding:0 18px 14px">
+                <summary style="cursor:pointer;font-size:12px;color:var(--accent)">Edit product</summary>
+                <form method="POST" style="margin-top:12px">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ p.id }}">
+                    <div class="form-grid" style="grid-template-columns:1fr 1fr">
+                        <div class="form-group"><label>Name</label><input type="text" name="name" value="{{ p.name }}" required></div>
+                        <div class="form-group"><label>Price</label><input type="number" name="price" value="{{ p.price }}" step="0.01" required></div>
+                    </div>
+                    <div class="form-group" style="margin-top:10px"><label>Image URL</label><input type="text" name="image" value="{{ p.image }}"></div>
+                    <div class="form-group" style="margin-top:10px"><label>Description</label><textarea name="description">{{ p.description }}</textarea></div>
+                    <div class="form-actions"><button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-save"></i> Update</button></div>
+                </form>
+            </details>
+        </div>
+        {% empty %}
+        <div class="card"><div class="card-body"><div class="empty-state"><i class="fa-solid fa-store"></i><p>No products added yet. Add your first product!</p></div></div></div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

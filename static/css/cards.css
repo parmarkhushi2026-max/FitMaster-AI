@@ -1,0 +1,75 @@
+/* ==========================
+   Statistics Cards
+========================== */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+}
+
+.card{
+
+    background:rgba(255,255,255,.05);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:25px;
+
+    padding:35px;
+
+    transition:.35s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 15px 40px rgba(0,255,136,.15);
+
+}
+
+.card i{
+
+    font-size:45px;
+
+    color:#00ff88;
+
+    margin-bottom:20px;
+
+}
+
+.card h2{
+
+    color:#fff;
+
+    font-size:38px;
+
+    margin-bottom:10px;
+
+}
+
+.card p{
+
+    color:#bdbdbd;
+
+    font-size:18px;
+
+}
+tore-card img{
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    display: block;
+    margin: 20px auto;
+    transition: 0.3s ease;
+}
+
+;

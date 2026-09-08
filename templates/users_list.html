@@ -1,0 +1,54 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}All Users{% endblock %}
+{% block page_title %}All Users{% endblock %}
+{% block breadcrumb %}Admin / Users{% endblock %}
+{% block user_role %}Administrator{% endblock %}
+{% block sidebar %}{% include "includes/admin_sidebar.html" %}{% endblock %}
+
+{% block content %}
+<div class="sec-hdr">
+    <div class="sec-hdr-left"><h2>All Users</h2><p>{{ users|length }} total users in system</p></div>
+</div>
+
+<div class="card">
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>#</th><th>Username</th><th>Full Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+            {% for u in users %}
+            <tr>
+                <td class="text-muted">{{ forloop.counter }}</td>
+                <td class="fw-600">{{ u.username }}</td>
+                <td>{{ u.get_full_name|default:"—" }}</td>
+                <td class="text-muted">{{ u.email|default:"—" }}</td>
+                <td>
+                    {% if u.profile.role == "admin" %}<span class="badge badge-yellow">Admin</span>
+                    {% elif u.profile.role == "trainer" %}<span class="badge badge-blue">Trainer</span>
+                    {% else %}<span class="badge badge-green">Customer</span>{% endif %}
+                </td>
+                <td>
+                    {% if u.is_active %}<span class="badge badge-green">Active</span>
+                    {% else %}<span class="badge badge-red">Inactive</span>{% endif %}
+                </td>
+                <td>
+                    <div style="display:flex;gap:6px;align-items:center;">
+                        <a href="{% url 'edit_user' u.id %}" class="btn btn-secondary btn-sm"><i class="fa-solid fa-pen"></i> Edit</a>
+                        {% if u.id != request.user.id %}
+                        <form method="POST" action="{% url 'delete_user' u.id %}" style="display:inline" onsubmit="return confirm('Are you sure you want to delete user {{ u.username }}?')">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7"><div class="empty-state"><i class="fa-solid fa-users"></i><p>No users found</p></div></td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

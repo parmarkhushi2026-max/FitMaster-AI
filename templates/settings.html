@@ -1,0 +1,72 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}Settings{% endblock %}
+{% block topbar_class %}{% if profile.role == 'admin' %}topbar-admin{% elif profile.role == 'trainer' %}topbar-trainer{% else %}topbar-customer{% endif %}{% endblock %}
+{% block page_title %}Account Settings{% endblock %}
+{% block topbar_badge %}<span class="topbar-badge {% if profile.role == 'admin' %}topbar-badge-admin{% elif profile.role == 'trainer' %}topbar-badge-trainer{% else %}topbar-badge-customer{% endif %}"><i class="fa-solid fa-gear"></i> Settings</span>{% endblock %}
+{% block breadcrumb %}Dashboard / Settings{% endblock %}
+{% block user_role %}{{ profile.role|title }}{% endblock %}
+
+{% block sidebar %}
+{% if profile.role == "admin" %}
+{% include "includes/admin_sidebar.html" %}
+{% elif profile.role == "trainer" %}
+{% include "includes/trainer_sidebar.html" %}
+{% else %}
+{% include "includes/customer_sidebar.html" %}
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+<div class="grid-2">
+    <!-- Profile Update -->
+    <div class="form-card">
+        <div class="form-title"><i class="fa-solid fa-user text-accent"></i> Profile Information</div>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="profile">
+            <div class="form-group" style="margin-bottom:16px">
+                <div style="width:70px;height:70px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#0d1117;margin-bottom:10px">
+                    {{ request.user.username|first|upper }}
+                </div>
+                <span class="badge badge-teal">{{ profile.role|title }}</span>
+            </div>
+            <div class="form-grid" style="grid-template-columns:1fr">
+                <div class="form-group"><label>Username</label><input type="text" value="{{ request.user.username }}" disabled style="opacity:0.6;cursor:not-allowed"></div>
+                <div class="form-group"><label>First Name</label><input type="text" name="first_name" value="{{ request.user.first_name }}"></div>
+                <div class="form-group"><label>Last Name</label><input type="text" name="last_name" value="{{ request.user.last_name }}"></div>
+                <div class="form-group"><label>Email</label><input type="email" name="email" value="{{ request.user.email }}"></div>
+                {% if trainer_detail %}
+                <div class="form-group">
+                    <label>Training Category</label>
+                    <input value="{{ trainer_detail.get_category_display }}" disabled style="opacity:0.6;cursor:not-allowed">
+                </div>
+                {% endif %}
+            </div>
+            <div class="form-actions"><button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Update Profile</button></div>
+        </form>
+    </div>
+
+    <!-- Change Password -->
+    <div class="form-card">
+        <div class="form-title"><i class="fa-solid fa-lock text-accent"></i> Change Password</div>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="password">
+            <div class="form-grid" style="grid-template-columns:1fr">
+                <div class="form-group"><label>Current Password</label><input type="password" name="old_password" placeholder="Enter current password" required></div>
+                <div class="form-group"><label>New Password</label><input type="password" name="new_password" placeholder="Min. 6 characters" required></div>
+                <div class="form-group"><label>Confirm New Password</label><input type="password" name="confirm_password" placeholder="Repeat new password" required></div>
+            </div>
+            <div class="form-actions"><button type="submit" class="btn btn-primary"><i class="fa-solid fa-key"></i> Change Password</button></div>
+        </form>
+
+        <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border)">
+            <h4 style="font-size:13px;margin-bottom:10px;color:var(--text-muted)">Danger Zone</h4>
+            <a href="{% url 'logout' %}" class="btn btn-danger btn-sm"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

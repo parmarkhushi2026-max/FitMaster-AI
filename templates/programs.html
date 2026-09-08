@@ -1,0 +1,461 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Programs | FitMaster{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'css/programs.css' %}?v=5">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="fm-program-page">
+
+    <div class="fm-program-wrapper">
+
+
+
+        <!-- =====================================================
+             PROGRAM GRID
+        ====================================================== -->
+
+        <main class="fm-program-grid">
+
+
+            <!-- =================================================
+                 1. WEIGHT LOSS
+            ================================================== -->
+
+            <article class="fm-program-card">
+
+                <div class="fm-program-image">
+
+                    <img src="{% static 'images/weight-loss.jpg' %}" alt="Weight Loss Program">
+
+                    <div class="fm-program-image-overlay"></div>
+
+                    <div class="fm-program-tag">
+                        <i class="fa-solid fa-fire"></i>
+                        Fat Burn
+                    </div>
+
+                </div>
+
+
+                <div class="fm-program-content">
+
+                    <div class="fm-program-icon fm-green">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+
+                    <h2>Weight Loss</h2>
+
+                    <p>
+                        Burn calories, improve stamina and achieve
+                        a healthier body with effective workouts.
+                    </p>
+
+                    <div class="fm-program-features">
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            HIIT
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Cardio
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Fat Burn
+                        </span>
+
+                    </div>
+
+                    <a href="{% url 'membership' %}" class="fm-program-button">
+
+                        Start Program
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- =================================================
+                 2. MUSCLE GAIN
+            ================================================== -->
+
+            <article class="fm-program-card">
+
+                <div class="fm-program-image">
+
+                    <img src="{% static 'images/muscle.jpg' %}" alt="Muscle Gain Program">
+
+                    <div class="fm-program-image-overlay"></div>
+
+                    <div class="fm-program-tag">
+                        <i class="fa-solid fa-dumbbell"></i>
+                        Build Muscle
+                    </div>
+
+                </div>
+
+
+                <div class="fm-program-content">
+
+                    <div class="fm-program-icon fm-purple">
+                        <i class="fa-solid fa-dumbbell"></i>
+                    </div>
+
+                    <h2>Muscle Gain</h2>
+
+                    <p>
+                        Build lean muscle, increase strength and
+                        improve your overall physical performance.
+                    </p>
+
+                    <div class="fm-program-features">
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Strength
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Muscle
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Power
+                        </span>
+
+                    </div>
+
+                    <a href="{% url 'membership' %}" class="fm-program-button">
+
+                        Start Program
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- =================================================
+                 3. YOGA
+            ================================================== -->
+
+            <article class="fm-program-card">
+
+                <div class="fm-program-image">
+
+                    <img src="{% static 'images/yoga.jpg' %}" alt="Yoga Program">
+
+                    <div class="fm-program-image-overlay"></div>
+
+                    <div class="fm-program-tag">
+                        <i class="fa-solid fa-spa"></i>
+                        Mind & Body
+                    </div>
+
+                </div>
+
+
+                <div class="fm-program-content">
+
+                    <div class="fm-program-icon fm-pink">
+                        <i class="fa-solid fa-spa"></i>
+                    </div>
+
+                    <h2>Yoga</h2>
+
+                    <p>
+                        Improve flexibility, balance, posture and
+                        mental relaxation through guided yoga sessions.
+                    </p>
+
+                    <div class="fm-program-features">
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Flexibility
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Balance
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Relaxation
+                        </span>
+
+                    </div>
+
+                    <a href="{% url 'membership' %}" class="fm-program-button">
+
+                        Start Program
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- =================================================
+                 4. CROSSFIT
+            ================================================== -->
+
+            <article class="fm-program-card">
+
+                <div class="fm-program-image">
+
+                    <img src="{% static 'images/crossfit.jpg' %}" alt="CrossFit Program">
+
+                    <div class="fm-program-image-overlay"></div>
+
+                    <div class="fm-program-tag">
+                        <i class="fa-solid fa-bolt"></i>
+                        High Intensity
+                    </div>
+
+                </div>
+
+
+                <div class="fm-program-content">
+
+                    <div class="fm-program-icon fm-orange">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+
+                    <h2>CrossFit</h2>
+
+                    <p>
+                        Challenge yourself with high-intensity
+                        workouts focused on strength and endurance.
+                    </p>
+
+                    <div class="fm-program-features">
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            HIIT
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Endurance
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Strength
+                        </span>
+
+                    </div>
+
+                    <a href="{% url 'membership' %}" class="fm-program-button">
+
+                        Start Program
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- =================================================
+                 5. CARDIO
+            ================================================== -->
+
+            <article class="fm-program-card">
+
+                <div class="fm-program-image">
+
+                    <img src="{% static 'images/cardio.jpg' %}" alt="Cardio Program">
+
+                    <div class="fm-program-image-overlay"></div>
+
+                    <div class="fm-program-tag">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        Heart Health
+                    </div>
+
+                </div>
+
+
+                <div class="fm-program-content">
+
+                    <div class="fm-program-icon fm-red">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+
+                    <h2>Cardio</h2>
+
+                    <p>
+                        Improve heart health, stamina and energy
+                        with fun and effective cardio sessions.
+                    </p>
+
+                    <div class="fm-program-features">
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Endurance
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Stamina
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Cardio
+                        </span>
+
+                    </div>
+
+                    <a href="{% url 'membership' %}" class="fm-program-button">
+
+                        Start Program
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- =================================================
+                 6. STRENGTH
+            ================================================== -->
+
+            <article class="fm-program-card">
+
+                <div class="fm-program-image">
+
+                    <img src="{% static 'images/strength.jpg' %}" alt="Strength Training Program">
+
+                    <div class="fm-program-image-overlay"></div>
+
+                    <div class="fm-program-tag">
+                        <i class="fa-solid fa-weight-hanging"></i>
+                        Power
+                    </div>
+
+                </div>
+
+
+                <div class="fm-program-content">
+
+                    <div class="fm-program-icon fm-blue">
+                        <i class="fa-solid fa-weight-hanging"></i>
+                    </div>
+
+                    <h2>Strength Training</h2>
+
+                    <p>
+                        Increase power, stamina and muscular strength
+                        with professional training routines.
+                    </p>
+
+                    <div class="fm-program-features">
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Power
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Stamina
+                        </span>
+
+                        <span>
+                            <i class="fa-solid fa-check"></i>
+                            Training
+                        </span>
+
+                    </div>
+
+                    <a href="{% url 'membership' %}" class="fm-program-button">
+
+                        Start Program
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+        </main>
+
+
+        <!-- =====================================================
+             AI CTA
+        ====================================================== -->
+
+        <section class="fm-program-ai">
+
+            <div class="fm-program-ai-icon">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+
+            <div class="fm-program-ai-text">
+
+                <h3>
+                    Not sure which program is right for you?
+                </h3>
+
+                <p>
+                    FitMaster AI can help you choose a program
+                    according to your fitness goals.
+                </p>
+
+            </div>
+
+            <a href="{% url 'membership' %}" class="fm-program-ai-button">
+
+                Explore Plans
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+        </section>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

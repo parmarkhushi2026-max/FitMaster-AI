@@ -1,0 +1,178 @@
+.settings-container{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:120px 20px;
+
+    background:linear-gradient(135deg,#081420,#0d223d);
+
+}
+
+.settings-card{
+
+    width:100%;
+
+    max-width:550px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(20px);
+
+    border-radius:20px;
+
+    padding:40px;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
+
+}
+
+.settings-card h1{
+
+    text-align:center;
+
+    color:#00ff88;
+
+    margin-bottom:30px;
+
+}
+
+.settings-card label{
+
+    display:block;
+
+    color:white;
+
+    margin:15px 0 8px;
+
+    font-weight:600;
+
+}
+
+.settings-card input{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:16px;
+
+    outline:none;
+
+}
+
+.settings-card input:focus{
+
+    border:1px solid #00ff88;
+
+}
+
+.settings-card button{
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#00ff88;
+
+    color:#081420;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.settings-card button:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.password-btn{
+
+    display:block;
+
+    margin-top:25px;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    background:#00ff88;
+
+    color:#081420;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+}
+
+.success-msg{
+
+    background:#00ff88;
+
+    color:#081420;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+}
+.back-btn{
+
+    display:inline-block;
+
+    padding:12px 25px;
+
+    background:#00ff88;
+
+    color:#081420;
+
+    text-decoration:none;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+
+}
+
+.back-btn:hover{
+
+    transform:translateY(-2px);
+
+}

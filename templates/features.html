@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Features | FitMaster
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/features.css' %}?v=4">
+{% endblock %}
+
+{% block content %}
+
+<section class="features-page">
+
+    <div class="container">
+
+        <!-- ================= Why Choose Us ================= -->
+
+<div class="why-us" style="margin-top: 0;">
+
+    <h2>Why Choose FitMaster?</h2>
+
+    <div class="why-grid">
+
+        <div class="why-card">
+            <i class="fas fa-user-check"></i>
+            <h3>Personalized Plans</h3>
+            <p>
+                AI creates workout and diet plans according to your goals.
+            </p>
+        </div>
+
+        <div class="why-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Track Progress</h3>
+            <p>
+                Monitor weight, BMI, calories and daily performance.
+            </p>
+        </div>
+
+        <div class="why-card">
+            <i class="fas fa-lock"></i>
+            <h3>Secure Payments</h3>
+            <p>
+                Safe and secure membership & product payments.
+            </p>
+        </div>
+
+        <div class="why-card">
+            <i class="fas fa-crown"></i>
+            <h3>Premium Experience</h3>
+            <p>
+                Modern dashboard with premium fitness features.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+                <i class="fas fa-dumbbell"></i>
+                <h3>AI Workout Plans</h3>
+                <p>Personalized workout routines based on your fitness goals.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-apple-alt"></i>
+                <h3>Diet Planner</h3>
+                <p>Healthy meal recommendations and nutrition guidance.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Progress Tracking</h3>
+                <p>Track weight, calories, BMI and daily performance.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-heartbeat"></i>
+                <h3>BMI Calculator</h3>
+                <p>Calculate BMI instantly and monitor your health.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-user-friends"></i>
+                <h3>Expert Trainers</h3>
+                <p>Get guidance from certified fitness professionals.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-headset"></i>
+                <h3>24×7 Support</h3>
+                <p>Quick assistance whenever you need help.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

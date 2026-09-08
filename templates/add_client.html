@@ -1,0 +1,41 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Add Client{% endblock %}
+{% block page_title %}Add Client{% endblock %}
+{% block breadcrumb %}Trainer / Add Client{% endblock %}
+{% block user_role %}Trainer{% endblock %}
+{% block sidebar %}{% include "includes/trainer_sidebar.html" %}{% endblock %}
+
+{% block content %}
+<div style="max-width:600px">
+    <div class="form-card">
+        <div class="form-title"><i class="fa-solid fa-user-plus text-accent"></i> Add New Client</div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-grid" style="grid-template-columns:1fr">
+                <div class="form-group">
+                    <label>Select Customer</label>
+                    <select name="client" required>
+                        <option value="">-- Select Customer --</option>
+                        {% for c in customers %}<option value="{{ c.id }}">{{ c.username }} ({{ c.email|default:"No email" }})</option>{% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Fitness Goal</label>
+                    <select name="goal">
+                        <option>Weight Loss</option>
+                        <option>Muscle Gain</option>
+                        <option>Endurance</option>
+                        <option>Flexibility</option>
+                        <option>General Fitness</option>
+                        <option>Stress Relief</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Add Client</button>
+                <a href="{% url 'my_clients' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

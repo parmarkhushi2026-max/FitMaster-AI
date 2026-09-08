@@ -1,0 +1,53 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Progress{% endblock %}
+{% block page_title %}Client Progress{% endblock %}
+{% block breadcrumb %}Trainer / Progress{% endblock %}
+{% block user_role %}Trainer{% endblock %}
+{% block sidebar %}{% include "includes/trainer_sidebar.html" %}{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+    <div class="form-card">
+        <div class="form-title"><i class="fa-solid fa-chart-line text-accent"></i> Log Progress</div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-grid" style="grid-template-columns:1fr">
+                <div class="form-group">
+                    <label>Client</label>
+                    <select name="client" required>
+                        <option value="">-- Select Client --</option>
+                        {% for c in clients %}<option value="{{ c.client.id }}">{{ c.client.username }}</option>{% endfor %}
+                    </select>
+                </div>
+                <div class="form-group"><label>Weight (kg)</label><input type="number" name="weight" step="0.1" placeholder="e.g. 75.5" required></div>
+                <div class="form-group"><label>Height (cm)</label><input type="number" name="height" step="0.1" placeholder="e.g. 175" required></div>
+                <div class="form-group"><label>BMI</label><input type="number" name="bmi" step="0.01" placeholder="Auto or enter manually"></div>
+                <div class="form-group"><label>Notes</label><textarea name="notes" placeholder="Any observations or comments..."></textarea></div>
+            </div>
+            <div class="form-actions"><button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save Progress</button></div>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-hdr"><h3>Progress Records</h3></div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Client</th><th>Weight</th><th>Height</th><th>BMI</th><th>Date</th></tr></thead>
+                <tbody>
+                {% for p in progress_data %}
+                <tr>
+                    <td class="fw-600">{{ p.client.username }}</td>
+                    <td>{{ p.weight }} kg</td>
+                    <td>{{ p.height }} cm</td>
+                    <td><span class="badge badge-teal">{{ p.bmi }}</span></td>
+                    <td class="text-muted">{{ p.created_at|date:"M d, Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5"><div class="empty-state"><i class="fa-solid fa-chart-line"></i><p>No progress records yet</p></div></td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

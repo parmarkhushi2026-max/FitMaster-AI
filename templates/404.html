@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}404 Page Not Found | FitMaster AI{% endblock %}
+
+{% block content %}
+<section class="auth-section" style="min-height: 75vh; display: flex; align-items: center; justify-content: center; text-align: center;">
+    <div class="auth-card" style="max-width: 600px; padding: 40px 30px;">
+        <div style="font-size: 80px; font-weight: 800; color: #ff3366; line-height: 1; margin-bottom: 10px;">404</div>
+        <h2 style="font-size: 26px; color: #ffffff; margin-bottom: 15px;">Page Not Found</h2>
+        <p style="color: #a0a5b5; font-size: 16px; margin-bottom: 30px; line-height: 1.6;">
+            Oops! The workout or page you are looking for doesn't exist or has been moved.
+        </p>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'home' %}" class="signup" style="padding: 12px 25px; border-radius: 8px; text-decoration: none;">
+                <i class="fa-solid fa-house"></i> Back to Home
+            </a>
+            <a href="{% url 'dashboard' %}" class="login" style="padding: 12px 25px; border-radius: 8px; text-decoration: none;">
+                <i class="fa-solid fa-gauge"></i> Go to Dashboard
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

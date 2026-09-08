@@ -1,0 +1,73 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}Diet Plans{% endblock %}
+{% block page_title %}Diet Plans{% endblock %}
+{% block breadcrumb %}Trainer / Diet Plans{% endblock %}
+{% block user_role %}Trainer{% endblock %}
+
+{% block sidebar %}{% include "includes/trainer_sidebar.html" %}{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+    <!-- Form -->
+    <div class="form-card">
+        <div class="form-title"><i class="fa-solid fa-utensils text-accent"></i> Create Diet Plan</div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-grid" style="grid-template-columns:1fr">
+                <div class="form-group">
+                    <label>Client</label>
+                    <select name="client" required>
+                        <option value="">-- Select Client --</option>
+                        {% for c in clients %}
+                        <option value="{{ c.client.id }}">{{ c.client.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>🌅 Breakfast</label>
+                    <textarea name="breakfast" rows="2" placeholder="e.g. Oats with banana, 2 boiled eggs..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>☀️ Lunch</label>
+                    <textarea name="lunch" rows="2" placeholder="e.g. Brown rice, grilled chicken, salad..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>🌙 Dinner</label>
+                    <textarea name="dinner" rows="2" placeholder="e.g. Dal, chapati, vegetables, curd..." required></textarea>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save Diet Plan</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- List -->
+    <div>
+        <div class="sec-hdr">
+            <div class="sec-hdr-left"><h2>Created Diet Plans</h2><p>All diet plans you've assigned</p></div>
+        </div>
+        {% if diets %}
+        <div style="display:flex;flex-direction:column;gap:14px">
+            {% for d in diets %}
+            <div class="card">
+                <div class="card-hdr" style="padding:14px 18px">
+                    <div class="fw-600"><i class="fa-solid fa-user text-accent"></i> {{ d.client.username }}</div>
+                    <span class="text-muted" style="font-size:11px">{{ d.created_at|date:"M d, Y" }}</span>
+                </div>
+                <div style="padding:12px 18px;display:flex;flex-direction:column;gap:8px">
+                    <div style="font-size:12px"><span style="color:var(--warning);font-weight:600">Breakfast:</span> {{ d.breakfast|truncatechars:60 }}</div>
+                    <div style="font-size:12px"><span style="color:var(--accent);font-weight:600">Lunch:</span> {{ d.lunch|truncatechars:60 }}</div>
+                    <div style="font-size:12px"><span style="color:var(--info);font-weight:600">Dinner:</span> {{ d.dinner|truncatechars:60 }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card"><div class="card-body"><div class="empty-state"><i class="fa-solid fa-utensils"></i><p>No diet plans created yet.</p></div></div></div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

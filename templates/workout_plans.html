@@ -1,0 +1,80 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}Workout Plans{% endblock %}
+{% block page_title %}Workout Plans{% endblock %}
+{% block breadcrumb %}Trainer / Workout Plans{% endblock %}
+{% block user_role %}Trainer{% endblock %}
+
+{% block sidebar %}{% include "includes/trainer_sidebar.html" %}{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+    <!-- Create Plan Form -->
+    <div class="form-card">
+        <div class="form-title"><i class="fa-solid fa-plus text-accent"></i> Create Workout Plan</div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-grid" style="grid-template-columns:1fr">
+                <div class="form-group">
+                    <label>Client</label>
+                    <select name="client" required>
+                        <option value="">-- Select Client --</option>
+                        {% for c in clients %}
+                        <option value="{{ c.client.id }}">{{ c.client.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Workout Title</label>
+                    <input type="text" name="title" placeholder="e.g. Full Body Strength" required>
+                </div>
+                <div class="form-group">
+                    <label>Duration</label>
+                    <select name="duration">
+                        <option>30 Minutes</option>
+                        <option selected>45 Minutes</option>
+                        <option>60 Minutes</option>
+                        <option>90 Minutes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description / Exercises</label>
+                    <textarea name="description" placeholder="Describe the workout plan, exercises, sets and reps..." required></textarea>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save Plan</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Plans List -->
+    <div>
+        <div class="sec-hdr">
+            <div class="sec-hdr-left"><h2>Created Plans</h2><p>All workout plans you've assigned</p></div>
+        </div>
+        {% if workouts %}
+        <div style="display:flex;flex-direction:column;gap:14px">
+            {% for w in workouts %}
+            <div class="card">
+                <div class="card-hdr" style="padding:14px 18px">
+                    <div>
+                        <div class="fw-600">{{ w.title }}</div>
+                        <div style="font-size:12px;color:var(--text-muted);margin-top:3px">
+                            <i class="fa-solid fa-user"></i> {{ w.client.username }} &nbsp;·&nbsp;
+                            <span class="badge badge-blue">{{ w.duration }}</span>
+                        </div>
+                    </div>
+                    <span class="text-muted" style="font-size:11px">{{ w.created_at|date:"M d, Y" }}</span>
+                </div>
+                <div style="padding:12px 18px;font-size:13px;color:var(--text-muted)">{{ w.description|truncatewords:25 }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card"><div class="card-body"><div class="empty-state"><i class="fa-solid fa-dumbbell"></i><p>No workout plans created yet.</p></div></div></div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

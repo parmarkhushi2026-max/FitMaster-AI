@@ -1,0 +1,77 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Assign Trainer{% endblock %}
+{% block page_title %}Assign Trainer{% endblock %}
+{% block breadcrumb %}Admin / Assign Trainer{% endblock %}
+{% block user_role %}Administrator{% endblock %}
+{% block sidebar %}{% include "includes/admin_sidebar.html" %}{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+    <!-- Assign Form -->
+    <div class="form-card">
+        <div class="form-title"><i class="fa-solid fa-link text-accent"></i> Assign Trainer to Customer</div>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="assign">
+            <div class="form-grid" style="grid-template-columns:1fr">
+                <div class="form-group">
+                    <label>Select Trainer</label>
+                    <select name="trainer_id" required>
+                        <option value="">-- Select Trainer --</option>
+                        {% for t in trainers %}<option value="{{ t.id }}">{{ t.username }} ({{ t.trainer_detail.get_category_display|default:"No category" }})</option>{% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Select Customer</label>
+                    <select name="customer_id" required>
+                        <option value="">-- Select Customer --</option>
+                        {% for c in customers %}<option value="{{ c.id }}">{{ c.username }} ({{ c.email|default:"No email" }})</option>{% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Fitness Goal</label>
+                    <select name="goal">
+                        <option>Weight Loss</option>
+                        <option>Muscle Gain</option>
+                        <option>Endurance</option>
+                        <option>Flexibility</option>
+                        <option>General Fitness</option>
+                        <option>Stress Relief</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions"><button type="submit" class="btn btn-primary"><i class="fa-solid fa-link"></i> Assign</button></div>
+        </form>
+    </div>
+
+    <!-- Assignments -->
+    <div class="card">
+        <div class="card-hdr"><h3>Current Assignments</h3><span class="badge badge-teal">{{ assignments|length }}</span></div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Customer</th><th>Trainer</th><th>Goal</th><th>Joined</th><th>Action</th></tr></thead>
+                <tbody>
+                {% for a in assignments %}
+                <tr>
+                    <td class="fw-600">{{ a.client.username }}</td>
+                    <td><span class="badge badge-blue">{{ a.trainer.username }}</span></td>
+                    <td class="text-muted">{{ a.goal }}</td>
+                    <td class="text-muted" style="font-size:12px">{{ a.joined_on }}</td>
+                    <td>
+                        <form method="POST" style="display:inline" onsubmit="return confirm('Remove this assignment?')">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="remove">
+                            <input type="hidden" name="assignment_id" value="{{ a.id }}">
+                            <button type="submit" class="btn btn-danger btn-xs"><i class="fa-solid fa-unlink"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5"><div class="empty-state"><i class="fa-solid fa-link-slash"></i><p>No assignments yet</p></div></td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+.transactions{
+    margin-top: 100px;
+    padding-bottom: 60px;
+}
+
+
+.transactions h1{
+    text-align:center;
+    margin-bottom:30px;
+    color:#fff;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+    border-radius:15px;
+    overflow:hidden;
+}
+
+th{
+    background:#00d4ff;
+    color:#000;
+    padding:16px;
+}
+
+td{
+    padding:16px;
+    color:#fff;
+    text-align:center;
+    border-bottom:1px solid rgba(255,255,255,.15);
+}
+
+tr:hover{
+    background:rgba(255,255,255,.08);
+}

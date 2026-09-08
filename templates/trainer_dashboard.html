@@ -1,0 +1,610 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}Trainer Workspace | FitMaster{% endblock %}
+{% block topbar_class %}topbar-trainer{% endblock %}
+{% block page_title %}Trainer Coaching Workspace{% endblock %}
+
+{% block topbar_badge %}
+<span class="topbar-badge topbar-badge-trainer" style="background:rgba(56,189,248,0.12);color:var(--secondary);border:1px solid rgba(56,189,248,0.25);">
+    <i class="fa-solid fa-user-tie"></i> Certified Coach
+</span>
+{% endblock %}
+
+{% block breadcrumb %}Trainer / Workspace & Analytics{% endblock %}
+{% block user_role %}Trainer{% endblock %}
+
+{% block topbar_status %}
+<div class="header-status-pill">
+    <i class="fa-solid fa-users" style="color:var(--secondary);"></i>
+    <span>Clients: <strong>{{ clients_count|default:"0" }} Active</strong></span>
+</div>
+{% endblock %}
+
+{% block topbar_actions %}
+<a href="{% url 'add_client' %}" class="topbar-action-btn topbar-action-trainer">
+    <i class="fa-solid fa-user-plus"></i> Add Client
+</a>
+<a href="{% url 'workout_plans' %}" class="topbar-action-btn topbar-action-trainer">
+    <i class="fa-solid fa-dumbbell"></i> Workout Plans
+</a>
+{% endblock %}
+
+{% block sidebar %}
+{% include "includes/trainer_sidebar.html" %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.trainer-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.trainer-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.trainer-kpi-card {
+    background: var(--surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.trainer-kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    border-color: rgba(56, 189, 248, 0.4);
+}
+
+.trainer-kpi-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.trainer-kpi-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+}
+
+.trainer-kpi-icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.trainer-kpi-val {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.1;
+}
+
+.trainer-kpi-sub {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Welcome Coach Banner */
+.coach-welcome-banner {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(22, 34, 56, 0.85) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--secondary);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.coach-welcome-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    color: #040810;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
+    flex-shrink: 0;
+}
+
+/* Charts Grid */
+.trainer-charts-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1.2fr;
+    gap: 20px;
+}
+
+@media (max-width: 1024px) {
+    .trainer-charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.chart-card {
+    background: var(--surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.chart-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chart-badge {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-weight: 600;
+}
+
+/* Main Grid Layout */
+.trainer-main-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1.1fr;
+    gap: 20px;
+}
+
+@media (max-width: 1024px) {
+    .trainer-main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.trainer-card {
+    background: var(--surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.trainer-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.trainer-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.trainer-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.trainer-table th {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.trainer-table td {
+    padding: 12px;
+    font-size: 13px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+}
+
+.trainer-table tr:hover td {
+    background: rgba(56, 189, 248, 0.03);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="trainer-wrap">
+
+    <!-- Welcome Coach Banner -->
+    <div class="coach-welcome-banner">
+        <div style="display:flex;align-items:center;gap:16px;">
+            <div class="coach-welcome-avatar">
+                {{ request.user.username|first|upper }}
+            </div>
+            <div>
+                <h2 style="font-size:19px;font-weight:800;color:var(--text);margin:0;">Welcome back, Coach {{ request.user.username|capfirst }}!</h2>
+                <p style="font-size:13px;color:var(--text-muted);margin-top:2px;">
+                    You have <strong style="color:#ffffff;">{{ clients_count|default:"0" }} Active Athletes</strong> assigned to your training protocols.
+                </p>
+            </div>
+        </div>
+        <div style="display:flex;gap:10px;">
+            <a href="{% url 'add_client' %}" class="btn btn-primary btn-sm">
+                <i class="fa-solid fa-user-plus"></i> New Client
+            </a>
+            <a href="{% url 'workout_plans' %}" class="btn btn-secondary btn-sm">
+                <i class="fa-solid fa-dumbbell"></i> Workout Plans
+            </a>
+        </div>
+    </div>
+
+    <!-- KPI Metrics -->
+    <div class="trainer-kpi-grid">
+        
+        <!-- Active Clients -->
+        <div class="trainer-kpi-card">
+            <div class="trainer-kpi-card-header">
+                <span class="trainer-kpi-label">Active Clients</span>
+                <div class="trainer-kpi-icon-box" style="background:rgba(255,255,255,0.08);color:#ffffff;">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+            </div>
+            <div>
+                <div class="trainer-kpi-val">{{ clients_count|default:"0" }}</div>
+                <div class="trainer-kpi-sub" style="color:#ffffff;">
+                    <i class="fa-solid fa-circle-check"></i> Coaching Roster Active
+                </div>
+            </div>
+        </div>
+
+        <!-- Today's Sessions -->
+        <div class="trainer-kpi-card">
+            <div class="trainer-kpi-card-header">
+                <span class="trainer-kpi-label">Today's Sessions</span>
+                <div class="trainer-kpi-icon-box" style="background:rgba(255,85,64,0.12);color:#ff5540;">
+                    <i class="fa-solid fa-calendar-day"></i>
+                </div>
+            </div>
+            <div>
+                <div class="trainer-kpi-val">{{ today_sessions|default:"0" }}</div>
+                <div class="trainer-kpi-sub" style="color:#ff5540;">Scheduled Consultations</div>
+            </div>
+        </div>
+
+        <!-- Workout Plans Built -->
+        <div class="trainer-kpi-card">
+            <div class="trainer-kpi-card-header">
+                <span class="trainer-kpi-label">Workout Plans</span>
+                <div class="trainer-kpi-icon-box" style="background:rgba(251,191,36,0.12);color:#fbbf24;">
+                    <i class="fa-solid fa-dumbbell"></i>
+                </div>
+            </div>
+            <div>
+                <div class="trainer-kpi-val">{{ workout_count|default:"0" }}</div>
+                <div class="trainer-kpi-sub" style="color:#fbbf24;">Custom Protocols Created</div>
+            </div>
+        </div>
+
+        <!-- Diet Plans Built -->
+        <div class="trainer-kpi-card">
+            <div class="trainer-kpi-card-header">
+                <span class="trainer-kpi-label">Diet Protocols</span>
+                <div class="trainer-kpi-icon-box" style="background:rgba(129,140,248,0.15);color:#818cf8;">
+                    <i class="fa-solid fa-utensils"></i>
+                </div>
+            </div>
+            <div>
+                <div class="trainer-kpi-val">{{ diet_count|default:"0" }}</div>
+                <div class="trainer-kpi-sub" style="color:#818cf8;">Nutritional Plans Active</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= REAL DYNAMIC CHARTS SECTION ================= -->
+    <div class="trainer-charts-grid">
+        
+        <!-- Chart 1: Weekly Sessions & Activity -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <div class="chart-title">
+                    <i class="fa-solid fa-chart-column" style="color:#ff5540;"></i>
+                    Weekly Coaching Activity (Mon - Sun)
+                </div>
+                <span class="chart-badge">Live Sessions Tracker</span>
+            </div>
+            <div style="height: 240px; position: relative;">
+                <canvas id="trainerActivityChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 2: Client Goals Distribution -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <div class="chart-title">
+                    <i class="fa-solid fa-bullseye" style="color:#ff5540;"></i>
+                    Athlete Focus & Goals
+                </div>
+                <span class="chart-badge" style="background:rgba(255,85,64,0.12);color:#ff5540;border-color:rgba(255,85,64,0.25);">Goal Ratio</span>
+            </div>
+            <div style="height: 240px; position: relative; display: flex; align-items: center; justify-content: center;">
+                <canvas id="trainerGoalsChart"></canvas>
+                <!-- Center Metric Ring Overlay -->
+                <div id="trainerGoalsCenterText" style="position: absolute; text-align: center; pointer-events: none; margin-bottom: 24px;">
+                    <div id="trainerGoalsCenterCount" style="font-size: 24px; font-weight: 800; color: #ffffff; line-height: 1;">0</div>
+                    <div style="font-size: 10.5px; color: #a1a1aa; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px;">Athletes</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Main Grid -->
+    <div class="trainer-main-grid">
+        
+        <!-- Left: Client List -->
+        <div>
+            <div class="trainer-card">
+                <div class="trainer-card-header">
+                    <div class="trainer-card-title">
+                        <i class="fa-solid fa-user-group" style="color:var(--secondary);"></i>
+                        Assigned Athletes
+                    </div>
+                    <a href="{% url 'my_clients' %}" class="btn btn-secondary btn-xs">All Clients →</a>
+                </div>
+
+                <table class="trainer-table">
+                    <thead>
+                        <tr>
+                            <th>Athlete</th>
+                            <th>Goal</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if clients %}
+                            {% for c in clients %}
+                            <tr>
+                                <td>
+                                    <strong>{{ c.client.username }}</strong>
+                                </td>
+                                <td>
+                                    <span style="color:#ffffff;font-weight:600;font-size:12.5px;">{{ c.goal|default:"Weight Loss" }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-green">Active</span>
+                                </td>
+                                <td>
+                                    <a href="{% url 'workout_plans' %}" class="btn btn-secondary btn-xs" style="padding:4px 10px;font-size:11.5px;">Assign Plan</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4" style="text-align:center;color:var(--text-muted);padding:24px;">
+                                    <i class="fa-solid fa-user-slash" style="font-size:24px;margin-bottom:8px;display:block;"></i>
+                                    No clients assigned yet. Click "New Client" to onboard athletes.
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Right: Fast Actions -->
+        <div>
+            <div class="trainer-card">
+                <div class="trainer-card-header">
+                    <div class="trainer-card-title">
+                        <i class="fa-solid fa-bolt" style="color:var(--primary);"></i>
+                        Quick Protocols
+                    </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <a href="{% url 'workout_plans' %}" class="btn btn-secondary" style="display:flex;align-items:center;gap:10px;justify-content:flex-start;padding:11px 14px;">
+                        <i class="fa-solid fa-dumbbell" style="color:var(--primary);"></i>
+                        <span>Create Workout Protocol</span>
+                    </a>
+                    <a href="{% url 'diet_plans' %}" class="btn btn-secondary" style="display:flex;align-items:center;gap:10px;justify-content:flex-start;padding:11px 14px;">
+                        <i class="fa-solid fa-utensils" style="color:var(--secondary);"></i>
+                        <span>Create Nutrition Plan</span>
+                    </a>
+                    <a href="{% url 'schedule' %}" class="btn btn-secondary" style="display:flex;align-items:center;gap:10px;justify-content:flex-start;padding:11px 14px;">
+                        <i class="fa-solid fa-calendar-check" style="color:var(--warning);"></i>
+                        <span>Manage Session Calendar</span>
+                    </a>
+                    <a href="{% url 'progress' %}" class="btn btn-primary" style="display:flex;align-items:center;gap:10px;justify-content:center;padding:11px 14px;margin-top:4px;">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Review Client Biometrics</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Chart.js Live Rendering for Trainer -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Weekly Activity Bar/Area Chart
+    const actCtx = document.getElementById('trainerActivityChart');
+    if (actCtx) {
+        const actLabels = {{ weekday_labels_json|default:"[]"|safe }};
+        const actData = {{ weekly_activity_data_json|default:"[]"|safe }};
+
+        const gradient = actCtx.getContext('2d').createLinearGradient(0, 0, 0, 240);
+        gradient.addColorStop(0, 'rgba(255, 85, 64, 0.4)');
+        gradient.addColorStop(1, 'rgba(255, 85, 64, 0.0)');
+
+        new Chart(actCtx, {
+            type: 'bar',
+            data: {
+                labels: actLabels,
+                datasets: [{
+                    label: 'Sessions & Protocols Logged',
+                    data: actData,
+                    backgroundColor: gradient,
+                    borderColor: '#ff5540',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(10, 15, 29, 0.95)',
+                        titleColor: '#f8fafc',
+                        bodyColor: '#ff5540',
+                        borderColor: 'rgba(255, 85, 64, 0.4)',
+                        borderWidth: 1,
+                        padding: 10
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8', font: { size: 11, family: 'Poppins' } }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: {
+                            color: '#94a3b8',
+                            font: { size: 11, family: 'Poppins' },
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // 2. Client Goals Executive Donut Chart
+    const goalsCtx = document.getElementById('trainerGoalsChart');
+    if (goalsCtx) {
+        const goalLabels = {{ client_goal_labels_json|default:"[]"|safe }};
+        const goalData = {{ client_goal_data_json|default:"[]"|safe }};
+        const totalGoals = goalData.reduce((a, b) => a + b, 0);
+
+        const centerGoalCountElem = document.getElementById('trainerGoalsCenterCount');
+        if (centerGoalCountElem) {
+            centerGoalCountElem.textContent = totalGoals.toLocaleString();
+        }
+
+        const palette = ['#ff5540', '#ff8a7a', '#e03e2a', '#38bdf8', '#818cf8', '#fbbf24'];
+
+        new Chart(goalsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: goalLabels,
+                datasets: [{
+                    data: goalData,
+                    backgroundColor: palette.slice(0, goalLabels.length),
+                    borderColor: '#0e0e11',
+                    borderWidth: 3,
+                    borderRadius: 5,
+                    spacing: 3,
+                    hoverOffset: 6,
+                    hoverBorderColor: '#ff5540'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '76%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#a1a1aa',
+                            boxWidth: 9,
+                            boxHeight: 9,
+                            usePointStyle: true,
+                            pointStyle: 'circle',
+                            font: { size: 11, weight: '600', family: 'Poppins' },
+                            padding: 12
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(8, 8, 12, 0.96)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ff5540',
+                        borderColor: 'rgba(255, 85, 64, 0.4)',
+                        borderWidth: 1,
+                        padding: 12,
+                        cornerRadius: 10,
+                        callbacks: {
+                            label: function(context) {
+                                const val = context.parsed;
+                                const pct = totalGoals > 0 ? Math.round((val / totalGoals) * 100) : 0;
+                                return ` ${context.label}: ${val} (${pct}%)`;
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 900
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

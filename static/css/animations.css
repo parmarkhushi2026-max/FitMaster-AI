@@ -1,0 +1,264 @@
+/* ==========================================================================
+   FITMASTER AI — SMOOTH KINETIC ANIMATIONS & MICRO-INTERACTIONS
+   Fast, Elegant, Professional, Signature Emerald Green Accents
+   ========================================================================== */
+
+/* ─── 1. KEYFRAME DEFINITIONS ────────────────────────────────────────────── */
+
+@keyframes fadeInUpSmooth {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeftSmooth {
+  0% {
+    opacity: 0;
+    transform: translateX(-22px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRightSmooth {
+  0% {
+    opacity: 0;
+    transform: translateX(22px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes greenBreathing {
+  0%, 100% {
+    box-shadow: 0 4px 18px rgba(0, 245, 155, 0.3);
+  }
+  50% {
+    box-shadow: 0 6px 24px rgba(0, 245, 155, 0.55), 0 0 12px rgba(0, 255, 196, 0.35);
+  }
+}
+
+@keyframes pingDotGreen {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 245, 155, 0.6);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 7px rgba(0, 245, 155, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 245, 155, 0);
+  }
+}
+
+@keyframes timelineFlowGreen {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 200%;
+  }
+}
+
+/* ─── 2. SCROLL REVEAL ANIMATION CLASSES (Fast & Elegant) ───────────────── */
+
+.reveal-init {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-init.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left-init {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-left-init.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right-init {
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-right-init.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger delays */
+.delay-1 { transition-delay: 0.08s !important; }
+.delay-2 { transition-delay: 0.15s !important; }
+.delay-3 { transition-delay: 0.22s !important; }
+.delay-4 { transition-delay: 0.3s !important; }
+
+/* ─── 3. INTERACTIVE MICRO-ANIMATIONS ────────────────────────────────────── */
+
+/* Floating UI Element */
+.animate-float {
+  animation: subtleFloat 3.5s ease-in-out infinite;
+}
+
+/* Glowing CTA Buttons */
+.btn-stitch-primary,
+.btn-product-buy,
+.buy-btn,
+.signup,
+.btn-primary {
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease;
+}
+
+.btn-stitch-primary:hover,
+.btn-product-buy:hover,
+.buy-btn:hover,
+.btn-primary:hover {
+  transform: translateY(-2.5px);
+}
+
+/* Status Pulse Dot */
+.status-pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary, #ff5540);
+  animation: pingDotGreen 2s infinite;
+  margin-right: 6px;
+}
+
+/* Timeline Center Flowing Light */
+.timeline-center-line {
+  background: linear-gradient(180deg, rgba(255,85,64,0.1) 0%, #ff5540 50%, rgba(255,138,122,0.1) 100%) !important;
+  background-size: 100% 200% !important;
+  animation: timelineFlowGreen 3.5s linear infinite !important;
+}
+
+/* Universal Smooth Hover Lift Cards */
+.calc-box-glass,
+.product-store-card,
+.faq-card-item,
+.architect-card,
+.stat-card,
+.program-card,
+.why-card,
+.ai-box,
+.package-card,
+.trainer-card,
+.goal-card,
+.transform-card,
+.bmi-card,
+.logo-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.calc-box-glass:hover,
+.architect-card:hover,
+.transform-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Image Subtle Smooth Zoom */
+.trainer-card img,
+.timeline-media-side,
+.paradigm-img-box,
+.hero-image {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+}
+
+.faq-card-item {
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.25s ease;
+}
+
+.faq-card-item:hover {
+  border-color: rgba(255, 85, 64, 0.4);
+}
+
+/* ─── 4. UNIVERSAL BUTTON SHIMMER & CARD LIFT ─────────────────────────── */
+@keyframes btnShimmerPass {
+  0% { left: -120%; }
+  100% { left: 220%; }
+}
+
+.btn-stitch-primary,
+.btn-product-buy,
+.buy-btn,
+.signup,
+.btn-primary,
+.btn-submit {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-stitch-primary::before,
+.btn-product-buy::before,
+.buy-btn::before,
+.signup::before,
+.btn-primary::before,
+.btn-submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+
+.btn-stitch-primary:hover::before,
+.btn-product-buy:hover::before,
+.buy-btn:hover::before,
+.signup:hover::before,
+.btn-primary:hover::before,
+.btn-submit:hover::before {
+  animation: btnShimmerPass 0.85s ease;
+}
+
+.payment-card,
+.membership-card,
+.notice-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+}
+
+.payment-card:hover,
+.membership-card:hover,
+.notice-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 85, 64, 0.15);
+}

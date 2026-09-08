@@ -1,0 +1,47 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Trainers{% endblock %}
+{% block page_title %}Trainers{% endblock %}
+{% block breadcrumb %}Admin / Trainers{% endblock %}
+{% block user_role %}Administrator{% endblock %}
+{% block sidebar %}{% include "includes/admin_sidebar.html" %}{% endblock %}
+
+{% block content %}
+<div class="sec-hdr">
+    <div class="sec-hdr-left"><h2>All Trainers</h2><p>{{ trainers|length }} trainers registered</p></div>
+</div>
+
+<div class="grid-auto">
+{% for t in trainers %}
+<div class="card">
+    <div class="card-body" style="text-align:center;padding:24px">
+        <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--accent2),#818cf8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;margin:0 auto 12px">
+            {{ t.username|first|upper }}
+        </div>
+        <div class="fw-600" style="font-size:15px">{{ t.username }}</div>
+        <div class="text-muted" style="font-size:12px;margin-top:3px">{{ t.email|default:"No email" }}</div>
+        <div style="margin:12px 0">
+            {% if t.trainer_detail %}
+            {% if t.trainer_detail.category == "gym" %}<span class="badge badge-orange">🏋️ Gym</span>
+            {% elif t.trainer_detail.category == "yoga" %}<span class="badge badge-green">🧘 Yoga</span>
+            {% else %}<span class="badge badge-purple">💃 Zumba</span>{% endif %}
+            {% else %}<span class="badge badge-yellow">No Category</span>{% endif %}
+        </div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px">
+            <i class="fa-solid fa-users"></i> {{ t.trainer_clients.count }} clients
+        </div>
+        <div style="display:flex;gap:6px;">
+            <a href="{% url 'edit_user' t.id %}" class="btn btn-secondary btn-sm" style="flex:1"><i class="fa-solid fa-pen"></i> Edit</a>
+            {% if t.id != request.user.id %}
+            <form method="POST" action="{% url 'delete_user' t.id %}" style="flex:1" onsubmit="return confirm('Are you sure you want to delete trainer {{ t.username }}?')">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm" style="width:100%"><i class="fa-solid fa-trash"></i> Delete</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="card" style="grid-column:1/-1"><div class="card-body"><div class="empty-state"><i class="fa-solid fa-user-tie"></i><p>No trainers registered yet</p></div></div></div>
+{% endfor %}
+</div>
+{% endblock %}

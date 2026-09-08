@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+
+<section class="checkout">
+
+    <div class="checkout-card">
+
+        <h1>Checkout</h1>
+
+        <div class="product-info">
+
+            <img src="{% static product.image %}" alt="{{ product.name }}">
+
+            <div>
+                <h2>{{ product.name }}</h2>
+                <p>Price : ₹{{ product.price }}</p>
+            </div>
+
+        </div>
+
+        <form method="GET" action="{% url 'payment' %}">
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                required
+            >
+
+            <input
+                type="text"
+                name="mobile"
+                placeholder="Mobile Number"
+                required
+            >
+
+            <textarea
+                name="address"
+                placeholder="Delivery Address"
+                required
+            ></textarea>
+
+            <!-- Product Details -->
+            <input
+                type="hidden"
+                name="plan"
+                value="{{ product.name }}"
+            >
+
+            <input
+                type="hidden"
+                name="price"
+                value="{{ product.price }}"
+            >
+
+            <button type="submit">
+                Continue To Payment
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

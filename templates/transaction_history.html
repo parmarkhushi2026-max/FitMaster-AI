@@ -1,0 +1,78 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}Transactions{% endblock %}
+{% block topbar_class %}{% if profile.role == 'admin' %}topbar-admin{% else %}topbar-customer{% endif %}{% endblock %}
+{% block page_title %}Transaction History{% endblock %}
+{% block topbar_badge %}<span class="topbar-badge {% if profile.role == 'admin' %}topbar-badge-admin{% else %}topbar-badge-customer{% endif %}"><i class="fa-solid fa-receipt"></i> Transactions</span>{% endblock %}
+{% block breadcrumb %}Dashboard / Transactions{% endblock %}
+{% block user_role %}{{ profile.role|title }}{% endblock %}
+
+{% block sidebar %}
+{% if profile.role == "admin" %}
+{% include "includes/admin_sidebar.html" %}
+{% elif profile.role == "trainer" %}
+{% include "includes/trainer_sidebar.html" %}
+{% else %}
+{% include "includes/customer_sidebar.html" %}
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+<!-- Membership Payments -->
+<div class="card" style="margin-bottom:24px">
+    <div class="card-hdr">
+        <h3><i class="fa-solid fa-id-card text-accent"></i> Membership Payments</h3>
+        <span class="badge badge-teal">{{ membership_payments|length }} records</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>#</th><th>Name</th><th>Plan</th><th>Amount</th><th>Card</th><th>Date</th><th>Invoice</th></tr></thead>
+            <tbody>
+            {% for p in membership_payments %}
+            <tr>
+                <td class="text-muted">{{ p.id }}</td>
+                <td class="fw-600">{{ p.name|default:"-" }}</td>
+                <td>{{ p.plan }}</td>
+                <td style="color:var(--success);font-weight:600">₹{{ p.amount }}</td>
+                <td class="text-muted">**** {{ p.card }}</td>
+                <td class="text-muted">{{ p.created_at|date:"M d, Y" }}</td>
+                <td><a href="{% url 'invoice' p.id %}" class="btn btn-secondary btn-xs"><i class="fa-solid fa-file-invoice"></i> View</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7"><div class="empty-state"><i class="fa-solid fa-id-card"></i><p>No membership payments</p></div></td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Product Payments -->
+<div class="card">
+    <div class="card-hdr">
+        <h3><i class="fa-solid fa-store text-accent"></i> Product Purchases</h3>
+        <span class="badge badge-purple">{{ product_payments|length }} records</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>#</th><th>Name</th><th>Product</th><th>Amount</th><th>Card</th><th>Date</th><th>Invoice</th></tr></thead>
+            <tbody>
+            {% for p in product_payments %}
+            <tr>
+                <td class="text-muted">{{ p.id }}</td>
+                <td class="fw-600">{{ p.name|default:"-" }}</td>
+                <td>{{ p.plan }}</td>
+                <td style="color:var(--success);font-weight:600">₹{{ p.amount }}</td>
+                <td class="text-muted">**** {{ p.card }}</td>
+                <td class="text-muted">{{ p.created_at|date:"M d, Y" }}</td>
+                <td><a href="{% url 'invoice' p.id %}" class="btn btn-secondary btn-xs"><i class="fa-solid fa-file-invoice"></i> View</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7"><div class="empty-state"><i class="fa-solid fa-shopping-cart"></i><p>No product purchases</p></div></td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

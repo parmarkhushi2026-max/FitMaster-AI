@@ -1,0 +1,873 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment Portal | FitMaster AI</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+    <link rel="alternate icon" href="{% static 'images/favicon.svg' %}">
+    
+    <!-- Razorpay Checkout SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}?v=5">
+    <style>
+        body {
+            background: #0e0e0e;
+            background-image: 
+                radial-gradient(at 50% 0%, #3a0000 0px, transparent 65%),
+                radial-gradient(rgba(255, 85, 64, 0.04) 1px, transparent 1px);
+            background-size: 100% 100%, 32px 32px;
+            background-attachment: fixed;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .pay-wrap {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 90px 16px 40px;
+        }
+
+        .pay-box {
+            background: #0e0e11;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 1040px;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95), 0 0 35px rgba(255, 85, 64, 0.15);
+        }
+
+        /* LEFT SIDEBAR */
+        .pay-left {
+            background: #121216;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 36px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .pay-amount {
+            font-size: 38px;
+            font-weight: 800;
+            color: #ff5540;
+            letter-spacing: -0.5px;
+            text-shadow: 0 0 20px rgba(255, 85, 64, 0.35);
+        }
+
+        .pay-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .pay-features li {
+            font-size: 12.5px;
+            color: #a1a1aa;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pay-features li i {
+            color: #ff5540;
+            font-size: 13px;
+        }
+
+        /* RIGHT CONTENT */
+        .pay-right {
+            padding: 32px 36px;
+            background: #0e0e11;
+        }
+
+        .methods-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 6px;
+            background: #141418;
+            padding: 6px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 22px;
+        }
+
+        .method-btn {
+            background: transparent;
+            border: none;
+            color: #a1a1aa;
+            padding: 8px 4px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .method-btn i {
+            font-size: 16px;
+        }
+
+        .method-btn.active {
+            background: #ff5540;
+            color: #ffffff;
+            box-shadow: none;
+        }
+
+        .pay-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .pay-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            color: #a1a1aa;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            background: #141418;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: #ffffff;
+            padding: 11px 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13.5px;
+            outline: none;
+            transition: all 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #ff5540;
+            box-shadow: 0 0 0 3px rgba(255, 85, 64, 0.15);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .pay-submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff5540 0%, #e03e2a 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 13px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14.5px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.25s;
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .pay-submit-btn:hover {
+            background: linear-gradient(135deg, #ff8a7a 0%, #ff5540 100%);
+            transform: translateY(-2px);
+            box-shadow: none;
+        }
+
+        .qr-card-box {
+            background: #141418;
+            border: 1px dashed rgba(255, 85, 64, 0.4);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .qr-white-frame {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 12px;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .upi-pill {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0e0e11;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 10px;
+        }
+
+        .bank-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .bank-card-opt {
+            background: #141418;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+            font-weight: 600;
+            color: #d4d4d8;
+        }
+
+        .bank-card-opt:hover, .bank-card-opt.selected {
+            border-color: #ff5540;
+            background: rgba(255, 85, 64, 0.08);
+            color: #ff5540;
+        }
+
+        /* Card Preview Animation */
+        .card-preview {
+            background: linear-gradient(135deg, #1e1e24 0%, #0d0d10 100%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-chip {
+            width: 34px;
+            height: 24px;
+            background: linear-gradient(135deg, #d4af37, #f7d070);
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .card-number-display {
+            font-family: monospace;
+            font-size: 16px;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .card-details-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #a1a1aa;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 860px) {
+            .pay-box {
+                grid-template-columns: 1fr;
+            }
+            .methods-nav-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav style="background:rgba(0,0,0,0.92);border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 24px;position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between">
+    <a href="{% url 'home' %}" style="font-size:18px;font-weight:800;color:#ffffff;text-decoration:none;display:flex;align-items:center;gap:6px;">
+        <span style="color:#ff5540;">💪</span> FitMaster AI
+    </a>
+    <div style="display:flex;align-items:center;gap:10px">
+        <a href="{% url 'membership' %}" style="color:#a1a1aa;font-size:12.5px;text-decoration:none;background:#141418;border:1px solid rgba(255,255,255,0.08);padding:6px 12px;border-radius:8px">Plans</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}" style="color:#ff5540;font-size:12.5px;text-decoration:none;background:#141418;border:1px solid rgba(255,85,64,0.3);padding:6px 12px;border-radius:8px">Dashboard</a>
+        {% endif %}
+    </div>
+</nav>
+
+<div class="pay-wrap">
+    <div class="pay-box">
+        
+        <!-- Left Summary Column -->
+        <div class="pay-left">
+            <div>
+                <span style="background:rgba(255,85,64,0.12);border:1px solid rgba(255,85,64,0.3);color:#ff5540;padding:4px 12px;border-radius:20px;font-size:11.5px;font-weight:700;display:inline-block;margin-bottom:14px;">
+                    <i class="fa-solid fa-shield-halved"></i> 100% Encrypted Checkout
+                </span>
+                <h2 style="font-size:22px;font-weight:800;color:#ffffff;margin-bottom:4px;">{{ plan }}</h2>
+                <span style="font-size:12px;color:#a1a1aa;">Selected Fitness Protocol / Item</span>
+            </div>
+
+            <div class="pay-amount">
+                ₹{{ price }}
+            </div>
+
+            <ul class="pay-features">
+                <li><i class="fa-solid fa-circle-check"></i> Instant Membership Activation</li>
+                <li><i class="fa-solid fa-circle-check"></i> Personalized Workout & Diet Protocol</li>
+                <li><i class="fa-solid fa-circle-check"></i> Certified Trainer Onboarding</li>
+                <li><i class="fa-solid fa-circle-check"></i> Real-Time Biometrics Tracking</li>
+                <li><i class="fa-solid fa-circle-check"></i> Official Gym Access Pass</li>
+            </ul>
+
+            <div style="font-size:11px;color:#a1a1aa;display:flex;align-items:center;gap:6px;">
+                <i class="fa-solid fa-lock" style="color:#ff5540;"></i>
+                <span>PCI-DSS & 256-Bit SSL Secured</span>
+            </div>
+        </div>
+
+        <!-- Right Content Column: All Supported Payment Methods -->
+        <div class="pay-right">
+            
+            <!-- Razorpay Gateway Quick Checkout Trigger -->
+            <div style="background:linear-gradient(135deg, rgba(255,85,64,0.12), rgba(255,138,122,0.06));border:1.5px solid #ff5540;border-radius:14px;padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:36px;height:36px;border-radius:8px;background:#ff5540;color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div>
+                        <div style="font-size:13.5px;font-weight:800;color:#ffffff;">Razorpay Express Gateway</div>
+                        <div style="font-size:11px;color:#a1a1aa;">One-click instant payment via UPI, Cards & NetBanking</div>
+                    </div>
+                </div>
+                <button type="button" onclick="triggerRazorpayCheckout()" style="background:#ff5540;color:#ffffff;border:none;padding:8px 18px;border-radius:20px;font-size:12.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:transform 0.2s;">
+                    <span>Pay with Razorpay</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <h3 style="font-size:14px;font-weight:700;color:#cbd5e1;margin:0;">Or Select Payment App / Method:</h3>
+                <span style="font-size:11px;color:#ff5540;font-weight:600;"><i class="fa-solid fa-shield-check"></i> Zero Gateway Fee</span>
+            </div>
+
+            <!-- 6 Methods Grid (Matching contact page) -->
+            <div class="methods-nav-grid">
+                <button type="button" class="method-btn active" id="btn-gpay" onclick="switchMethod('gpay')">
+                    <i class="fa-brands fa-google-pay" style="font-size:20px;color:#ff5540;"></i>
+                    <span>Google Pay</span>
+                </button>
+                <button type="button" class="method-btn" id="btn-phonepe" onclick="switchMethod('phonepe')">
+                    <i class="fa-solid fa-mobile-screen-button" style="color:#818cf8;"></i>
+                    <span>PhonePe</span>
+                </button>
+                <button type="button" class="method-btn" id="btn-paytm" onclick="switchMethod('paytm')">
+                    <i class="fa-solid fa-wallet" style="color:#38bdf8;"></i>
+                    <span>Paytm</span>
+                </button>
+                <button type="button" class="method-btn" id="btn-upi" onclick="switchMethod('upi')">
+                    <i class="fa-solid fa-qrcode" style="color:#fbbf24;"></i>
+                    <span>BHIM UPI</span>
+                </button>
+                <button type="button" class="method-btn" id="btn-cards" onclick="switchMethod('cards')">
+                    <i class="fa-solid fa-credit-card" style="color:#f43f5e;"></i>
+                    <span>Cards</span>
+                </button>
+                <button type="button" class="method-btn" id="btn-netbanking" onclick="switchMethod('netbanking')">
+                    <i class="fa-solid fa-building-columns" style="color:#a855f7;"></i>
+                    <span>Net Banking</span>
+                </button>
+                <button type="button" class="method-btn" id="btn-cash" onclick="switchMethod('cash')">
+                    <i class="fa-solid fa-money-bill-wave" style="color:#22c55e;"></i>
+                    <span>Cash</span>
+                </button>
+            </div>
+
+            <!-- ================= 1. GOOGLE PAY ================= -->
+            <div class="pay-panel active" id="panel-gpay">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan" value="{{ plan }}">
+                    <input type="hidden" name="price" value="{{ price }}">
+                    <input type="hidden" name="payment_method" value="gpay">
+
+                    <div class="qr-card-box">
+                        <div class="qr-white-frame">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=fitmaster@okaxis&pn=FitMaster%20Fitness&am={{ price }}&cu=INR" alt="GPay QR Code" style="width:125px;height:125px;display:block;">
+                        </div>
+                        <div style="font-size:11.5px;color:#a1a1aa;margin-top:8px;">Scan with <strong>Google Pay (GPay)</strong> app</div>
+
+                        <div class="upi-pill">
+                            <span style="font-size:12.5px;font-weight:700;color:#ff5540;font-family:monospace;">fitmaster@okaxis</span>
+                            <button type="button" onclick="copyUPI('fitmaster@okaxis')" style="background:#ff5540;color:#ffffff;border:none;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;">
+                                <i class="fa-regular fa-copy"></i> Copy GPay VPA
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" name="name" placeholder="Full Name" required value="{{ request.user.get_full_name|default:request.user.username }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Google Pay UTR / Ref (12-digit UPI reference)</label>
+                        <input type="text" name="upi_ref" placeholder="e.g. 423987123456" maxlength="20">
+                    </div>
+
+                    <button type="submit" class="pay-submit-btn">
+                        <i class="fa-brands fa-google-pay" style="font-size:22px;"></i> Pay ₹{{ price }} with Google Pay
+                    </button>
+                </form>
+            </div>
+
+            <!-- ================= 2. PHONEPE ================= -->
+            <div class="pay-panel" id="panel-phonepe">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan" value="{{ plan }}">
+                    <input type="hidden" name="price" value="{{ price }}">
+                    <input type="hidden" name="payment_method" value="phonepe">
+
+                    <div class="qr-card-box">
+                        <div class="qr-white-frame">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=fitmaster@ybl&pn=FitMaster%20Fitness&am={{ price }}&cu=INR" alt="PhonePe QR Code" style="width:125px;height:125px;display:block;">
+                        </div>
+                        <div style="font-size:11.5px;color:#a1a1aa;margin-top:8px;">Scan with <strong>PhonePe</strong> app</div>
+
+                        <div class="upi-pill">
+                            <span style="font-size:12.5px;font-weight:700;color:#818cf8;font-family:monospace;">fitmaster@ybl</span>
+                            <button type="button" onclick="copyUPI('fitmaster@ybl')" style="background:#818cf8;color:#ffffff;border:none;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;">
+                                <i class="fa-regular fa-copy"></i> Copy PhonePe UPI
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" name="name" placeholder="Full Name" required value="{{ request.user.get_full_name|default:request.user.username }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>PhonePe Transaction ID / UTR</label>
+                        <input type="text" name="upi_ref" placeholder="e.g. T2608190012345" maxlength="20">
+                    </div>
+
+                    <button type="submit" class="pay-submit-btn" style="background:linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);color:#ffffff;">
+                        <i class="fa-solid fa-mobile-screen-button"></i> Pay ₹{{ price }} with PhonePe
+                    </button>
+                </form>
+            </div>
+
+            <!-- ================= 3. PAYTM ================= -->
+            <div class="pay-panel" id="panel-paytm">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan" value="{{ plan }}">
+                    <input type="hidden" name="price" value="{{ price }}">
+                    <input type="hidden" name="payment_method" value="paytm">
+
+                    <div class="qr-card-box">
+                        <div class="qr-white-frame">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=fitmaster@paytm&pn=FitMaster%20Fitness&am={{ price }}&cu=INR" alt="Paytm QR Code" style="width:125px;height:125px;display:block;">
+                        </div>
+                        <div style="font-size:11.5px;color:#a1a1aa;margin-top:8px;">Scan with <strong>Paytm Wallet or UPI</strong></div>
+
+                        <div class="upi-pill">
+                            <span style="font-size:12.5px;font-weight:700;color:#38bdf8;font-family:monospace;">fitmaster@paytm</span>
+                            <button type="button" onclick="copyUPI('fitmaster@paytm')" style="background:#38bdf8;color:#050505;border:none;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;">
+                                <i class="fa-regular fa-copy"></i> Copy Paytm UPI
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" name="name" placeholder="Full Name" required value="{{ request.user.get_full_name|default:request.user.username }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Paytm Order / UPI Reference</label>
+                        <input type="text" name="upi_ref" placeholder="e.g. PYTM98765432" maxlength="20">
+                    </div>
+
+                    <button type="submit" class="pay-submit-btn" style="background:linear-gradient(135deg, #0284c7 0%, #0369a1 100%);color:#ffffff;">
+                        <i class="fa-solid fa-wallet"></i> Pay ₹{{ price }} with Paytm
+                    </button>
+                </form>
+            </div>
+
+            <!-- ================= 4. BHIM UPI / ANY QR ================= -->
+            <div class="pay-panel" id="panel-upi">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan" value="{{ plan }}">
+                    <input type="hidden" name="price" value="{{ price }}">
+                    <input type="hidden" name="payment_method" value="upi_qr">
+
+                    <div class="qr-card-box">
+                        <div class="qr-white-frame">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=fitmaster@upi&pn=FitMaster%20Fitness&am={{ price }}&cu=INR" alt="BHIM UPI QR Code" style="width:125px;height:125px;display:block;">
+                        </div>
+                        <div style="font-size:11.5px;color:#a1a1aa;margin-top:8px;">Scan with <strong>BHIM, CRED, Amazon Pay, Any UPI App</strong></div>
+
+                        <div class="upi-pill">
+                            <span style="font-size:12.5px;font-weight:700;color:#fbbf24;font-family:monospace;">fitmaster@upi</span>
+                            <button type="button" onclick="copyUPI('fitmaster@upi')" style="background:#fbbf24;color:#050505;border:none;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;">
+                                <i class="fa-regular fa-copy"></i> Copy UPI ID
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" name="name" placeholder="Full Name" required value="{{ request.user.get_full_name|default:request.user.username }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>12-Digit UPI UTR Reference Number</label>
+                        <input type="text" name="upi_ref" placeholder="e.g. 502938174628" maxlength="20">
+                    </div>
+
+                    <button type="submit" class="pay-submit-btn" style="background:linear-gradient(135deg, #fbbf24 0%, #d97706 100%);color:#050505;">
+                        <i class="fa-solid fa-qrcode"></i> Confirm BHIM UPI Payment ₹{{ price }}
+                    </button>
+                </form>
+            </div>
+
+            <!-- ================= 5. DEBIT / CREDIT CARDS ================= -->
+            <div class="pay-panel" id="panel-cards">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan" value="{{ plan }}">
+                    <input type="hidden" name="price" value="{{ price }}">
+                    <input type="hidden" name="payment_method" value="card">
+
+                    <!-- Live Card Preview -->
+                    <div class="card-preview">
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <div class="card-chip"></div>
+                            <span id="card-brand-badge" style="font-size:11px;font-weight:800;color:#ff5540;letter-spacing:1px;">VISA / MASTERCARD / RUPAY</span>
+                        </div>
+                        <div class="card-number-display" id="preview-card-num">•••• •••• •••• ••••</div>
+                        <div class="card-details-row">
+                            <div>
+                                <span style="display:block;font-size:9px;">Cardholder</span>
+                                <span id="preview-card-name" style="color:#fff;font-weight:600;">{{ request.user.get_full_name|default:"YOUR NAME" }}</span>
+                            </div>
+                            <div>
+                                <span style="display:block;font-size:9px;">Expires</span>
+                                <span id="preview-card-exp" style="color:#fff;font-weight:600;">MM/YY</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cardholder Name</label>
+                        <input type="text" name="name" id="cardNameInput" placeholder="Name on Card" required value="{{ request.user.get_full_name|default:request.user.username }}" oninput="updateCardPreview()">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Card Number (Visa, Mastercard, RuPay)</label>
+                        <input type="text" name="card" id="cardNumInput" placeholder="4123 4567 8901 2345" maxlength="19" required oninput="formatCard(this); updateCardPreview()">
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Expiry (MM/YY)</label>
+                            <input type="text" id="cardExpInput" placeholder="12/28" maxlength="5" required oninput="formatExp(this); updateCardPreview()">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV / CVC</label>
+                            <input type="password" placeholder="123" maxlength="4" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="pay-submit-btn">
+                        <i class="fa-solid fa-lock"></i> Pay ₹{{ price }} Securely with Card
+                    </button>
+                </form>
+            </div>
+
+            <!-- ================= 6. NET BANKING ================= -->
+            <div class="pay-panel" id="panel-netbanking">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan" value="{{ plan }}">
+                    <input type="hidden" name="price" value="{{ price }}">
+                    <input type="hidden" name="payment_method" value="netbanking">
+                    <input type="hidden" name="bank_name" id="selectedBankInput" value="HDFC">
+
+                    <label style="font-size:12px;color:#a1a1aa;font-weight:600;display:block;margin-bottom:8px;">Popular Indian Banks</label>
+                    <div class="bank-grid">
+                        <div class="bank-card-opt selected" onclick="selectBank('HDFC', this)">
+                            <i class="fa-solid fa-building-columns" style="display:block;margin-bottom:4px;color:#ff5540;"></i> HDFC Bank
+                        </div>
+                        <div class="bank-card-opt" onclick="selectBank('SBI', this)">
+                            <i class="fa-solid fa-building-columns" style="display:block;margin-bottom:4px;color:#38bdf8;"></i> SBI
+                        </div>
+                        <div class="bank-card-opt" onclick="selectBank('ICICI', this)">
+                            <i class="fa-solid fa-building-columns" style="display:block;margin-bottom:4px;color:#f97316;"></i> ICICI Bank
+                        </div>
+                        <div class="bank-card-opt" onclick="selectBank('AXIS', this)">
+                            <i class="fa-solid fa-building-columns" style="display:block;margin-bottom:4px;color:#a855f7;"></i> Axis Bank
+                        </div>
+                        <div class="bank-card-opt" onclick="selectBank('KOTAK', this)">
+                            <i class="fa-solid fa-building-columns" style="display:block;margin-bottom:4px;color:#ef4444;"></i> Kotak Bank
+                        </div>
+                        <div class="bank-card-opt" onclick="selectBank('PNB', this)">
+                            <i class="fa-solid fa-building-columns" style="display:block;margin-bottom:4px;color:#fbbf24;"></i> PNB
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Or Select Other Indian Bank</label>
+                        <select onchange="if(this.value){ selectBank(this.value, null); }">
+                            <option value="">-- Choose From 50+ Other Banks --</option>
+                            <option value="Bank of Baroda">Bank of Baroda</option>
+                            <option value="Canara Bank">Canara Bank</option>
+                            <option value="Union Bank of India">Union Bank of India</option>
+                            <option value="IndusInd Bank">IndusInd Bank</option>
+                            <option value="IDFC FIRST Bank">IDFC FIRST Bank</option>
+                            <option value="Federal Bank">Federal Bank</option>
+                            <option value="Yes Bank">Yes Bank</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Account Holder Name</label>
+                        <input type="text" name="name" placeholder="Account Holder Name" required value="{{ request.user.get_full_name|default:request.user.username }}">
+                    </div>
+
+                    <button type="submit" class="pay-submit-btn" style="background:linear-gradient(135deg, #a855f7 0%, #9333ea 100%);color:#ffffff;">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i> Continue to Bank Portal ₹{{ price }}
+                    </button>
+                </form>
+            </div>
+
+            <!-- ================= 7. CASH PAYMENT ================= -->
+            <div class="pay-panel" id="panel-cash">
+                <form method="POST" action="{% url 'payment' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan" value="{{ plan }}">
+                    <input type="hidden" name="price" value="{{ price }}">
+                    <input type="hidden" name="payment_method" value="cash">
+
+                    <div style="background:rgba(34, 197, 94, 0.1);border:1px solid rgba(34, 197, 94, 0.3);border-radius:14px;padding:18px;margin-bottom:18px;text-align:center;">
+                        <div style="width:48px;height:48px;border-radius:50%;background:rgba(34, 197, 94, 0.2);color:#22c55e;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 10px;">
+                            <i class="fa-solid fa-money-bill-wave"></i>
+                        </div>
+                        <h4 style="font-size:15px;font-weight:800;color:#ffffff;margin-bottom:4px;">Pay Cash at Gym Reception</h4>
+                        <p style="font-size:12px;color:#a1a1aa;margin:0;line-height:1.5;">Book your membership online now and pay ₹{{ price }} in cash at our gym reception desk when you visit.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Full Name</label>
+                        <input type="text" name="name" placeholder="Enter your full name" required value="{{ request.user.get_full_name|default:request.user.username }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contact Phone Number</label>
+                        <input type="tel" name="phone" placeholder="Enter 10-digit mobile number" required value="9876543210">
+                    </div>
+
+                    <button type="submit" class="pay-submit-btn" style="background:linear-gradient(135deg, #22c55e 0%, #16a34a 100%);color:#ffffff;">
+                        <i class="fa-solid fa-circle-check"></i> Confirm Cash Order (₹{{ price }})
+                    </button>
+                </form>
+            </div>
+
+            <!-- Footer Badge -->
+            <div style="font-size:11px;color:#a1a1aa;text-align:center;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:12px;">
+                <i class="fa-brands fa-google-pay" style="font-size:20px;"></i>
+                <i class="fa-solid fa-mobile-screen-button" style="font-size:14px;color:#818cf8;"></i>
+                <i class="fa-brands fa-cc-visa" style="font-size:20px;"></i>
+                <i class="fa-brands fa-cc-mastercard" style="font-size:20px;"></i>
+                <i class="fa-solid fa-building-columns" style="font-size:14px;color:#a855f7;"></i>
+                <span>100% RBI & NPCI Compliant</span>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+function switchMethod(methodName) {
+    document.querySelectorAll('.method-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.pay-panel').forEach(p => p.classList.remove('active'));
+    
+    const btn = document.getElementById('btn-' + methodName);
+    const panel = document.getElementById('panel-' + methodName);
+    
+    if (btn) btn.classList.add('active');
+    if (panel) panel.classList.add('active');
+}
+
+function selectBank(name, el) {
+    document.getElementById('selectedBankInput').value = name;
+    if (el) {
+        document.querySelectorAll('.bank-card-opt').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+    }
+}
+
+function formatCard(input) {
+    let v = input.value.replace(/\s+/g,'').replace(/[^0-9]/gi,'');
+    let matches = v.match(/\d{4,16}/g);
+    let match = matches && matches[0] || '';
+    let parts = [];
+    for (let i=0, len=match.length; i<len; i+=4) parts.push(match.substring(i,i+4));
+    input.value = parts.length ? parts.join(' ') : v;
+}
+
+function formatExp(input) {
+    let v = input.value.replace(/[^0-9]/g, '');
+    if (v.length > 2) {
+        input.value = v.substring(0, 2) + '/' + v.substring(2, 4);
+    } else {
+        input.value = v;
+    }
+}
+
+function updateCardPreview() {
+    const num = document.getElementById('cardNumInput').value;
+    const name = document.getElementById('cardNameInput').value;
+    const exp = document.getElementById('cardExpInput').value;
+    
+    document.getElementById('preview-card-num').textContent = num || '•••• •••• •••• ••••';
+    document.getElementById('preview-card-name').textContent = (name || 'YOUR NAME').toUpperCase();
+    document.getElementById('preview-card-exp').textContent = exp || 'MM/YY';
+    
+    const brand = document.getElementById('card-brand-badge');
+    if (num.startsWith('4')) {
+        brand.textContent = 'VISA';
+        brand.style.color = '#38bdf8';
+    } else if (num.startsWith('5')) {
+        brand.textContent = 'MASTERCARD';
+        brand.style.color = '#f97316';
+    } else if (num.startsWith('6') || num.startsWith('8')) {
+        brand.textContent = 'RUPAY';
+        brand.style.color = '#ff5540';
+    } else {
+        brand.textContent = 'SECURE CARD';
+        brand.style.color = '#a1a1aa';
+    }
+}
+
+function copyUPI(upiId) {
+    navigator.clipboard.writeText(upiId).then(function() {
+        alert('UPI ID copied: ' + upiId + '\nOpen your UPI app to complete the payment.');
+    });
+}
+
+<!-- ================= REAL RAZORPAY INTEGRATION ================= -->
+<script>
+function triggerRazorpayCheckout() {
+    var options = {
+        "key": "{{ razorpay_key_id }}",
+        "amount": parseInt("{{ price }}") * 100, // Amount is in currency subunits
+        "currency": "{{ razorpay_currency }}",
+        "name": "FitMaster AI",
+        "description": "{{ plan }}",
+        "image": "{% static 'images/favicon.svg' %}",
+        "handler": function (response){
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = "{% url 'payment' %}";
+            
+            const csrf = document.createElement('input');
+            csrf.type = 'hidden';
+            csrf.name = 'csrfmiddlewaretoken';
+            csrf.value = '{{ csrf_token }}';
+            form.appendChild(csrf);
+
+            const pPlan = document.createElement('input');
+            pPlan.type = 'hidden';
+            pPlan.name = 'plan';
+            pPlan.value = '{{ plan }}';
+            form.appendChild(pPlan);
+
+            const pPrice = document.createElement('input');
+            pPrice.type = 'hidden';
+            pPrice.name = 'price';
+            pPrice.value = '{{ price }}';
+            form.appendChild(pPrice);
+
+            const pRzpId = document.createElement('input');
+            pRzpId.type = 'hidden';
+            pRzpId.name = 'razorpay_payment_id';
+            pRzpId.value = response.razorpay_payment_id;
+            form.appendChild(pRzpId);
+
+            const pName = document.createElement('input');
+            pName.type = 'hidden';
+            pName.name = 'name';
+            pName.value = '{{ request.user.username|default:"Athlete" }}';
+            form.appendChild(pName);
+
+            document.body.appendChild(form);
+            form.submit();
+        },
+        "prefill": {
+            "name": "{{ request.user.get_full_name|default:request.user.username }}",
+            "email": "{{ request.user.email|default:'' }}"
+        },
+        "theme": {
+            "color": "#ff5540"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response){
+        alert("Payment failed: " + response.error.description);
+    });
+    rzp1.open();
+}
+
+// Auto select method from URL query param if present e.g. ?method=phonepe
+window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const m = params.get('method');
+    if (m && ['gpay', 'phonepe', 'paytm', 'upi', 'cards', 'netbanking', 'cash'].includes(m)) {
+        switchMethod(m);
+    }
+});
+</script>
+<!-- FitMaster Internationalization, Multi-Currency, Microsoft AI Voice & Cursor Engine -->
+<script src="{% static 'js/i18n_currency_voice.js' %}"></script>
+
+</body>
+</html>

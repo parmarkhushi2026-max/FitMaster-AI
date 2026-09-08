@@ -1,0 +1,90 @@
+{% extends base_template|default:'base.html' %}
+{% load static %}
+
+{% block title %}Membership Plans | FitMaster{% endblock %}
+
+{% if request.user.is_authenticated %}
+{% block topbar_class %}topbar-customer{% endblock %}
+{% block page_title %}Membership Packages{% endblock %}
+{% block topbar_badge %}<span class="topbar-badge topbar-badge-customer"><i class="fa-solid fa-id-card"></i> Membership</span>{% endblock %}
+{% block breadcrumb %}Dashboard / Membership{% endblock %}
+{% block user_role %}{% if profile %}{{ profile.role|title }}{% else %}Customer{% endif %}{% endblock %}
+
+{% block sidebar %}
+{% if profile and profile.role == "admin" %}
+{% include "includes/admin_sidebar.html" %}
+{% elif profile and profile.role == "trainer" %}
+{% include "includes/trainer_sidebar.html" %}
+{% else %}
+{% include "includes/customer_sidebar.html" %}
+{% endif %}
+{% endblock %}
+{% endif %}
+
+{% block content %}
+<style>
+.mem-wrap { max-width: 1200px; margin: 0 auto; padding: {% if request.user.is_authenticated %}15px 0 40px{% else %}75px 20px 40px{% endif %}; }
+.plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 10px; }
+.plan-card { background: linear-gradient(145deg, #111116 0%, #0c0c10 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 22px 18px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); position: relative; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7); display: flex; flex-direction: column; }
+.plan-card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(0,0,0,0.85), 0 0 20px rgba(255, 85, 64, 0.15); border-color: #ff5540; }
+.plan-card.popular { border: 1.5px solid #ff5540; background: linear-gradient(135deg, rgba(255, 85, 64, 0.06), #0e0e11); }
+.popular-tag { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: #ff5540; color: #ffffff; font-size: 10px; font-weight: 800; padding: 3px 12px; border-radius: 20px; white-space: nowrap; box-shadow: 0 0 12px rgba(255, 85, 64, 0.35); }
+.plan-icon { font-size: 28px; margin-bottom: 8px; color: #ff5540; text-align: center; }
+.plan-name { font-size: 17px; font-weight: 800; color: #ffffff; margin-bottom: 4px; text-align: center; }
+.plan-desc { font-size: 12px; color: #94a3b8; margin-bottom: 12px; line-height: 1.45; text-align: center; }
+.plan-price { font-size: 28px; font-weight: 800; color: #ff5540; margin-bottom: 2px; text-align: center; text-shadow: 0 0 12px rgba(255, 85, 64, 0.25); }
+.plan-duration { font-size: 11.5px; color: #a1a1aa; margin-bottom: 16px; font-weight: 500; text-align: center; }
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; padding: 0; flex: 1; }
+.plan-features li { font-size: 12.5px; color: #e2e8f0; display: flex; align-items: center; gap: 8px; }
+.plan-features li::before { content: '✓'; color: #ff5540; font-weight: 800; font-size: 12px; }
+.plan-btn { display: flex; align-items: center; justify-content: center; width: 100%; background: #ff5540; color: #ffffff; padding: 9px 14px; border-radius: 8px; font-weight: 700; font-size: 12.5px; text-decoration: none; transition: all 0.25s ease; box-shadow: 0 4px 14px rgba(255, 85, 64, 0.3); }
+.plan-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(255, 85, 64, 0.45); background: #ff8a7a; color: #ffffff; }
+.plan-btn.outline { background: transparent; border: 1.5px solid rgba(255, 85, 64, 0.4); color: #ffffff; }
+.plan-btn.outline:hover { background: #ff5540; color: #ffffff; border-color: #ff5540; }
+
+[data-theme="light"] .plan-card { background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04); }
+[data-theme="light"] .plan-name { color: #0f172a; }
+[data-theme="light"] .plan-desc { color: #475569; }
+[data-theme="light"] .plan-features li { color: #334155; }
+[data-theme="light"] .plan-btn.outline { color: #0f172a; border-color: rgba(255, 85, 64, 0.4); }
+</style>
+
+<div class="mem-wrap">
+
+    <div class="plans-grid">
+        {% for pkg in packages %}
+        <div class="plan-card {% if forloop.counter == 2 %}popular{% endif %}">
+            {% if forloop.counter == 2 %}<div class="popular-tag">⭐ Most Popular</div>{% endif %}
+            <div class="plan-icon">
+                {% if pkg.duration_months <= 3 %}🌱{% elif pkg.duration_months <= 6 %}🏋️{% else %}👑{% endif %}
+            </div>
+            <div class="plan-name">{{ pkg.name }}</div>
+            <div class="plan-desc">{{ pkg.description }}</div>
+            <div class="plan-price" data-inr-price="{{ pkg.price }}">₹{{ pkg.price }}</div>
+            <div class="plan-duration">for {{ pkg.duration_months }} months</div>
+            <ul class="plan-features">
+                <li>Gym & facility access</li>
+                <li>AI workout plans</li>
+                <li>Personalized diet plans</li>
+                <li>Professional trainer</li>
+                {% if pkg.duration_months >= 6 %}<li>Progress tracking</li>{% endif %}
+                {% if pkg.duration_months >= 12 %}<li>Premium 24/7 support</li><li>Unlimited sessions</li>{% endif %}
+            </ul>
+            {% if user.is_authenticated %}
+            <a href="{% url 'payment' %}?plan={{ pkg.name|urlencode }}&price={{ pkg.price }}" class="plan-btn {% if forloop.counter != 2 %}outline{% endif %}">
+                Get {{ pkg.name }} Plan
+            </a>
+            {% else %}
+            <a href="{% url 'login' %}" class="plan-btn {% if forloop.counter != 2 %}outline{% endif %}">
+                Login to Purchase
+            </a>
+            {% endif %}
+        </div>
+        {% empty %}
+        <div style="grid-column:1/-1;text-align:center;color:#94a3b8;padding:40px">
+            No packages available right now. Please check back soon.
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+<ul>
+    <li class="nav-section">Overview</li>
+    <li class="{% if request.resolver_match.url_name == 'customer_dashboard' %}active{% endif %}">
+        <a href="{% url 'customer_dashboard' %}"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
+    </li>
+
+    <li class="nav-section">My Fitness</li>
+    <li class="{% if request.resolver_match.url_name == 'customer_plans' %}active{% endif %}">
+        <a href="{% url 'customer_plans' %}"><i class="fa-solid fa-dumbbell"></i><span>My Plans</span></a>
+    </li>
+    <li class="{% if request.resolver_match.url_name == 'membership' %}active{% endif %}">
+        <a href="{% url 'membership' %}"><i class="fa-solid fa-id-card"></i><span>Membership</span></a>
+    </li>
+    <li class="{% if request.resolver_match.url_name == 'store' %}active{% endif %}">
+        <a href="{% url 'store' %}"><i class="fa-solid fa-store"></i><span>Store</span></a>
+    </li>
+
+    <li class="nav-section">Account</li>
+    <li class="{% if request.resolver_match.url_name == 'transactions' %}active{% endif %}">
+        <a href="{% url 'transactions' %}"><i class="fa-solid fa-receipt"></i><span>Transactions</span></a>
+    </li>
+    <li class="{% if request.resolver_match.url_name == 'settings' %}active{% endif %}">
+        <a href="{% url 'settings' %}"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+    </li>
+    <li>
+        <a href="{% url 'home' %}"><i class="fa-solid fa-globe"></i><span>Go to Site</span></a>
+    </li>
+</ul>

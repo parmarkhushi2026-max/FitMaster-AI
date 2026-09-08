@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Our Trainers | FitMaster
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/trainers.css' %}?v=4">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<section class="trainers-page">
+
+    <div class="container">
+
+        <div class="trainer-grid">
+
+            <!-- Trainer 1 -->
+            <div class="trainer-card">
+
+                <img src="{% static 'images/trainer1.jpg' %}" alt="Trainer">
+
+                <div class="trainer-info">
+
+                    <h2>Rahul Sharma</h2>
+
+                    <span>Strength Coach</span>
+
+                    <p>
+                        8+ years experience in bodybuilding,
+                        strength training and weight loss.
+                    </p>
+
+                    <div class="trainer-details">
+
+                        <div>
+                            <i class="fa-solid fa-dumbbell"></i>
+                            <span>250+ Clients</span>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-star"></i>
+                            <span>4.9 Rating</span>
+                        </div>
+
+                    </div>
+
+                    <a href="{% url 'contact' %}" class="trainer-btn">
+                        Book Session
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Trainer 2 -->
+            <div class="trainer-card">
+
+                <img src="{% static 'images/trainer2.jpg' %}" alt="Trainer">
+
+                <div class="trainer-info">
+
+                    <h2>Priya Patel</h2>
+
+                    <span>Yoga Expert</span>
+
+                    <p>
+                        Certified yoga instructor with
+                        6+ years of professional experience.
+                    </p>
+
+                    <div class="trainer-details">
+
+                        <div>
+                            <i class="fa-solid fa-users"></i>
+                            <span>180+ Clients</span>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-star"></i>
+                            <span>4.8 Rating</span>
+                        </div>
+
+                    </div>
+
+                    <a href="{% url 'contact' %}" class="trainer-btn">
+                        Book Session
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Trainer 3 -->
+            <div class="trainer-card">
+
+                <img src="{% static 'images/trainer3.jpg' %}" alt="Trainer">
+
+                <div class="trainer-info">
+
+                    <h2>Amit Verma</h2>
+
+                    <span>Cardio Trainer</span>
+
+                    <p>
+                        Helping members improve endurance,
+                        stamina and overall fitness.
+                    </p>
+
+                    <div class="trainer-details">
+
+                        <div>
+                            <i class="fa-solid fa-heart-pulse"></i>
+                            <span>220+ Clients</span>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0 Rating</span>
+                        </div>
+
+                    </div>
+
+                    <a href="{% url 'contact' %}" class="trainer-btn">
+                        Book Session
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

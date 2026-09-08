@@ -1,0 +1,99 @@
+/* ==========================
+   Sidebar
+========================== */
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    width:280px;
+
+    height:100vh;
+
+    background:#0b1726;
+
+    padding:35px 25px;
+
+    border-right:1px solid rgba(255,255,255,.08);
+
+}
+
+/* Logo */
+
+.sidebar .logo{
+
+    color:#00ff88;
+
+    font-size:32px;
+
+    font-weight:700;
+
+    margin-bottom:60px;
+
+}
+
+/* Menu */
+
+.sidebar ul{
+
+    list-style:none;
+
+}
+
+.sidebar ul li{
+
+    margin-bottom:18px;
+
+}
+
+.sidebar ul li a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:16px 20px;
+
+    border-radius:15px;
+
+    text-decoration:none;
+
+    color:#d6d6d6;
+
+    font-size:17px;
+
+    transition:.35s;
+
+}
+
+.sidebar ul li a:hover{
+
+    background:#00ff88;
+
+    color:#000;
+
+}
+
+.sidebar ul li.active a{
+
+    background:#00ff88;
+
+    color:#000;
+
+    font-weight:600;
+
+}
+
+.sidebar i{
+
+    width:25px;
+
+    text-align:center;
+
+}

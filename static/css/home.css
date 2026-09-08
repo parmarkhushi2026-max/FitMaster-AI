@@ -1,0 +1,1080 @@
+/* ==========================================================================
+   FITMASTER AI — SIGNATURE CORAL FLAME & KINETIC GYM HOMEPAGE STYLING
+   Compact Spacing for 100% Zoom | Vibrant Coral Flame (#ff5540 / #ff8a7a) | Deep Stealth Black
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* 10% Signature Flame / Coral Accent */
+    --primary: #ff5540;
+    --primary-light: #ff8a7a;
+    --primary-dark: #e03e2a;
+    --primary-glow: rgba(255, 85, 64, 0.4);
+    --primary-glow-subtle: rgba(255, 85, 64, 0.12);
+    --primary-gradient: linear-gradient(135deg, #ff5540 0%, #ff8a7a 100%);
+    --primary-border: rgba(255, 85, 64, 0.3);
+
+    /* 70% Charcoal & Deep Stealth Black Base */
+    --gym-bg: #0e0e0e;
+    --gym-surface: #131313;
+    --gym-card: #16161a;
+    --gym-card-hover: #1c1c22;
+    --gym-card-border: rgba(255, 255, 255, 0.08);
+    --gym-card-border-green: rgba(255, 85, 64, 0.35);
+
+    /* 20% Neutral & Crisp Text */
+    --text-white: #ffffff;
+    --text-light: #f1f5f9;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+
+    /* Typography */
+    --font-heading: 'Poppins', 'Inter', system-ui, sans-serif;
+    --font-body: 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Shadows & Transitions */
+    --shadow-heavy: 0 16px 40px rgba(0, 0, 0, 0.85);
+    --shadow-green: 0 8px 25px rgba(255, 85, 64, 0.25);
+    --transition-smooth: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: all 0.18s ease;
+}
+
+/* Base Home Scope */
+.hero, .trusted, .stats, .partners, .programs, .why, .ai-section, .packages, .trainers, .bmi-section, .stitch-hero {
+    font-family: var(--font-body);
+}
+
+/* ==========================================================================
+   1. HERO SECTION (Compact 100% Zoom Proportions)
+   ========================================================================== */
+.hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 85px 0 45px;
+    position: relative;
+    background: radial-gradient(circle at 50% 12%, rgba(255, 85, 64, 0.08) 0%, transparent 65%);
+}
+
+.hero-container {
+    width: 90%;
+    max-width: 1280px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: 36px;
+    background: linear-gradient(145deg, #0e0e13 0%, #08080a 100%);
+    border: 1px solid rgba(0, 245, 155, 0.2);
+    border-radius: 24px;
+    padding: 42px 48px;
+    box-shadow: var(--shadow-heavy), 0 0 30px rgba(0, 245, 155, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary-gradient);
+    opacity: 0.9;
+}
+
+.hero-left h1 {
+    font-size: clamp(38px, 4.2vw, 54px);
+    line-height: 1.1;
+    margin: 12px 0 16px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text-white);
+}
+
+.hero-left h1 span {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 25px var(--primary-glow);
+    display: inline-block;
+}
+
+.hero-left p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #cbd5e1;
+    margin-bottom: 24px;
+    max-width: 540px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.hero-buttons .btn-primary, .hero-buttons .btn-green {
+    background: var(--primary-gradient);
+    color: #050a12;
+    font-weight: 800;
+    font-size: 13.5px;
+    padding: 12px 26px;
+    border-radius: 30px;
+    letter-spacing: 0.4px;
+    box-shadow: 0 4px 18px var(--primary-glow);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.hero-buttons .btn-primary:hover, .hero-buttons .btn-green:hover {
+    background: linear-gradient(135deg, #ff8a7a 0%, #ff5540 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 85, 64, 0.55);
+    color: #ffffff;
+}
+
+.hero-buttons .btn-outline {
+    border: 1.5px solid var(--primary);
+    color: var(--text-white);
+    font-weight: 700;
+    font-size: 13.5px;
+    padding: 12px 26px;
+    border-radius: 30px;
+    letter-spacing: 0.3px;
+    background: rgba(255, 85, 64, 0.05);
+    transition: var(--transition-smooth);
+}
+
+.hero-buttons .btn-outline:hover {
+    background: var(--primary);
+    color: #050a12;
+    box-shadow: 0 6px 20px var(--primary-glow);
+    transform: translateY(-2px);
+}
+
+.hero-right {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#hero-3d-canvas-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#hero-3d-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    outline: none;
+}
+
+.hero-image-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-image {
+    width: 100%;
+    max-width: 440px;
+    max-height: 400px;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    border-radius: 18px;
+    filter: drop-shadow(0 0 25px rgba(0, 245, 155, 0.25));
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-image:hover {
+    transform: scale(1.03) translateY(-3px);
+}
+
+.hero-glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(0, 245, 155, 0.18) 0%, transparent 70%);
+    filter: blur(70px);
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.hero-image-badge {
+    position: absolute;
+    right: 5px;
+    bottom: 25px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: rgba(12, 12, 16, 0.94);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 245, 155, 0.3);
+    border-radius: 14px;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 245, 155, 0.15);
+    animation: subtleFloat 3.5s ease-in-out infinite;
+}
+
+.hero-image-badge i {
+    color: var(--primary);
+    font-size: 20px;
+}
+
+.hero-image-badge strong {
+    display: block;
+    color: var(--text-white);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.hero-image-badge span {
+    display: block;
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+.hero-highlights {
+    display: flex;
+    gap: 28px;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-highlights div {
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-highlights strong {
+    color: var(--primary);
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.hero-highlights span {
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-top: 2px;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   2. TRUSTED & LOGO SLIDER SECTION
+   ========================================================================== */
+.trusted {
+    padding: 48px 0;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(5,5,7,0) 0%, rgba(12,12,16,0.6) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.trusted-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 22px;
+    color: var(--text-light);
+}
+
+.trusted-title span {
+    color: var(--primary);
+    text-shadow: 0 0 15px var(--primary-glow);
+}
+
+.logo-slider {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+}
+
+.logo-card {
+    background: #0e0e13;
+    padding: 18px 14px;
+    border-radius: 14px;
+    border: 1px solid var(--gym-card-border);
+    transition: var(--transition-smooth);
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.logo-card:hover {
+    background: linear-gradient(145deg, #14141c 0%, #111116 100%);
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7), 0 0 18px var(--primary-glow-subtle);
+}
+
+.logo-card i {
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: var(--primary);
+    transition: var(--transition-smooth);
+}
+
+.logo-card:hover i {
+    transform: scale(1.1);
+    color: var(--primary-light);
+}
+
+.logo-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-light);
+}
+
+/* ==========================================================================
+   3. STATS SECTION (Compact High-Contrast Metrics)
+   ========================================================================== */
+.stats {
+    padding: 55px 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.stat-card {
+    background: linear-gradient(145deg, #111116 0%, #0a0a0e 100%);
+    padding: 26px 18px;
+    text-align: center;
+    border-radius: 16px;
+    border: 1px solid var(--gym-card-border);
+    box-shadow: var(--shadow-heavy);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: var(--primary-gradient);
+    opacity: 0;
+    transition: var(--transition-smooth);
+}
+
+.stat-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.85), 0 0 22px var(--primary-glow-subtle);
+}
+
+.stat-card:hover::after {
+    opacity: 1;
+}
+
+.stat-card h1 {
+    font-size: 44px;
+    color: var(--primary);
+    margin-bottom: 4px;
+    font-weight: 800;
+    line-height: 1;
+    text-shadow: 0 0 20px var(--primary-glow);
+}
+
+.stat-card p {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   4. PARTNERS SECTION
+   ========================================================================== */
+.partners {
+    padding: 48px 0;
+}
+
+.partner-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+}
+
+.partner-grid div {
+    background: #0e0e13;
+    padding: 16px 10px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text-muted);
+    border: 1px solid var(--gym-card-border);
+    transition: var(--transition-smooth);
+}
+
+.partner-grid div:hover {
+    background: var(--primary);
+    color: #050a12;
+    transform: scale(1.04);
+    border-color: var(--primary);
+    box-shadow: 0 8px 20px var(--primary-glow);
+}
+
+/* ==========================================================================
+   5. FITNESS PROGRAMS SECTION (Tightened Spacing & Sleek Cards)
+   ========================================================================== */
+.programs {
+    padding: 56px 0;
+}
+
+.program-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.program-card {
+    background: linear-gradient(145deg, #111116 0%, #0c0c10 100%);
+    padding: 30px 24px;
+    border-radius: 18px;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--gym-card-border);
+    box-shadow: var(--shadow-heavy);
+}
+
+.program-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--primary-gradient);
+    transition: height 0.35s ease;
+}
+
+.program-card:hover {
+    border-color: rgba(0, 245, 155, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85), 0 0 25px var(--primary-glow-subtle);
+}
+
+.program-card:hover::before {
+    height: 100%;
+}
+
+.program-icon {
+    width: 52px;
+    height: 52px;
+    background: var(--primary-gradient);
+    color: #050a12;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 6px 18px var(--primary-glow);
+    transition: var(--transition-smooth);
+}
+
+.program-card:hover .program-icon {
+    transform: scale(1.06) rotate(2deg);
+}
+
+.program-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-white);
+}
+
+.program-card p {
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    font-size: 13.5px;
+}
+
+.program-card a {
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 12.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition-smooth);
+}
+
+.program-card a:hover {
+    color: var(--primary-light);
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   6. WHY CHOOSE SECTION (Tightened Spacing)
+   ========================================================================== */
+.why {
+    padding: 56px 0;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 245, 155, 0.03) 0%, transparent 70%);
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.why-card {
+    background: linear-gradient(145deg, #111116 0%, #0a0a0d 100%);
+    padding: 28px 20px;
+    border-radius: 16px;
+    text-align: center;
+    transition: var(--transition-smooth);
+    border: 1px solid var(--gym-card-border);
+    box-shadow: var(--shadow-heavy);
+}
+
+.why-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 20px var(--primary-glow-subtle);
+}
+
+.why-card i {
+    font-size: 34px;
+    margin-bottom: 14px;
+    color: var(--primary);
+    transition: var(--transition-smooth);
+}
+
+.why-card:hover i {
+    transform: scale(1.12);
+    color: var(--primary-light);
+}
+
+.why-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-white);
+}
+
+.why-card p {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+/* ==========================================================================
+   7. AI FEATURES SECTION
+   ========================================================================== */
+.ai-section {
+    padding: 56px 0;
+}
+
+.ai-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.ai-box {
+    background: linear-gradient(145deg, #121218 0%, #0c0c10 100%);
+    padding: 32px 24px;
+    border-radius: 18px;
+    text-align: center;
+    transition: var(--transition-smooth);
+    border: 1px solid var(--gym-card-border);
+    box-shadow: var(--shadow-heavy);
+}
+
+.ai-box:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 22px var(--primary-glow-subtle);
+}
+
+.ai-box i {
+    font-size: 38px;
+    color: var(--primary);
+    margin-bottom: 14px;
+    transition: var(--transition-smooth);
+}
+
+.ai-box:hover i {
+    transform: scale(1.08);
+    color: var(--primary-light);
+}
+
+.ai-box h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-white);
+}
+
+.ai-box p {
+    color: var(--text-muted);
+    font-size: 13.5px;
+    line-height: 1.55;
+}
+
+/* ==========================================================================
+   8. MEMBERSHIP PACKAGES SECTION
+   ========================================================================== */
+.packages {
+    padding: 60px 0;
+}
+
+.package-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    align-items: stretch;
+}
+
+.package-card {
+    background: linear-gradient(145deg, #121217 0%, #0a0a0e 100%);
+    padding: 36px 26px;
+    border-radius: 20px;
+    text-align: center;
+    position: relative;
+    transition: var(--transition-smooth);
+    border: 1px solid var(--gym-card-border);
+    box-shadow: var(--shadow-heavy);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.package-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.9), 0 0 25px var(--primary-glow-subtle);
+}
+
+.package-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-light);
+}
+
+.package-card h1 {
+    font-size: 42px;
+    margin: 12px 0;
+    color: var(--primary);
+    font-weight: 800;
+    line-height: 1;
+    text-shadow: 0 0 20px var(--primary-glow);
+}
+
+.package-card ul {
+    list-style: none;
+    margin: 20px 0;
+    text-align: left;
+    padding: 0;
+    flex-grow: 1;
+}
+
+.package-card li {
+    margin: 10px 0;
+    color: #cbd5e1;
+    font-size: 13.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.package-card li i {
+    color: var(--primary);
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.package-card.popular {
+    border: 2px solid var(--primary);
+    background: linear-gradient(145deg, #171720 0%, #0d0d12 100%);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 28px var(--primary-glow);
+    transform: scale(1.02);
+}
+
+.popular-tag {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-gradient);
+    padding: 4px 18px;
+    color: #050a12;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+    box-shadow: 0 4px 14px var(--primary-glow);
+}
+
+.buy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 12px 20px;
+    background: var(--primary-gradient);
+    color: #050a12;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 13px;
+    transition: var(--transition-smooth);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 16px var(--primary-glow);
+}
+
+.buy-btn:hover {
+    background: linear-gradient(135deg, #ff8a7a 0%, #ff5540 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 85, 64, 0.5);
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   9. TRAINERS SECTION
+   ========================================================================== */
+.trainers {
+    padding: 60px 0;
+}
+
+.trainer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.trainer-card {
+    background: #0e0e13;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    border: 1px solid var(--gym-card-border);
+    box-shadow: var(--shadow-heavy);
+}
+
+.trainer-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9), 0 0 25px var(--primary-glow-subtle);
+}
+
+.trainer-card img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.trainer-card:hover img {
+    transform: scale(1.04);
+}
+
+.trainer-info {
+    padding: 20px 18px;
+    text-align: center;
+    background: linear-gradient(180deg, #0e0e13 0%, #08080b 100%);
+}
+
+.trainer-info h3 {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: var(--text-white);
+}
+
+.trainer-info span {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.trainer-info p {
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-size: 12.5px;
+    line-height: 1.45;
+}
+
+.rating {
+    color: #ffb703;
+    margin-top: 8px;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+}
+
+/* ==========================================================================
+   10. FITNESS GOALS SECTION
+   ========================================================================== */
+.goal-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 28px;
+}
+
+.goal-card {
+    padding: 24px 18px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #111116 0%, #0c0c10 100%);
+    border: 1px solid var(--gym-card-border);
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-heavy);
+}
+
+.goal-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 20px var(--primary-glow-subtle);
+}
+
+.goal-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 245, 155, 0.12);
+    color: var(--primary);
+    font-size: 20px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(0, 245, 155, 0.25);
+    transition: var(--transition-smooth);
+}
+
+.goal-card:hover .goal-icon {
+    background: var(--primary);
+    color: #050a12;
+    transform: scale(1.06);
+    box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.goal-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text-white);
+}
+
+.goal-card p {
+    color: var(--text-muted);
+    line-height: 1.5;
+    font-size: 12.5px;
+    margin-bottom: 14px;
+}
+
+.goal-card a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: var(--transition-smooth);
+}
+
+.goal-card a:hover {
+    color: var(--primary-light);
+    transform: translateX(3px);
+}
+
+/* ==========================================================================
+   11. BMI CALCULATOR SECTION
+   ========================================================================== */
+.bmi-section {
+    padding: 56px 0;
+}
+
+.bmi-card {
+    background: linear-gradient(145deg, #111116 0%, #09090d 100%);
+    border: 1px solid rgba(0, 245, 155, 0.25);
+    border-radius: 20px;
+    padding: 34px;
+    box-shadow: var(--shadow-heavy), 0 0 25px var(--primary-glow-subtle);
+}
+
+.bmi-card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: center;
+}
+
+.bmi-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.bmi-form-group label {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.bmi-form-group input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #14141a;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-white);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    outline: none;
+    transition: var(--transition-smooth);
+}
+
+.bmi-form-group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-glow-subtle);
+    background: #181822;
+}
+
+.bmi-submit-btn {
+    width: 100%;
+    border: none;
+    padding: 12px;
+    border-radius: 30px;
+    background: var(--primary-gradient);
+    color: #050a12;
+    font-weight: 800;
+    font-size: 13.5px;
+    cursor: pointer;
+    box-shadow: 0 4px 18px var(--primary-glow);
+    transition: var(--transition-smooth);
+}
+
+.bmi-submit-btn:hover {
+    background: linear-gradient(135deg, #ff8a7a 0%, #ff5540 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 85, 64, 0.45);
+}
+
+.bmi-result-card {
+    text-align: center;
+    background: #09090d;
+    padding: 28px 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 85, 64, 0.25);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.bmi-result-card h4 {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.bmi-result-card h1 {
+    font-size: 52px;
+    color: var(--primary);
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 6px;
+    text-shadow: 0 0 22px var(--primary-glow);
+}
+
+.bmi-result-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-white);
+}
+
+.bmi-result-card p {
+    font-size: 12.5px;
+    color: var(--text-light);
+    line-height: 1.55;
+}
+
+/* ==========================================================================
+   12. STITCH HERO & TIMELINE EMBEDDED OVERRIDES
+   ========================================================================== */
+.stitch-badge-pill {
+    border-color: rgba(0, 245, 155, 0.35) !important;
+    background: rgba(0, 245, 155, 0.1) !important;
+    color: var(--primary) !important;
+}
+
+.stitch-badge-dot {
+    background: var(--primary) !important;
+    box-shadow: 0 0 8px var(--primary) !important;
+}
+
+.btn-stitch-primary {
+    background: var(--primary-gradient) !important;
+    color: #050a12 !important;
+    box-shadow: 0 4px 18px var(--primary-glow) !important;
+    font-weight: 800 !important;
+}
+
+.btn-stitch-primary:hover {
+    box-shadow: 0 8px 25px rgba(0, 245, 155, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* ==========================================================================
+   13. RESPONSIVE BREAKPOINTS (Mobile, Tablet, Desktop)
+   ========================================================================== */
+@media (max-width: 1150px) {
+    .hero-container { grid-template-columns: 1fr; padding: 36px 28px; }
+    .hero-left h1 { font-size: 46px; }
+    .hero-right { height: 320px; }
+    .stats-grid, .why-grid, .goal-grid { grid-template-columns: repeat(2, 1fr); }
+    .program-grid, .package-grid, .trainer-grid, .ai-grid { grid-template-columns: 1fr; }
+    .package-card.popular { transform: none; }
+    .logo-slider { grid-template-columns: repeat(3, 1fr); }
+    .partner-grid { grid-template-columns: repeat(3, 1fr); }
+    .bmi-card-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+    .hero { padding: 75px 0 35px; }
+    .hero-container { padding: 26px 16px; border-radius: 18px; }
+    .hero-left h1 { font-size: 34px; }
+    .hero-highlights { flex-direction: row; gap: 16px; }
+    .hero-highlights strong { font-size: 22px; }
+    .stats-grid, .why-grid, .goal-grid { grid-template-columns: 1fr; }
+    .logo-slider { grid-template-columns: repeat(2, 1fr); }
+    .partner-grid { grid-template-columns: repeat(2, 1fr); }
+    .bmi-card { padding: 22px 14px; }
+    .bmi-form-grid { grid-template-columns: 1fr; }
+    .hero-image-wrapper { min-height: 280px; }
+    .hero-image { max-height: 280px; }
+    .hero-image-badge { right: 0; bottom: 10px; padding: 8px 12px; }
+}

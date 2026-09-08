@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}500 Internal Server Error | FitMaster AI{% endblock %}
+
+{% block content %}
+<section class="auth-section" style="min-height: 75vh; display: flex; align-items: center; justify-content: center; text-align: center;">
+    <div class="auth-card" style="max-width: 600px; padding: 40px 30px;">
+        <div style="font-size: 80px; font-weight: 800; color: #ff3366; line-height: 1; margin-bottom: 10px;">500</div>
+        <h2 style="font-size: 26px; color: #ffffff; margin-bottom: 15px;">Internal Server Error</h2>
+        <p style="color: #a0a5b5; font-size: 16px; margin-bottom: 30px; line-height: 1.6;">
+            Something went wrong on our server. Our team has been notified and is working on fixing it.
+        </p>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'home' %}" class="signup" style="padding: 12px 25px; border-radius: 8px; text-decoration: none;">
+                <i class="fa-solid fa-house"></i> Back to Home
+            </a>
+            <a href="{% url 'contact' %}" class="login" style="padding: 12px 25px; border-radius: 8px; text-decoration: none;">
+                <i class="fa-solid fa-headset"></i> Contact Support
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

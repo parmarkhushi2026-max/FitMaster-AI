@@ -1,0 +1,79 @@
+{% extends 'dashboard_base.html' %}
+{% block title %}Packages{% endblock %}
+{% block page_title %}Membership Packages{% endblock %}
+{% block breadcrumb %}Admin / Packages{% endblock %}
+{% block user_role %}Administrator{% endblock %}
+{% block sidebar %}{% include "includes/admin_sidebar.html" %}{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+    <!-- Create Package -->
+    <div class="form-card">
+        <div class="form-title"><i class="fa-solid fa-plus text-accent"></i> Add New Package</div>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="package_id" value="">
+            <div class="form-grid" style="grid-template-columns:1fr">
+                <div class="form-group"><label>Package Name</label><input type="text" name="name" placeholder="e.g. 3 Months" required></div>
+                <div class="form-group"><label>Duration (months)</label><input type="number" name="duration_months" min="1" max="24" placeholder="e.g. 3" required></div>
+                <div class="form-group"><label>Price (₹)</label><input type="number" name="price" min="0" placeholder="e.g. 999" required></div>
+                <div class="form-group"><label>Description</label><textarea name="description" placeholder="What's included in this package..."></textarea></div>
+                <div class="form-group">
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+                        <input type="checkbox" name="is_active" checked style="width:auto;accent-color:var(--accent)">
+                        Active (visible to customers)
+                    </label>
+                </div>
+            </div>
+            <div class="form-actions"><button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save Package</button></div>
+        </form>
+    </div>
+
+    <!-- Package List -->
+    <div>
+        <div class="sec-hdr"><div class="sec-hdr-left"><h2>Existing Packages</h2><p>{{ packages|length }} packages configured</p></div></div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+        {% for p in packages %}
+        <div class="card">
+            <div class="card-hdr">
+                <div>
+                    <div class="fw-600">{{ p.name }}</div>
+                    <div class="text-muted" style="font-size:12px">{{ p.duration_months }} months</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px">
+                    <div style="font-size:18px;font-weight:700;color:var(--accent)">₹{{ p.price }}</div>
+                    {% if p.is_active %}<span class="badge badge-green">Active</span>{% else %}<span class="badge badge-red">Inactive</span>{% endif %}
+                    <form method="POST" style="display:inline" onsubmit="return confirm('Are you sure you want to delete package {{ p.name }}?')">
+                        {% csrf_token %}
+                        <input type="hidden" name="package_id" value="{{ p.id }}">
+                        <input type="hidden" name="action" value="delete">
+                        <button type="submit" class="btn btn-danger btn-sm" title="Delete Package"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </form>
+                </div>
+            </div>
+            <div style="padding:12px 18px">
+                <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">{{ p.description|default:"No description" }}</p>
+                <details>
+                    <summary style="cursor:pointer;font-size:12px;color:var(--accent)">Edit this package</summary>
+                    <form method="POST" style="margin-top:12px">
+                        {% csrf_token %}
+                        <input type="hidden" name="package_id" value="{{ p.id }}">
+                        <div class="form-grid" style="grid-template-columns:1fr 1fr">
+                            <div class="form-group"><label>Name</label><input type="text" name="name" value="{{ p.name }}" required></div>
+                            <div class="form-group"><label>Months</label><input type="number" name="duration_months" value="{{ p.duration_months }}" required></div>
+                            <div class="form-group"><label>Price</label><input type="number" name="price" value="{{ p.price }}" required></div>
+                            <div class="form-group"><label>Active</label><select name="is_active"><option value="on" {% if p.is_active %}selected{% endif %}>Yes</option><option value="" {% if not p.is_active %}selected{% endif %}>No</option></select></div>
+                        </div>
+                        <div class="form-group" style="margin-top:10px"><label>Description</label><textarea name="description">{{ p.description }}</textarea></div>
+                        <div class="form-actions"><button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-save"></i> Update</button></div>
+                    </form>
+                </details>
+            </div>
+        </div>
+        {% empty %}
+        <div class="card"><div class="card-body"><div class="empty-state"><i class="fa-solid fa-box"></i><p>No packages yet</p></div></div></div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+body{
+    font-family:Poppins,sans-serif;
+    background:#081420;
+    color:white;
+    padding:40px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+}
+
+form{
+    display:grid;
+    gap:15px;
+}
+
+input,
+select,
+button{
+    padding:14px;
+    font-size:16px;
+}
+
+button{
+    background:#00ff88;
+    border:none;
+    cursor:pointer;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:30px;
+}
+
+th{
+    background:#00ff88;
+    color:black;
+    padding:12px;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #444;
+}

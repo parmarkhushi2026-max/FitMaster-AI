@@ -1,0 +1,1718 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}FitMaster — Personalized Fitness Plans & Certified Coaching{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ==========================================================================
+   FITMASTER AI — PROTOCOL ALPHA STITCH DESIGN SYSTEM (CORAL FLAME THEME)
+   ========================================================================== */
+
+:root {
+    --stitch-primary: #ff5540;
+    --stitch-primary-glow: rgba(255, 85, 64, 0.4);
+    --stitch-primary-container: #5c0000;
+    --stitch-secondary: #ff8a7a;
+    --stitch-secondary-glow: rgba(255, 138, 122, 0.4);
+    --stitch-accent-purple: #488fff;
+    
+    --stitch-surface: #131313;
+    --stitch-surface-low: #1b1b1b;
+    --stitch-surface-high: #2a2a2a;
+    --stitch-surface-lowest: #0e0e0e;
+    
+    --stitch-border: rgba(255, 255, 255, 0.08);
+    --stitch-border-glow: rgba(255, 85, 64, 0.25);
+    --stitch-text: #ffffff;
+    --stitch-text-muted: #a1a1aa;
+    --stitch-text-dim: #71717a;
+}
+
+[data-theme="light"] {
+    --stitch-primary: #ff5540;
+    --stitch-primary-glow: rgba(255, 85, 64, 0.3);
+    --stitch-primary-container: #d93824;
+    --stitch-secondary: #2563eb;
+    --stitch-secondary-glow: rgba(37, 99, 235, 0.3);
+    --stitch-accent-purple: #488fff;
+
+    --stitch-surface: #ffffff;
+    --stitch-surface-low: #f8fafc;
+    --stitch-surface-high: #ffffff;
+    --stitch-surface-lowest: #f1f5f9;
+    --stitch-border: rgba(0, 0, 0, 0.08);
+    --stitch-border-glow: rgba(255, 85, 64, 0.35);
+    --stitch-text: #0f172a;
+    --stitch-text-muted: #475569;
+    --stitch-text-dim: #64748b;
+}
+
+/* Light Theme Overrides */
+[data-theme="light"] .stitch-hero {
+    background-image: 
+        radial-gradient(circle at 80% 25%, rgba(255, 85, 64, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 20% 70%, rgba(37, 99, 235, 0.12) 0%, transparent 55%),
+        linear-gradient(to top, rgba(248,250,252,0.96) 0%, rgba(248,250,252,0.65) 50%, rgba(248,250,252,0.3) 100%), 
+        url('https://lh3.googleusercontent.com/aida-public/AB6AXuCQuIZnrJ-pMLDqBIcY7Qw5XxnNGL-dp2yx144dJdwyno66IFu4MyO1VRkV_3o39JRADP97IlCpzannqsgG6GgNhmursKGWKiNp2Q2amfYxAOUks98fl388T4Xr90ku6ddrTJ7tAQOo6MZuGbXCEIsQWxTQczQD2g0E0frR9jYSrahjF_mN4O4d67R-yvxC4r4pRrtcJ67O-GZKgULd9EsF4VBOJ1aiG6rZseY7k89QdZpeqRyvx9ia4Q') !important;
+}
+
+[data-theme="light"] .stitch-hero-title {
+    color: #0f172a !important;
+    background: linear-gradient(135deg, #0f172a 40%, #ff5540 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme="light"] .stitch-hero-desc {
+    color: #334155 !important;
+    font-weight: 500;
+}
+
+[data-theme="light"] .stitch-badge-text {
+    color: #ff5540 !important;
+}
+
+[data-theme="light"] .stitch-badge-line {
+    background: linear-gradient(90deg, #ff5540, #2563eb) !important;
+}
+
+[data-theme="light"] .btn-stitch-primary {
+    background: linear-gradient(135deg, #ff5540 0%, #d93824 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 18px rgba(255, 85, 64, 0.3) !important;
+}
+
+[data-theme="light"] .btn-stitch-outline {
+    background: #ffffff !important;
+    border: 1.5px solid #ff5540 !important;
+    color: #ff5540 !important;
+}
+
+[data-theme="light"] .btn-stitch-outline:hover {
+    background: rgba(255, 85, 64, 0.08) !important;
+    color: #d93824 !important;
+}
+
+[data-theme="light"] .paradigm-img-box {
+    filter: none !important;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .timeline-media-side {
+    filter: none !important;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="light"] .architect-photo {
+    filter: none !important;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08) !important;
+}
+
+[data-theme="light"] .timeline-center-line {
+    background: linear-gradient(180deg, rgba(255,85,64,0.15) 0%, #ff5540 50%, rgba(255,85,64,0.15) 100%) !important;
+}
+
+[data-theme="light"] .timeline-node-pill {
+    background: linear-gradient(135deg, #ff5540, #2563eb) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 14px rgba(255, 85, 64, 0.35) !important;
+}
+
+[data-theme="light"] .timeline-node-pill.dim {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    border-color: rgba(0,0,0,0.1) !important;
+    box-shadow: none !important;
+}
+
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4 {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] p,
+[data-theme="light"] li,
+[data-theme="light"] span:not(.material-symbols-outlined):not(.product-stock-tag):not(.product-rating-tag) {
+    color: #334155;
+}
+
+[data-theme="light"] .stitch-quote {
+    border-left-color: #ff5540 !important;
+    color: #ff5540 !important;
+}
+
+[data-theme="light"] .calc-box-glass,
+[data-theme="light"] .calc-summary-card,
+[data-theme="light"] .faq-card-item,
+[data-theme="light"] .architect-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.02) !important;
+}
+
+[data-theme="light"] .calc-input-dark {
+    background: #f8fafc !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .calc-field-group label {
+    color: #0f172a !important;
+    font-weight: 700;
+}
+
+[data-theme="light"] .paradigm-telemetry-badge {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(0,0,0,0.08) !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
+}
+
+[data-theme="light"] .paradigm-telemetry-badge span:nth-child(2) {
+    color: #0f172a !important;
+}
+
+/* Transformation Cards */
+.transform-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.transform-card {
+    background: #0e0e11;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75);
+}
+
+.transform-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, #ffffff, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.transform-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 245, 155, 0.45);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 25px rgba(0, 245, 155, 0.15);
+}
+
+.transform-card:hover::before {
+    opacity: 1;
+}
+
+[data-theme="light"] .transform-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .transform-card:hover {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08) !important;
+    border-color: rgba(5, 150, 105, 0.4) !important;
+}
+
+/* Transformation Filters */
+.transform-filters {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.transform-filter-btn {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--stitch-text-muted);
+    padding: 7px 16px;
+    border-radius: 30px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.25s ease;
+}
+
+.transform-filter-btn:hover {
+    color: #ff5540;
+    border-color: #ff5540;
+    box-shadow: 0 0 15px rgba(255, 85, 64, 0.25);
+}
+
+.transform-filter-btn.active {
+    background: linear-gradient(135deg, #ff5540, #e03e2a);
+    color: #ffffff;
+    border-color: #ff5540;
+    box-shadow: 0 4px 16px rgba(255, 85, 64, 0.4);
+}
+
+[data-theme="light"] .transform-filter-btn {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #475569;
+}
+
+[data-theme="light"] .transform-filter-btn.active {
+    background: linear-gradient(135deg, #ff5540, #d93824) !important;
+    color: #ffffff !important;
+    border-color: #ff5540 !important;
+    box-shadow: 0 4px 15px rgba(255, 85, 64, 0.3) !important;
+}
+
+/* Packaging / Membership Pricing Grid on Home Page */
+.pkg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.pkg-card {
+    background: #0e0e11;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+    position: relative;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75);
+}
+
+.pkg-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 85, 64, 0.2);
+    border-color: rgba(255, 85, 64, 0.45);
+}
+
+.pkg-card.popular {
+    border: 2px solid #ff5540;
+    background: linear-gradient(180deg, rgba(255, 85, 64, 0.08) 0%, rgba(15, 23, 42, 0.85) 100%);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 85, 64, 0.25);
+}
+
+.pkg-popular-tag {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ff5540, #ff8a7a);
+    color: #ffffff;
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+    box-shadow: 0 0 16px rgba(255, 85, 64, 0.5);
+}
+
+.pkg-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pkg-icon {
+    font-size: 26px;
+    margin-bottom: 2px;
+}
+
+.pkg-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.pkg-desc {
+    font-size: 12.5px;
+    color: var(--stitch-text-muted);
+    line-height: 1.4;
+}
+
+.pkg-price-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin: 4px 0;
+}
+
+.pkg-price {
+    font-size: 34px;
+    font-weight: 900;
+    color: #ff5540;
+    letter-spacing: -0.5px;
+    text-shadow: 0 0 18px rgba(255, 85, 64, 0.35);
+}
+
+.pkg-duration {
+    font-size: 11.5px;
+    color: var(--stitch-text-muted);
+    font-weight: 600;
+}
+
+.pkg-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+}
+
+.pkg-features li {
+    font-size: 12px;
+    color: var(--stitch-text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pkg-features li i {
+    color: #ff5540;
+    font-size: 11px;
+}
+
+.btn-pkg-buy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    background: linear-gradient(135deg, #ff5540 0%, #e03e2a 100%);
+    color: #ffffff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 12.5px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 16px rgba(255, 85, 64, 0.35);
+}
+
+.btn-pkg-buy:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 85, 64, 0.55);
+    background: linear-gradient(135deg, #ff8a7a 0%, #ff5540 100%);
+}
+
+.btn-pkg-outline {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(255, 85, 64, 0.5);
+    color: #ffffff;
+}
+
+.btn-pkg-outline:hover {
+    background: #ff5540;
+    color: #ffffff;
+    border-color: #ff5540;
+}
+
+[data-theme="light"] .pkg-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="light"] .pkg-card.popular {
+    border: 2px solid #ff5540 !important;
+    background: linear-gradient(180deg, rgba(255, 85, 64, 0.06) 0%, #ffffff 100%) !important;
+}
+
+[data-theme="light"] .pkg-title {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .pkg-price {
+    color: #ff5540 !important;
+    text-shadow: none !important;
+}
+
+[data-theme="light"] .btn-pkg-buy {
+    background: linear-gradient(135deg, #ff5540, #d93824) !important;
+    color: #ffffff !important;
+}
+
+[data-theme="light"] .btn-pkg-outline {
+    background: #ffffff !important;
+    border: 1.5px solid #ff5540 !important;
+    color: #ff5540 !important;
+}
+
+[data-theme="light"] .btn-pkg-outline:hover {
+    background: #ff5540 !important;
+    color: #ffffff !important;
+}
+
+/* Unique Aurora Obsidian Background Canvas */
+.stitch-wrapper {
+    background-color: #0e0e0e;
+    background-image: 
+        radial-gradient(at 10% 15%, rgba(255, 85, 64, 0.14) 0px, transparent 50%),
+        radial-gradient(at 90% 25%, rgba(72, 143, 255, 0.15) 0px, transparent 55%),
+        radial-gradient(at 50% 60%, rgba(255, 138, 122, 0.09) 0px, transparent 50%),
+        radial-gradient(at 20% 85%, rgba(255, 85, 64, 0.11) 0px, transparent 50%),
+        radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 32px 32px;
+    background-attachment: fixed;
+    color: var(--stitch-text);
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+[data-theme="light"] .stitch-wrapper {
+    background-color: #f8fafc;
+    background-image: 
+        radial-gradient(at 12% 15%, rgba(255, 85, 64, 0.08) 0px, transparent 50%),
+        radial-gradient(at 88% 25%, rgba(37, 99, 235, 0.08) 0px, transparent 50%),
+        radial-gradient(at 50% 65%, rgba(72, 143, 255, 0.05) 0px, transparent 50%),
+        radial-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 30px 30px;
+    background-attachment: fixed;
+}
+
+/* Hero Section (Expansive & Sleek Aurora Backdrop) */
+.stitch-hero {
+    position: relative;
+    width: 100%;
+    min-height: clamp(560px, 72vh, 760px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-size: cover;
+    background-position: center 25%;
+    background-repeat: no-repeat;
+    background-image: 
+        radial-gradient(circle at 75% 30%, rgba(255, 85, 64, 0.28) 0%, transparent 60%),
+        radial-gradient(circle at 20% 65%, rgba(72, 143, 255, 0.22) 0%, transparent 55%),
+        linear-gradient(to top, #0e0e0e 0%, rgba(14,14,14,0.65) 45%, rgba(14,14,14,0.35) 100%), 
+        url('https://lh3.googleusercontent.com/aida-public/AB6AXuCQuIZnrJ-pMLDqBIcY7Qw5XxnNGL-dp2yx144dJdwyno66IFu4MyO1VRkV_3o39JRADP97IlCpzannqsgG6GgNhmursKGWKiNp2Q2amfYxAOUks98fl388T4Xr90ku6ddrTJ7tAQOo6MZuGbXCEIsQWxTQczQD2g0E0frR9jYSrahjF_mN4O4d67R-yvxC4r4pRrtcJ67O-GZKgULd9EsF4VBOJ1aiG6rZseY7k89QdZpeqRyvx9ia4Q');
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7);
+}
+
+.stitch-hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 90px 24px 80px;
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.stitch-protocol-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stitch-badge-line {
+    width: 32px;
+    height: 2px;
+    background: linear-gradient(90deg, #ff5540, #ff8a7a);
+}
+
+.stitch-badge-text {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ff5540;
+    text-shadow: 0 0 12px rgba(255, 85, 64, 0.4);
+}
+
+.stitch-hero-title {
+    font-size: clamp(32px, 4.2vw, 50px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    max-width: 820px;
+}
+
+.stitch-hero-desc {
+    font-size: clamp(13.5px, 1.2vw, 15px);
+    line-height: 1.55;
+    color: #94a3b8;
+    max-width: 560px;
+}
+
+.stitch-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.btn-stitch-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #ff5540 0%, #e03e2a 100%);
+    color: #ffffff;
+    padding: 11px 24px;
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 18px rgba(255, 85, 64, 0.4);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-stitch-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 85, 64, 0.6);
+    background: linear-gradient(135deg, #ff8a7a 0%, #ff5540 100%);
+}
+
+.btn-stitch-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(15, 23, 42, 0.6);
+    color: #f8fafc;
+    border: 1px solid rgba(255, 85, 64, 0.4);
+    padding: 11px 24px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+}
+
+.btn-stitch-outline:hover {
+    border-color: #ff5540;
+    color: #ff5540;
+    background: rgba(255, 85, 64, 0.12);
+    box-shadow: 0 0 18px rgba(255, 85, 64, 0.3);
+}
+
+/* Generic Section Styles (Compact Spacing) */
+.stitch-section {
+    padding: 38px 20px;
+    position: relative;
+}
+
+.stitch-container {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* Section 2: Smart BMI & Calorie Calculator */
+.bmi-engine-section {
+    background-color: rgba(10, 15, 29, 0.6);
+    backdrop-filter: blur(12px);
+    padding: 38px 20px 42px;
+    border-bottom: 1px solid var(--stitch-border);
+}
+
+.calc-box-glass {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 22px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 900px) {
+    .calc-box-glass {
+        grid-template-columns: 1fr;
+        padding: 18px;
+        gap: 18px;
+    }
+}
+
+.calc-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.calc-field-group label {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--stitch-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.calc-input-dark {
+    background: rgba(8, 12, 22, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 9px 12px;
+    color: #f8fafc;
+    font-size: 13.5px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.calc-input-dark:focus {
+    border-color: #ff5540;
+    box-shadow: 0 0 0 2px rgba(255, 85, 64, 0.25);
+}
+
+.calc-summary-card {
+    background: rgba(10, 15, 29, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 85, 64, 0.25);
+    border-radius: 12px;
+    padding: 18px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Section 3: Paradigm */
+.paradigm-split {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 24px;
+    align-items: center;
+}
+
+@media (max-width: 992px) {
+    .paradigm-split {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+.paradigm-img-box {
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #0d1527;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.55), 0 0 25px rgba(255, 85, 64, 0.12);
+    border: 1px solid rgba(255, 85, 64, 0.25);
+}
+
+.paradigm-telemetry-badge {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(8, 12, 22, 0.88);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 85, 64, 0.35);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.stitch-quote {
+    border-left: 3px solid #ff5540;
+    padding-left: 14px;
+    font-style: italic;
+    font-size: 14px;
+    color: #ff5540;
+    line-height: 1.5;
+}
+
+/* Section 4: Blueprint Timeline */
+.timeline-track-wrap {
+    position: relative;
+    padding: 18px 0;
+}
+
+.timeline-center-line {
+    position: absolute;
+    top: 0; bottom: 0; left: 50%;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(255,85,64,0.1) 0%, #ff5540 50%, rgba(255,138,122,0.2) 100%);
+    transform: translateX(-50%);
+}
+
+@media (max-width: 768px) {
+    .timeline-center-line { left: 20px; }
+}
+
+.timeline-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.timeline-row.reverse {
+    flex-direction: row-reverse;
+}
+
+@media (max-width: 768px) {
+    .timeline-row, .timeline-row.reverse {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 48px;
+        margin-bottom: 20px;
+    }
+}
+
+.timeline-node-pill {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #ff5540;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 12px;
+    box-shadow: 0 0 16px rgba(255, 85, 64, 0.5);
+    z-index: 5;
+}
+
+.timeline-node-pill.dim {
+    background: rgba(15, 23, 42, 0.85);
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+}
+
+@media (max-width: 768px) {
+    .timeline-node-pill {
+        left: 20px;
+        transform: translateX(-50%);
+    }
+}
+
+.timeline-content-side {
+    width: 42%;
+}
+
+@media (max-width: 768px) {
+    .timeline-content-side { width: 100%; margin-bottom: 10px; }
+}
+
+.timeline-media-side {
+    width: 42%;
+    height: 170px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    transition: transform 0.4s ease;
+}
+
+.timeline-media-side:hover {
+    transform: scale(1.03);
+}
+
+@media (max-width: 768px) {
+    .timeline-media-side { width: 100%; height: 150px; }
+}
+
+/* Section 5: Architect */
+.architect-card {
+    background: rgba(15, 23, 42, 0.78);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 18px;
+}
+
+@media (min-width: 992px) {
+    .architect-card {
+        flex-direction: row;
+    }
+}
+
+.architect-photo {
+    flex: 1;
+    min-height: 280px;
+    background-size: cover;
+    background-position: center;
+    background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCRP5HENKdNT_Xi_3oqwhCnYQMPQ4eIA13bAVhuBN9H5EI3WUWCqnCoJGDvNYYh8fSDy6UcX8ZLYEyGmlTr8PuvFndtImmhvP6-XZPET-OxV80YAhAUuh02JqzYX0hYxaWT5AA44OhwqTbX0_tr9_fWWe3giyPwn7lgQhR5JMAQpiKOZJmh4L50kQj6P78EELvNiTiVQOU6Gu972oB_2aTqOdOlv87BAYgROHlApwfxCaZhlWTLFcDHiw');
+    transition: transform 0.4s ease;
+}
+
+.architect-card:hover .architect-photo {
+    transform: scale(1.03);
+}
+
+.architect-bio {
+    flex: 1.4;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* Section 6: FAQ */
+.faq-wrap-dark {
+    background-color: rgba(7, 11, 20, 0.7);
+    backdrop-filter: blur(12px);
+    padding: 40px 20px 46px;
+}
+
+.faq-card-item {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 14px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-bottom: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.faq-card-item:hover {
+    background: rgba(22, 33, 58, 0.85);
+    border-color: rgba(245, 184, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.faq-answer-collapse {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+}
+
+.faq-answer-collapse.active {
+    max-height: 500px;
+    transition: max-height 0.3s ease-in-out;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="stitch-wrapper">
+
+    <!-- ================= 1. HERO SECTION ================= -->
+    <section class="stitch-hero">
+        <div class="stitch-hero-content">
+            
+            <div class="stitch-protocol-badge">
+                <span class="stitch-badge-line"></span>
+                <span class="stitch-badge-text">✨ Trusted by 10,000+ Happy Fitness Members</span>
+            </div>
+
+            <h1 class="stitch-hero-title">
+                Transform Your Body.<br>Elevate Your Life.
+            </h1>
+
+            <p class="stitch-hero-desc">
+                Personalized workouts, balanced nutrition plans, and caring 1-on-1 coach support to help you get fitter, stronger, and full of energy every single day.
+            </p>
+
+            <div class="stitch-hero-actions">
+                {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn-stitch-primary">
+                    <span>Go to My Dashboard</span>
+                    <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+                </a>
+                {% else %}
+                <a href="{% url 'signup' %}" class="btn-stitch-primary">
+                    <span>Start Your Journey Free</span>
+                    <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+                </a>
+                {% endif %}
+
+                <a href="#packages" class="btn-stitch-outline">
+                    <span class="material-symbols-outlined" style="font-size:18px;">card_membership</span>
+                    <span>View Membership Plans</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ================= 2. SMART BMI & NUTRITION CALCULATOR ================= -->
+    <section class="bmi-engine-section" id="bmi-calculator">
+        <div class="stitch-container">
+            
+            <div style="text-align:center;max-width:680px;margin:0 auto 22px;">
+                <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:24px;background:rgba(255,85,64,0.12);border:1px solid rgba(255,85,64,0.3);color:#ff5540;font-size:11px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:8px;">
+                    <span class="material-symbols-outlined" style="font-size:15px;">calculate</span>
+                    <span>🥗 Daily Health Calculator</span>
+                </div>
+                <h2 style="font-size:clamp(24px, 3.2vw, 34px);font-weight:900;color:var(--stitch-text);letter-spacing:-0.5px;margin:0;">
+                    Smart BMI & Nutrition Calculator
+                </h2>
+                <p style="font-size:13.5px;color:var(--stitch-text-muted);margin-top:6px;line-height:1.5;">
+                    Discover your ideal daily calorie intake, healthy target weight, and tailored protein & nutrition breakdown in seconds.
+                </p>
+            </div>
+
+            <div class="calc-box-glass" style="max-width:1120px;margin:0 auto;">
+                
+                <!-- Left Input Matrix -->
+                <div style="display:flex;flex-direction:column;gap:14px;">
+                    
+                    <!-- Height & Weight -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                        <div class="calc-field-group">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <label for="calcHeight">Height (cm)</label>
+                                <span id="heightValLabel" style="font-size:11.5px;font-weight:700;color:#ff5540;">175 cm</span>
+                            </div>
+                            <input type="range" id="calcHeightSlider" min="120" max="230" value="175" step="1" oninput="syncHeight(this.value)" style="accent-color:#ff5540;cursor:pointer;margin:2px 0 6px;">
+                            <input type="number" id="calcHeight" class="calc-input-dark" value="175" min="100" max="250" oninput="syncHeightSlider(this.value)">
+                        </div>
+
+                        <div class="calc-field-group">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <label for="calcWeight">Weight (kg)</label>
+                                <span id="weightValLabel" style="font-size:11.5px;font-weight:700;color:#ff5540;">74 kg</span>
+                            </div>
+                            <input type="range" id="calcWeightSlider" min="35" max="180" value="74" step="0.5" oninput="syncWeight(this.value)" style="accent-color:#ff5540;cursor:pointer;margin:2px 0 6px;">
+                            <input type="number" id="calcWeight" class="calc-input-dark" value="74" min="30" max="250" oninput="syncWeightSlider(this.value)">
+                        </div>
+                    </div>
+
+                    <!-- Age & Gender -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                        <div class="calc-field-group">
+                            <label for="calcAge">Age (Years)</label>
+                            <input type="number" id="calcAge" class="calc-input-dark" value="26" min="12" max="100" oninput="calculateBMI()">
+                        </div>
+                        <div class="calc-field-group">
+                            <label for="calcGender">Gender</label>
+                            <select id="calcGender" class="calc-input-dark" onchange="calculateBMI()">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Activity Level -->
+                    <div class="calc-field-group">
+                        <label for="calcActivity">Daily Activity Level</label>
+                        <select id="calcActivity" class="calc-input-dark" onchange="calculateBMI()">
+                            <option value="1.2">Sedentary (Desk Job / Light Walking)</option>
+                            <option value="1.375">Lightly Active (1-3 Workouts / Week)</option>
+                            <option value="1.55" selected>Moderately Active (3-5 Workouts / Week)</option>
+                            <option value="1.725">Very Active (6-7 Workouts / Week)</option>
+                            <option value="1.9">Athlete / High Energy Training</option>
+                        </select>
+                    </div>
+
+                    <!-- Goal Vector -->
+                    <div class="calc-field-group">
+                        <label for="calcGoal">Your Primary Goal</label>
+                        <select id="calcGoal" class="calc-input-dark" onchange="calculateBMI()">
+                            <option value="maintain">Healthy Weight Maintenance & Energy</option>
+                            <option value="cut">Fat Loss & Toning (-500 kcal)</option>
+                            <option value="bulk">Muscle Gain & Strength (+350 kcal)</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- Right Live Score Card & Spectrum -->
+                <div class="calc-summary-card" style="box-shadow:0 8px 24px rgba(0,0,0,0.3);">
+                    <div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span style="font-size:11px;font-weight:800;color:var(--stitch-text-muted);text-transform:uppercase;letter-spacing:0.8px;">Your Health Summary</span>
+                            <span style="font-size:10.5px;font-weight:700;color:#ff5540;">✨ Instant Analysis</span>
+                        </div>
+
+                        <div style="margin:12px 0 8px;display:flex;align-items:baseline;gap:10px;">
+                            <div id="bmiValDisplay" style="font-size:42px;font-weight:900;color:#ff5540;line-height:1;letter-spacing:-0.5px;">24.2</div>
+                            <div style="display:flex;flex-direction:column;">
+                                <span style="font-size:11.5px;font-weight:800;text-transform:uppercase;color:var(--stitch-text);">BMI Score</span>
+                                <span id="bmiCategoryBadge" style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:10.5px;font-weight:800;background:rgba(255,85,64,0.15);color:#ff5540;margin-top:2px;">
+                                    Optimal Healthy Weight
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Spectrum Gauge Bar -->
+                        <div style="margin:12px 0 16px;">
+                            <div style="display:flex;justify-content:space-between;font-size:9.5px;font-weight:700;color:var(--stitch-text-muted);text-transform:uppercase;margin-bottom:3px;">
+                                <span>Under (&lt;18.5)</span>
+                                <span>Normal (18.5-25)</span>
+                                <span>Over (25-30)</span>
+                                <span>High (30+)</span>
+                            </div>
+                            <div style="position:relative;height:7px;border-radius:4px;background:linear-gradient(90deg, #60efff 0%, #ff5540 30%, #ffb703 70%, #ef4444 100%);overflow:hidden;">
+                                <div id="spectrumMarker" style="position:absolute;top:0;bottom:0;width:4px;background:#ffffff;box-shadow:0 0 8px #ffffff;border-radius:2px;left:45%;transition:left 0.3s cubic-bezier(0.16,1,0.3,1);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Macro Target Breakdown -->
+                    <div style="padding-top:14px;border-top:1px solid var(--stitch-border);">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                            <span style="font-size:12.5px;font-weight:600;color:var(--stitch-text-muted);">Recommended Daily Calories</span>
+                            <span style="font-weight:900;font-size:16px;color:var(--stitch-text);" id="calorieValDisplay">2,450 kcal</span>
+                        </div>
+                        
+                        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center;">
+                            <div style="padding:6px 4px;border-radius:6px;background:var(--stitch-surface-low);border:1px solid var(--stitch-border);">
+                                <div style="font-size:9.5px;color:var(--stitch-text-muted);font-weight:700;">PROTEIN</div>
+                                <div style="font-weight:800;color:#ff5540;font-size:13px;" id="proteinValDisplay">150g</div>
+                            </div>
+                            <div style="padding:6px 4px;border-radius:6px;background:var(--stitch-surface-low);border:1px solid var(--stitch-border);">
+                                <div style="font-size:9.5px;color:var(--stitch-text-muted);font-weight:700;">CARBS</div>
+                                <div style="font-weight:800;color:#60efff;font-size:13px;" id="carbsValDisplay">260g</div>
+                            </div>
+                            <div style="padding:6px 4px;border-radius:6px;background:var(--stitch-surface-low);border:1px solid var(--stitch-border);">
+                                <div style="font-size:9.5px;color:var(--stitch-text-muted);font-weight:700;">FATS</div>
+                                <div style="font-weight:800;color:#ffb703;font-size:13px;" id="fatsValDisplay">68g</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Direct Action CTA -->
+                    <a href="{% url 'signup' %}" class="btn-stitch-primary" style="margin-top:14px;justify-content:center;padding:10px 16px;font-size:12px;">
+                        Get My Personalized Plan Free →
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= 3. OUR PHILOSOPHY ================= -->
+    <section class="stitch-section">
+        <div class="stitch-container">
+            
+            <div class="paradigm-split">
+                
+                <!-- Left: Warm human trainer photo with live badge -->
+                <div class="paradigm-img-box" style="background-image: url('{% static 'images/human_coach.jpg' %}');">
+                    <div class="paradigm-telemetry-badge">
+                        <span style="font-size:10.5px;font-weight:700;color:#ff5540;text-transform:uppercase;letter-spacing:0.06em;">🌟 Coach Guided</span>
+                        <span style="font-size:30px;font-weight:800;color:#ffffff;line-height:1;">94%</span>
+                        <span style="font-size:11.5px;color:#bbcabf;">Member Consistency Rate</span>
+                    </div>
+                </div>
+
+                <!-- Right: Friendly Philosophy Copy -->
+                <div style="display:flex;flex-direction:column;gap:16px;">
+                    <div>
+                        <span style="font-size:11.5px;font-weight:700;color:#ff5540;text-transform:uppercase;letter-spacing:0.1em;">[ 01 ] Our Philosophy</span>
+                        <h2 style="font-size:clamp(24px, 3.2vw, 34px);font-weight:800;color:#dde4dd;margin-top:4px;line-height:1.2;">
+                            Fitness Made Simple, Sustainable & Enjoyable
+                        </h2>
+                    </div>
+
+                    <div style="font-size:14.5px;color:#bbcabf;line-height:1.6;display:flex;flex-direction:column;gap:10px;">
+                        <p>
+                            No crash diets. No extreme burnout. We believe true transformation happens when enjoyable workouts and balanced nutrition seamlessly fit into your everyday life.
+                        </p>
+                        <p>
+                            Whether you're stepping into fitness for the first time or looking to reach peak personal strength, our coaches provide the caring guidance, motivation, and proven plans to help you thrive.
+                        </p>
+                    </div>
+
+                    <blockquote class="stitch-quote">
+                        "Consistency always beats perfection. Build healthy daily habits, celebrate your small wins, and fall in love with becoming your best self."
+                    </blockquote>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= 4. YOUR 3-STEP FITNESS JOURNEY ================= -->
+    <section class="stitch-section blueprint-bg" id="blueprint">
+        <div class="stitch-container" style="max-width:1080px;">
+            
+            <div style="text-align:center;max-width:650px;margin:0 auto 24px;">
+                <h2 style="font-size:clamp(24px, 3.2vw, 32px);font-weight:800;color:#dde4dd;margin-bottom:8px;">
+                    Your 3-Step Fitness Journey
+                </h2>
+                <p style="font-size:14.5px;color:#bbcabf;line-height:1.5;">
+                    A simple, supportive path designed to take you from where you are today to your dream health and strength.
+                </p>
+            </div>
+
+            <div class="timeline-track-wrap">
+                <div class="timeline-center-line"></div>
+
+                <!-- Node 01 -->
+                <div class="timeline-row">
+                    <div class="timeline-node-pill">01</div>
+                    <div class="timeline-content-side">
+                        <h3 style="font-size:19px;font-weight:700;color:#dde4dd;margin-bottom:6px;">Discover Your Goals</h3>
+                        <p style="font-size:13.5px;color:#bbcabf;line-height:1.55;">
+                            We learn about your lifestyle, food preferences, and personal fitness goals to build a routine that feels exciting, comfortable, and tailored just for you.
+                        </p>
+                    </div>
+                    <div class="timeline-media-side" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAvBZDUoNToW9xWoWRoUgCQu7-OVinbX02Mn_FVlio7b3-YxuH7BunQN0rKpwqs7N3u9fS6CfZvwmtgAhRMAXQ3KAGFpgh2SYwenrBNdqTiD-LDBKv5xc_rYNZRhiV-kInAkpvRhrHxgfbNreqKWuV1ZW7evGYwkoghzsvu_-rqQmkvsC0B5A_85CdTFeVY7VkB5ehYRFaoUraQq_AJE1I5tYaHpvSPpitnerf9PxSVPDEEg2-2TBRoIA');"></div>
+                </div>
+
+                <!-- Node 02 -->
+                <div class="timeline-row reverse">
+                    <div class="timeline-node-pill dim">02</div>
+                    <div class="timeline-content-side">
+                        <h3 style="font-size:19px;font-weight:700;color:#dde4dd;margin-bottom:6px;">Tailored Workouts & Meals</h3>
+                        <p style="font-size:13.5px;color:#bbcabf;line-height:1.55;">
+                            Follow easy-to-understand workout routines and delicious, balanced meal plans that keep your metabolism active and your energy high throughout the day.
+                        </p>
+                    </div>
+                    <div class="timeline-media-side" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCr13KzDedCfotbTpD72C-Fd8ytfvvscN0LuKi52c-0fQgNvZp_kEY_Ro-NGekgQ_efXaaVpCVqlFs1S-VR3yPOlIDuCYxuoESITsXwiZvHGXx6J_s1uRTOdnj2X3YqS415ur6H0rzCDf4UWV6jOY5bpCd2yI5vgBXwyND6BCIM-OWTDBbz7dUbG3SQlTpXouAUxC9-0PY6D2GMis1_UbW6WABY4RkcLvgkTVpMU5mpnxJAFbTHyphLog');"></div>
+                </div>
+
+                <!-- Node 03 -->
+                <div class="timeline-row">
+                    <div class="timeline-node-pill dim">03</div>
+                    <div class="timeline-content-side">
+                        <h3 style="font-size:19px;font-weight:700;color:#dde4dd;margin-bottom:6px;">Lifelong Habits & Confidence</h3>
+                        <p style="font-size:13.5px;color:#bbcabf;line-height:1.55;">
+                            Celebrate weekly milestones with certified coach check-ins, steady progress updates, and a healthy lifestyle you'll love keeping for years to come.
+                        </p>
+                    </div>
+                    <div class="timeline-media-side" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD65EUyvDkHP-e9jiBm-euoV3Do4-M6qGw_We5slloLxhZ-CDbyxF3Uo88yRRlNcJch-06Tfl-qs6TWMRVSQdzbSOKyFKNwInkHwvfjjUvgQAL7AHj8JJKSEem0mCCwppv98bjvBLjSsbeWV6NPV7yLGkZ_MpwcekpgXIUyTm_cYlRBhprsatC1mp4UB9FMusIZuADK6Rb83jDAGcxdTFRKCqGJV7YVtdN_qD3UthlDndr4TSYszebqxQ');"></div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= 5. ATHLETE TRANSFORMATIONS & SOCIAL PROOF ================= -->
+    <section class="stitch-section" id="results">
+        <div class="stitch-container">
+            
+            <div style="text-align:center;max-width:700px;margin:0 auto 18px;">
+                <span style="font-size:11.5px;font-weight:700;color:#ff5540;text-transform:uppercase;letter-spacing:0.1em;">[ 04 ] Real Stories & Results</span>
+                <h2 style="font-size:clamp(24px, 3.2vw, 34px);font-weight:800;color:#dde4dd;margin-top:4px;line-height:1.2;">
+                    Real Transformations. Real People.
+                </h2>
+                <p style="font-size:14px;color:#bbcabf;line-height:1.5;margin-top:6px;">
+                    Heartfelt stories and quantified results from active members who transformed their health, body, and confidence with us.
+                </p>
+            </div>
+
+            <!-- Interactive Category Filter -->
+            <div class="transform-filters">
+                <button type="button" class="transform-filter-btn active" onclick="filterTransformations('all', this)">
+                    <i class="fa-solid fa-layer-group"></i> All Stories
+                </button>
+                <button type="button" class="transform-filter-btn" onclick="filterTransformations('hypertrophy', this)">
+                    <i class="fa-solid fa-dumbbell"></i> Muscle & Tone
+                </button>
+                <button type="button" class="transform-filter-btn" onclick="filterTransformations('fatloss', this)">
+                    <i class="fa-solid fa-fire-flame-curved"></i> Weight Loss
+                </button>
+                <button type="button" class="transform-filter-btn" onclick="filterTransformations('strength', this)">
+                    <i class="fa-solid fa-bolt"></i> Strength & Energy
+                </button>
+            </div>
+
+            <div class="transform-grid" id="transformGrid">
+                
+                <!-- Card 1: Hypertrophy -->
+                <div class="transform-card" data-category="hypertrophy">
+                    <div style="display:flex;align-items:center;justify-content:space-between;">
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #ff5540, #ff8a7a);display:flex;align-items:center;justify-content:center;font-weight:800;color:#ffffff;font-size:14px;">AR</div>
+                            <div>
+                                <h4 style="font-size:14px;font-weight:700;color:#dde4dd;margin:0;">Alex R.</h4>
+                                <span style="font-size:11px;color:#ff5540;font-weight:600;">Muscle & Tone &bull; 16 Wks</span>
+                            </div>
+                        </div>
+                        <span style="background:rgba(255,85,64,0.15);color:#ff5540;padding:3px 8px;border-radius:16px;font-size:10.5px;font-weight:700;border:1px solid rgba(255,85,64,0.3);">
+                            <i class="fa-solid fa-circle-check"></i> Verified Member
+                        </span>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--stitch-surface);padding:10px 12px;border-radius:10px;border:1px solid var(--stitch-border);">
+                        <div>
+                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Body Fat</span>
+                            <div style="font-size:15px;font-weight:800;color:#dde4dd;margin-top:1px;">18.4% → <span style="color:#ff5540;">9.1%</span></div>
+                        </div>
+                        <div>
+                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Lean Muscle</span>
+                            <div style="font-size:15px;font-weight:800;color:#ff5540;margin-top:1px;">+5.8 kg</div>
+                        </div>
+                    </div>
+
+                    <p style="font-size:13px;color:#bbcabf;line-height:1.55;font-style:italic;margin:0;">
+                        "The daily coaching and clear workout steps completely changed my relationship with fitness. Feeling healthier and more confident than ever at 32!"
+                    </p>
+                </div>
+
+                <!-- Card 2: Fat Loss -->
+                <div class="transform-card" data-category="fatloss">
+                    <div style="display:flex;align-items:center;justify-content:space-between;">
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #ffb703, #ff7b00);display:flex;align-items:center;justify-content:center;font-weight:800;color:#002113;font-size:14px;">EK</div>
+                            <div>
+                                <h4 style="font-size:14px;font-weight:700;color:#dde4dd;margin:0;">Elena K.</h4>
+                                <span style="font-size:11px;color:#ffb703;font-weight:600;">Healthy Fat Loss &bull; 12 Wks</span>
+                            </div>
+                        </div>
+                        <span style="background:rgba(255,183,3,0.15);color:#ffb703;padding:3px 8px;border-radius:16px;font-size:10.5px;font-weight:700;border:1px solid rgba(255,183,3,0.3);">
+                            <i class="fa-solid fa-circle-check"></i> Verified Member
+                        </span>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--stitch-surface);padding:10px 12px;border-radius:10px;border:1px solid var(--stitch-border);">
+                        <div>
+                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Total Weight</span>
+                            <div style="font-size:15px;font-weight:800;color:#dde4dd;margin-top:1px;">74kg → <span style="color:#ff5540;">62kg</span></div>
+                        </div>
+                        <div>
+                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Resting HR</span>
+                            <div style="font-size:15px;font-weight:800;color:#ff5540;margin-top:1px;">54 BPM (-18)</div>
+                        </div>
+                    </div>
+
+                    <p style="font-size:13px;color:#bbcabf;line-height:1.55;font-style:italic;margin:0;">
+                        "FitMaster made healthy eating and home workouts so simple to manage alongside my busy work schedule. My daily stamina is incredible!"
+                    </p>
+                </div>
+
+                <!-- Card 3: Max Strength -->
+                <div class="transform-card" data-category="strength">
+                    <div style="display:flex;align-items:center;justify-content:space-between;">
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #60efff, #0061ff);display:flex;align-items:center;justify-content:center;font-weight:800;color:#002113;font-size:14px;">MD</div>
+                            <div>
+                                <h4 style="font-size:14px;font-weight:700;color:#dde4dd;margin:0;">Marcus D.</h4>
+                                <span style="font-size:11px;color:#60efff;font-weight:600;">Strength & Conditioning &bull; 20 Wks</span>
+                            </div>
+                        </div>
+                        <span style="background:rgba(96,239,255,0.15);color:#60efff;padding:3px 8px;border-radius:16px;font-size:10.5px;font-weight:700;border:1px solid rgba(96,239,255,0.3);">
+                            <i class="fa-solid fa-circle-check"></i> Verified Member
+                        </span>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--stitch-surface);padding:10px 12px;border-radius:10px;border:1px solid var(--stitch-border);">
+                        <div>
+                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Squat 1RM</span>
+                            <div style="font-size:15px;font-weight:800;color:#dde4dd;margin-top:1px;">140kg → <span style="color:#ff5540;">195kg</span></div>
+                        </div>
+                        <div>
+                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Bench 1RM</span>
+                            <div style="font-size:15px;font-weight:800;color:#ff5540;margin-top:1px;">145 kg (+35kg)</div>
+                        </div>
+                    </div>
+
+                    <p style="font-size:13px;color:#bbcabf;line-height:1.55;font-style:italic;margin:0;">
+                        "The personalized workout progression and progress tracking kept me motivated every single week without injury or burnouts."
+                    </p>
+                </div>
+
+                <!-- Card 4: Recomp -->
+                <div class="transform-card" data-category="hypertrophy">
+                    <div style="display:flex;align-items:center;justify-content:space-between;">
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #ff5540, #ff8a7a);display:flex;align-items:center;justify-content:center;font-weight:800;color:#ffffff;font-size:14px;">SK</div>
+                            <div>
+                                <h4 style="font-size:14px;font-weight:700;color:#dde4dd;margin:0;">Sarah K.</h4>
+                                <span style="font-size:11px;color:#ff5540;font-weight:600;">Lifestyle Recomp &bull; 14 Wks</span>
+                            </div>
+                        </div>
+                        <span style="background:rgba(255,85,64,0.15);color:#ff5540;padding:3px 8px;border-radius:16px;font-size:10.5px;font-weight:700;border:1px solid rgba(255,85,64,0.3);">
+                            <i class="fa-solid fa-circle-check"></i> Verified Member
+                        </span>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--stitch-surface);padding:10px 12px;border-radius:10px;border:1px solid var(--stitch-border);">
+                        <div>
+                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Waistline</span>
+                            <div style="font-size:15px;font-weight:800;color:#dde4dd;margin-top:1px;">32" → <span style="color:#ff5540;">26"</span></div>
+                        </div>
+                        <div>
+                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Deadlift 1RM</span>
+                            <div style="font-size:15px;font-weight:800;color:#ff5540;margin-top:1px;">130 kg (+40kg)</div>
+                        </div>
+                    </div>
+
+                    <p style="font-size:13px;color:#bbcabf;line-height:1.55;font-style:italic;margin:0;">
+                        "Lost 6 inches off my waist and discovered a genuine love for fitness. The personal trainer support makes all the difference!"
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= 6. MEMBERSHIP PACKAGES ================= -->
+    <section class="stitch-section" id="packages" style="background: rgba(0,0,0,0.15);">
+        <div class="stitch-container">
+            
+            <div style="text-align:center;max-width:700px;margin:0 auto 16px;">
+                <span style="font-size:11.5px;font-weight:700;color:#ff5540;text-transform:uppercase;letter-spacing:0.1em;">💎 Membership Plans</span>
+                <h2 style="font-size:clamp(24px, 3.2vw, 34px);font-weight:800;color:#dde4dd;margin-top:4px;line-height:1.2;">
+                    Simple, Transparent Pricing
+                </h2>
+                <p style="font-size:13.5px;color:#bbcabf;line-height:1.5;margin-top:6px;">
+                    Choose the plan that fits your lifestyle. Start your transformation today with certified trainer guidance.
+                </p>
+            </div>
+
+            <div class="pkg-grid">
+                {% for pkg in packages %}
+                <div class="pkg-card {% if forloop.counter == 2 %}popular{% endif %}">
+                    {% if forloop.counter == 2 %}
+                    <div class="pkg-popular-tag">⭐ Most Popular Plan</div>
+                    {% endif %}
+                    
+                    <div class="pkg-header">
+                        <div class="pkg-icon">
+                            {% if pkg.duration_months <= 3 %}🌱{% elif pkg.duration_months <= 6 %}⚡{% else %}👑{% endif %}
+                        </div>
+                        <h3 class="pkg-title">{{ pkg.name }}</h3>
+                        <p class="pkg-desc">{{ pkg.description }}</p>
+                        
+                        <div class="pkg-price-wrap">
+                            <span class="pkg-price">₹{{ pkg.price }}</span>
+                            <span class="pkg-duration">/ {{ pkg.duration_months }} Months</span>
+                        </div>
+                    </div>
+
+                    <ul class="pkg-features">
+                        <li><i class="fa-solid fa-circle-check"></i> Gym & facility access</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Personalized Daily Workout Plans</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Custom Nutrition & Diet Guides</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Certified Personal Trainer Assignment</li>
+                        {% if pkg.duration_months >= 6 %}
+                        <li><i class="fa-solid fa-circle-check"></i> Weekly Progress & Body Tracking</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Direct Chat with Your Coach</li>
+                        {% endif %}
+                        {% if pkg.duration_months >= 12 %}
+                        <li><i class="fa-solid fa-circle-check"></i> VIP 24/7 Priority Support</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Unlimited 1-on-1 Personal Training</li>
+                        {% endif %}
+                    </ul>
+
+                    <div>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'payment' %}?plan={{ pkg.name|urlencode }}&price={{ pkg.price }}" class="btn-pkg-buy {% if forloop.counter != 2 %}btn-pkg-outline{% endif %}">
+                            <span>Get {{ pkg.name }} Plan</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'payment' %}?plan={{ pkg.name|urlencode }}&price={{ pkg.price }}" class="btn-pkg-buy {% if forloop.counter != 2 %}btn-pkg-outline{% endif %}">
+                            <span>Get Started Now</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div style="grid-column:1/-1;text-align:center;color:#bbcabf;padding:30px;">
+                    No packages loaded currently.
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= 7. LETTER FROM HEAD COACH ================= -->
+    <section class="stitch-section">
+        <div class="stitch-container">
+            
+            <div class="architect-card">
+                
+                <div class="architect-photo"></div>
+
+                <div class="architect-bio">
+                    <div>
+                        <h2 style="font-size:clamp(22px, 2.8vw, 30px);font-weight:800;color:#dde4dd;line-height:1.15;margin-bottom:4px;">A Message From Our Head Coach</h2>
+                        <span style="font-size:11px;font-weight:700;color:#ff5540;text-transform:uppercase;letter-spacing:0.1em;">Marcus Vance // Head Coach & Co-Founder</span>
+                    </div>
+
+                    <div style="font-size:14px;color:#bbcabf;line-height:1.6;display:flex;flex-direction:column;gap:10px;">
+                        <p>
+                            When we built FitMaster, our dream was simple: to make world-class personal training, caring coach guidance, and healthy nutrition accessible to everyone.
+                        </p>
+                        <p>
+                            Fitness shouldn't feel intimidating, confusing, or lonely. It should empower you, boost your daily energy, and help you live with unstoppable confidence.
+                        </p>
+                        <p style="color:#dde4dd;font-weight:600;">
+                            You don't have to be great to start, but you have to start to be great. We're excited to welcome you to our fitness family!
+                        </p>
+                    </div>
+
+                    <div style="margin-top:6px;display:flex;flex-direction:column;gap:2px;">
+                        <span style="font-size:26px;font-weight:700;color:rgba(221,228,221,0.4);font-style:italic;letter-spacing:-0.5px;">Marcus Vance</span>
+                        <span style="font-size:10px;font-weight:700;color:#ff5540;text-transform:uppercase;letter-spacing:0.08em;">FitMaster Team &bull; Certified Master Trainers</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ================= 8. FREQUENTLY ASKED QUESTIONS ================= -->
+    <section class="faq-wrap-dark">
+        <div class="stitch-container" style="max-width:860px;">
+            
+            <div style="text-align:center;margin-bottom:20px;">
+                <h2 style="font-size:clamp(22px, 2.8vw, 30px);font-weight:800;color:#dde4dd;margin-bottom:4px;">Frequently Asked Questions</h2>
+                <p style="font-size:13.5px;color:#bbcabf;">Got questions? We're here to help you every step of the way!</p>
+            </div>
+
+            <!-- FAQ Container -->
+            <div id="faq-container">
+                
+                <!-- FAQ 1 -->
+                <div class="faq-card-item" onclick="toggleStitchFaq(this)">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <h3 style="font-size:14.5px;font-weight:700;color:#dde4dd;margin:0;">Is FitMaster suitable for complete beginners?</h3>
+                        <span class="material-symbols-outlined faq-icon-sym" style="color:#ff5540;font-size:20px;transition:transform 0.3s;">add</span>
+                    </div>
+                    <div class="faq-answer-collapse">
+                        <p style="font-size:13px;color:#bbcabf;line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--stitch-border);">
+                            Yes, absolutely! Every workout plan is tailored to your current fitness level. Whether you are stepping into a gym for the very first time or have years of experience, your workouts start at a comfortable pace and progress naturally.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-card-item" onclick="toggleStitchFaq(this)">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <h3 style="font-size:14.5px;font-weight:700;color:#dde4dd;margin:0;">How do the personalized meal and diet plans work?</h3>
+                        <span class="material-symbols-outlined faq-icon-sym" style="color:#ff5540;font-size:20px;transition:transform 0.3s;">add</span>
+                    </div>
+                    <div class="faq-answer-collapse">
+                        <p style="font-size:13px;color:#bbcabf;line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--stitch-border);">
+                            You receive simple, delicious meal plans built around your dietary preferences (vegetarian, non-veg, vegan, etc.) and daily calorie targets. No extreme starvation or complicated recipes—just wholesome, energizing foods.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-card-item" onclick="toggleStitchFaq(this)">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <h3 style="font-size:14.5px;font-weight:700;color:#dde4dd;margin:0;">Can I workout at home or do I need a gym membership?</h3>
+                        <span class="material-symbols-outlined faq-icon-sym" style="color:#ff5540;font-size:20px;transition:transform 0.3s;">add</span>
+                    </div>
+                    <div class="faq-answer-collapse">
+                        <p style="font-size:13px;color:#bbcabf;line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--stitch-border);">
+                            You can do both! FitMaster offers bodyweight and dumbbell home workout routines as well as comprehensive gym training programs. You choose what fits your schedule best.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-card-item" onclick="toggleStitchFaq(this)">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <h3 style="font-size:14.5px;font-weight:700;color:#dde4dd;margin:0;">How do I get in touch with my assigned trainer?</h3>
+                        <span class="material-symbols-outlined faq-icon-sym" style="color:#ff5540;font-size:20px;transition:transform 0.3s;">add</span>
+                    </div>
+                    <div class="faq-answer-collapse">
+                        <p style="font-size:13px;color:#bbcabf;line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--stitch-border);">
+                            Once you log in, your dedicated trainer's details, schedules, and custom plans are available directly in your dashboard. You can track your progress, request routine adjustments, and get personalized advice anytime.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Warm Human CTA Banner -->
+            <div style="display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:28px;padding:24px 20px;border-radius:14px;background:var(--stitch-surface);border:1px solid var(--stitch-border);">
+                <h3 style="font-size:21px;font-weight:800;color:#dde4dd;margin-bottom:6px;">Ready to Transform Your Fitness?</h3>
+                <p style="font-size:13.5px;color:#bbcabf;max-width:520px;margin-bottom:14px;line-height:1.5;">
+                    Join thousands of members who are reaching their health and strength goals with expert coach guidance.
+                </p>
+                {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn-stitch-primary" style="padding:11px 24px;font-size:12.5px;">
+                    <span>Open My Dashboard</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                {% else %}
+                <a href="{% url 'signup' %}" class="btn-stitch-primary" style="padding:11px 24px;font-size:12.5px;">
+                    <span>Start Your Transformation Free</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+<!-- Interactive Scripts -->
+<script>
+function syncHeight(val) {
+    document.getElementById('calcHeight').value = val;
+    document.getElementById('heightValLabel').textContent = val + ' cm';
+    calculateBMI();
+}
+
+function syncHeightSlider(val) {
+    document.getElementById('calcHeightSlider').value = val;
+    document.getElementById('heightValLabel').textContent = val + ' cm';
+    calculateBMI();
+}
+
+function syncWeight(val) {
+    document.getElementById('calcWeight').value = val;
+    document.getElementById('weightValLabel').textContent = val + ' kg';
+    calculateBMI();
+}
+
+function syncWeightSlider(val) {
+    document.getElementById('calcWeightSlider').value = val;
+    document.getElementById('weightValLabel').textContent = val + ' kg';
+    calculateBMI();
+}
+
+function calculateBMI() {
+    var h = parseFloat(document.getElementById('calcHeight').value) / 100;
+    var w = parseFloat(document.getElementById('calcWeight').value);
+    var age = parseInt(document.getElementById('calcAge').value) || 26;
+    var gender = document.getElementById('calcGender').value;
+    var activity = parseFloat(document.getElementById('calcActivity').value);
+    var goal = document.getElementById('calcGoal').value;
+
+    if (!h || !w || h <= 0 || w <= 0) return;
+
+    var bmi = w / (h * h);
+    document.getElementById('bmiValDisplay').textContent = bmi.toFixed(1);
+
+    var badge = document.getElementById('bmiCategoryBadge');
+    var marker = document.getElementById('spectrumMarker');
+    
+    // Position spectrum marker (0% to 100% based on BMI 15 to 35)
+    var markerPos = Math.max(5, Math.min(95, ((bmi - 15) / 20) * 100));
+    if (marker) {
+        marker.style.left = markerPos + '%';
+    }
+
+    if (bmi < 18.5) {
+        badge.textContent = 'Underweight Baseline';
+        badge.style.background = 'rgba(96,239,255,0.15)';
+        badge.style.color = '#60efff';
+    } else if (bmi < 25) {
+        badge.textContent = 'Optimal Healthy Weight';
+        badge.style.background = 'rgba(255,85,64,0.15)';
+        badge.style.color = '#ff5540';
+    } else if (bmi < 30) {
+        badge.textContent = 'Overweight Range';
+        badge.style.background = 'rgba(255,183,3,0.15)';
+        badge.style.color = '#ffb703';
+    } else {
+        badge.textContent = 'High Weight / Obese';
+        badge.style.background = 'rgba(239,68,68,0.15)';
+        badge.style.color = '#ef4444';
+    }
+
+    // Mifflin-St Jeor Equation
+    var bmr = (10 * w) + (6.25 * (h * 100)) - (5 * age);
+    if (gender === 'male') {
+        bmr += 5;
+    } else {
+        bmr -= 161;
+    }
+
+    var tdee = bmr * activity;
+    if (goal === 'cut') tdee -= 500;
+    if (goal === 'bulk') tdee += 350;
+
+    var calories = Math.round(tdee);
+    document.getElementById('calorieValDisplay').textContent = calories.toLocaleString() + ' kcal';
+
+    var protein = Math.round(w * 2.0);
+    var fats = Math.round((calories * 0.25) / 9);
+    var carbs = Math.max(50, Math.round((calories - (protein * 4) - (fats * 9)) / 4));
+
+    document.getElementById('proteinValDisplay').textContent = protein + 'g';
+    document.getElementById('carbsValDisplay').textContent = carbs + 'g';
+    document.getElementById('fatsValDisplay').textContent = fats + 'g';
+}
+
+function toggleStitchFaq(card) {
+    var ans = card.querySelector('.faq-answer-collapse');
+    var icon = card.querySelector('.faq-icon-sym');
+    var isActive = ans.classList.contains('active');
+
+    // Close others
+    document.querySelectorAll('.faq-answer-collapse').forEach(function(el) {
+        el.classList.remove('active');
+    });
+    document.querySelectorAll('.faq-icon-sym').forEach(function(el) {
+        el.textContent = 'add';
+        el.style.transform = 'rotate(0deg)';
+    });
+
+    if (!isActive) {
+        ans.classList.add('active');
+        icon.textContent = 'close';
+        icon.style.transform = 'rotate(90deg)';
+    }
+}
+
+function filterTransformations(cat, btn) {
+    var buttons = document.querySelectorAll('.transform-filter-btn');
+    buttons.forEach(function(b) { b.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+
+    var cards = document.querySelectorAll('#transformGrid .transform-card');
+    cards.forEach(function(card) {
+        var cardCat = card.getAttribute('data-category');
+        if (cat === 'all' || cardCat === cat) {
+            card.style.display = 'flex';
+            card.style.animation = 'fadeInUpSmooth 0.4s ease';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    calculateBMI();
+});
+</script>
+{% endblock %}
