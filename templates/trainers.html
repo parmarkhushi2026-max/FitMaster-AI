@@ -1,140 +1,470 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}
-Our Trainers | FitMaster
+{% block title %}Certified Master Trainers | FitMaster Studio{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/trainers.css' %}?v=5">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 {% endblock %}
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/trainers.css' %}?v=4">
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 <section class="trainers-page">
-
     <div class="container">
 
-        <div class="trainer-grid">
+        <!-- =====================================================
+             1. APPLE FITNESS+ STUDIO HEADER & CATEGORY FILTERS
+        ====================================================== -->
+        <header class="trainer-apple-header">
+            <div class="trainer-apple-eyebrow">
+                <span class="trainer-apple-dot"></span>
+                <span>FitMaster Studio • Certified Master Coaches</span>
+            </div>
+            <h1 class="trainer-apple-title">Meet Your Master Trainers</h1>
+            <p class="trainer-apple-subtitle">
+                World-class certified fitness coaches, Olympic lifting specialists, and yoga masters dedicated to personalizing your athletic programming and form mastery.
+            </p>
 
-            <!-- Trainer 1 -->
-            <div class="trainer-card">
+            <!-- Category Filter Pills -->
+            <div class="trainer-apple-filters">
+                <button type="button" class="trainer-filter-pill active" onclick="filterTrainers(event, 'all')">
+                    <i class="fa-solid fa-layer-group"></i> All Coaches
+                </button>
+                <button type="button" class="trainer-filter-pill" onclick="filterTrainers(event, 'strength')">
+                    <i class="fa-solid fa-dumbbell"></i> Strength & Hypertrophy
+                </button>
+                <button type="button" class="trainer-filter-pill" onclick="filterTrainers(event, 'yoga')">
+                    <i class="fa-solid fa-spa"></i> Yoga & Mobility
+                </button>
+                <button type="button" class="trainer-filter-pill" onclick="filterTrainers(event, 'cardio')">
+                    <i class="fa-solid fa-heart-pulse"></i> Cardio & Aerobics
+                </button>
+                <button type="button" class="trainer-filter-pill" onclick="filterTrainers(event, 'crossfit')">
+                    <i class="fa-solid fa-bolt"></i> CrossFit & Functional
+                </button>
+            </div>
+        </header>
 
-                <img src="{% static 'images/trainer1.jpg' %}" alt="Trainer">
+        <!-- =====================================================
+             2. TRAINER CARDS GRID (6 ELITE COACHES)
+        ====================================================== -->
+        <div class="trainer-grid" id="trainersGrid">
+
+            <!-- Coach 1: Rahul Sharma -->
+            <article class="trainer-card" data-category="strength">
+                <div class="trainer-image-wrap">
+                    <img src="{% static 'images/trainer1.jpg' %}" alt="Coach Rahul Sharma">
+                    <div class="trainer-image-overlay"></div>
+                    <div class="trainer-badge-specialty">
+                        <i class="fa-solid fa-dumbbell"></i> Strength Coach
+                    </div>
+                    <div class="trainer-badge-rating">
+                        <i class="fa-solid fa-star"></i> 4.9
+                    </div>
+                    <div class="trainer-badge-exp">8+ Yrs Exp</div>
+                </div>
 
                 <div class="trainer-info">
+                    <div class="trainer-name-row">
+                        <h2>Rahul Sharma <i class="fa-solid fa-circle-check trainer-verified-icon" title="FitMaster Verified Coach"></i></h2>
+                    </div>
+                    <span class="trainer-role-subhead">Head Strength & Hypertrophy Coach</span>
 
-                    <h2>Rahul Sharma</h2>
+                    <div class="trainer-certs-row">
+                        <span class="trainer-cert-tag">ACE Certified</span>
+                        <span class="trainer-cert-tag">ISSA Bodybuilding</span>
+                        <span class="trainer-cert-tag">Biomechanics</span>
+                    </div>
 
-                    <span>Strength Coach</span>
-
-                    <p>
-                        8+ years experience in bodybuilding,
-                        strength training and weight loss.
+                    <p class="trainer-bio">
+                        Specializes in progressive overload hypertrophy, joint-friendly compound lifting, and personalized fat-loss protocols.
                     </p>
 
                     <div class="trainer-details">
-
-                        <div>
-                            <i class="fa-solid fa-dumbbell"></i>
-                            <span>250+ Clients</span>
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">250+</span>
+                            <span class="trainer-stat-lbl">Athletes</span>
                         </div>
-
-                        <div>
-                            <i class="fa-solid fa-star"></i>
-                            <span>4.9 Rating</span>
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">4.9 ★</span>
+                            <span class="trainer-stat-lbl">Rating</span>
                         </div>
-
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">100%</span>
+                            <span class="trainer-stat-lbl">Customized</span>
+                        </div>
                     </div>
 
-                    <a href="{% url 'contact' %}" class="trainer-btn">
-                        Book Session
-                    </a>
+                    <div class="trainer-actions-row">
+                        <a href="{% url 'contact' %}" class="trainer-btn-primary">
+                            <i class="fa-solid fa-calendar-check"></i> Book Session
+                        </a>
+                        <a href="{% url 'programs' %}" class="trainer-btn-secondary">
+                            <i class="fa-solid fa-play"></i> Workouts
+                        </a>
+                    </div>
+                </div>
+            </article>
 
+            <!-- Coach 2: Priya Patel -->
+            <article class="trainer-card" data-category="yoga">
+                <div class="trainer-image-wrap">
+                    <img src="{% static 'images/trainer2.jpg' %}" alt="Coach Priya Patel">
+                    <div class="trainer-image-overlay"></div>
+                    <div class="trainer-badge-specialty">
+                        <i class="fa-solid fa-spa"></i> Yoga Acharya
+                    </div>
+                    <div class="trainer-badge-rating">
+                        <i class="fa-solid fa-star"></i> 4.9
+                    </div>
+                    <div class="trainer-badge-exp">6+ Yrs Exp</div>
                 </div>
 
-            </div>
-
-            <!-- Trainer 2 -->
-            <div class="trainer-card">
-
-                <img src="{% static 'images/trainer2.jpg' %}" alt="Trainer">
-
                 <div class="trainer-info">
+                    <div class="trainer-name-row">
+                        <h2>Priya Patel <i class="fa-solid fa-circle-check trainer-verified-icon" title="FitMaster Verified Coach"></i></h2>
+                    </div>
+                    <span class="trainer-role-subhead">Senior Yoga & Mobility Director</span>
 
-                    <h2>Priya Patel</h2>
+                    <div class="trainer-certs-row">
+                        <span class="trainer-cert-tag">RYT-500 Master</span>
+                        <span class="trainer-cert-tag">Vinyasa Flow</span>
+                        <span class="trainer-cert-tag">Spinal Health</span>
+                    </div>
 
-                    <span>Yoga Expert</span>
-
-                    <p>
-                        Certified yoga instructor with
-                        6+ years of professional experience.
+                    <p class="trainer-bio">
+                        Combines mindful Vinyasa breathwork, spinal decompression, and active mobility routines for mental clarity and flexibility.
                     </p>
 
                     <div class="trainer-details">
-
-                        <div>
-                            <i class="fa-solid fa-users"></i>
-                            <span>180+ Clients</span>
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">180+</span>
+                            <span class="trainer-stat-lbl">Yogis</span>
                         </div>
-
-                        <div>
-                            <i class="fa-solid fa-star"></i>
-                            <span>4.8 Rating</span>
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">4.9 ★</span>
+                            <span class="trainer-stat-lbl">Rating</span>
                         </div>
-
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">Mindful</span>
+                            <span class="trainer-stat-lbl">Focus</span>
+                        </div>
                     </div>
 
-                    <a href="{% url 'contact' %}" class="trainer-btn">
-                        Book Session
-                    </a>
+                    <div class="trainer-actions-row">
+                        <a href="{% url 'contact' %}" class="trainer-btn-primary">
+                            <i class="fa-solid fa-calendar-check"></i> Book Session
+                        </a>
+                        <a href="{% url 'programs' %}" class="trainer-btn-secondary">
+                            <i class="fa-solid fa-play"></i> Workouts
+                        </a>
+                    </div>
+                </div>
+            </article>
 
+            <!-- Coach 3: Amit Verma -->
+            <article class="trainer-card" data-category="cardio">
+                <div class="trainer-image-wrap">
+                    <img src="{% static 'images/trainer3.jpg' %}" alt="Coach Amit Verma">
+                    <div class="trainer-image-overlay"></div>
+                    <div class="trainer-badge-specialty">
+                        <i class="fa-solid fa-heart-pulse"></i> Cardio Lead
+                    </div>
+                    <div class="trainer-badge-rating">
+                        <i class="fa-solid fa-star"></i> 5.0
+                    </div>
+                    <div class="trainer-badge-exp">7+ Yrs Exp</div>
                 </div>
 
-            </div>
-
-            <!-- Trainer 3 -->
-            <div class="trainer-card">
-
-                <img src="{% static 'images/trainer3.jpg' %}" alt="Trainer">
-
                 <div class="trainer-info">
+                    <div class="trainer-name-row">
+                        <h2>Amit Verma <i class="fa-solid fa-circle-check trainer-verified-icon" title="FitMaster Verified Coach"></i></h2>
+                    </div>
+                    <span class="trainer-role-subhead">Cardio Endurance & Aerobics Master</span>
 
-                    <h2>Amit Verma</h2>
+                    <div class="trainer-certs-row">
+                        <span class="trainer-cert-tag">Aerobics Certified</span>
+                        <span class="trainer-cert-tag">VO2 Max Specialist</span>
+                        <span class="trainer-cert-tag">High Tempo</span>
+                    </div>
 
-                    <span>Cardio Trainer</span>
-
-                    <p>
-                        Helping members improve endurance,
-                        stamina and overall fitness.
+                    <p class="trainer-bio">
+                        Specializes in high-energy rhythm cardio, interval tempo coaching, and cardiovascular conditioning for peak stamina.
                     </p>
 
                     <div class="trainer-details">
-
-                        <div>
-                            <i class="fa-solid fa-heart-pulse"></i>
-                            <span>220+ Clients</span>
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">220+</span>
+                            <span class="trainer-stat-lbl">Clients</span>
                         </div>
-
-                        <div>
-                            <i class="fa-solid fa-star"></i>
-                            <span>5.0 Rating</span>
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">5.0 ★</span>
+                            <span class="trainer-stat-lbl">Rating</span>
                         </div>
-
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">Peak</span>
+                            <span class="trainer-stat-lbl">Stamina</span>
+                        </div>
                     </div>
 
-                    <a href="{% url 'contact' %}" class="trainer-btn">
-                        Book Session
-                    </a>
+                    <div class="trainer-actions-row">
+                        <a href="{% url 'contact' %}" class="trainer-btn-primary">
+                            <i class="fa-solid fa-calendar-check"></i> Book Session
+                        </a>
+                        <a href="{% url 'programs' %}" class="trainer-btn-secondary">
+                            <i class="fa-solid fa-play"></i> Workouts
+                        </a>
+                    </div>
+                </div>
+            </article>
 
+            <!-- Coach 4: Sarah Vance -->
+            <article class="trainer-card" data-category="cardio">
+                <div class="trainer-image-wrap">
+                    <img src="{% static 'images/human_coach.jpg' %}" alt="Coach Sarah Vance">
+                    <div class="trainer-image-overlay"></div>
+                    <div class="trainer-badge-specialty">
+                        <i class="fa-solid fa-fire"></i> Metabolic Lead
+                    </div>
+                    <div class="trainer-badge-rating">
+                        <i class="fa-solid fa-star"></i> 4.9
+                    </div>
+                    <div class="trainer-badge-exp">9+ Yrs Exp</div>
                 </div>
 
-            </div>
+                <div class="trainer-info">
+                    <div class="trainer-name-row">
+                        <h2>Sarah Vance <i class="fa-solid fa-circle-check trainer-verified-icon" title="FitMaster Verified Coach"></i></h2>
+                    </div>
+                    <span class="trainer-role-subhead">Metabolic Conditioning & Nutrition Director</span>
+
+                    <div class="trainer-certs-row">
+                        <span class="trainer-cert-tag">NASM Master</span>
+                        <span class="trainer-cert-tag">Precision Nutrition</span>
+                        <span class="trainer-cert-tag">EPOC Specialist</span>
+                    </div>
+
+                    <p class="trainer-bio">
+                        Transforms body composition with metabolic circuits and science-backed macronutrient protocols engineered for sustained results.
+                    </p>
+
+                    <div class="trainer-details">
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">340+</span>
+                            <span class="trainer-stat-lbl">Clients</span>
+                        </div>
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">4.9 ★</span>
+                            <span class="trainer-stat-lbl">Rating</span>
+                        </div>
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">Body Comp</span>
+                            <span class="trainer-stat-lbl">Focus</span>
+                        </div>
+                    </div>
+
+                    <div class="trainer-actions-row">
+                        <a href="{% url 'contact' %}" class="trainer-btn-primary">
+                            <i class="fa-solid fa-calendar-check"></i> Book Session
+                        </a>
+                        <a href="{% url 'programs' %}" class="trainer-btn-secondary">
+                            <i class="fa-solid fa-play"></i> Workouts
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Coach 5: David Miller -->
+            <article class="trainer-card" data-category="crossfit">
+                <div class="trainer-image-wrap">
+                    <img src="{% static 'images/trainer_crossfit.jpg' %}" alt="Coach David Miller">
+                    <div class="trainer-image-overlay"></div>
+                    <div class="trainer-badge-specialty">
+                        <i class="fa-solid fa-bolt"></i> CrossFit L3
+                    </div>
+                    <div class="trainer-badge-rating">
+                        <i class="fa-solid fa-star"></i> 4.8
+                    </div>
+                    <div class="trainer-badge-exp">10+ Yrs Exp</div>
+                </div>
+
+                <div class="trainer-info">
+                    <div class="trainer-name-row">
+                        <h2>David Miller <i class="fa-solid fa-circle-check trainer-verified-icon" title="FitMaster Verified Coach"></i></h2>
+                    </div>
+                    <span class="trainer-role-subhead">Functional WOD & Athletic Performance</span>
+
+                    <div class="trainer-certs-row">
+                        <span class="trainer-cert-tag">CrossFit L3</span>
+                        <span class="trainer-cert-tag">Kettlebell Master</span>
+                        <span class="trainer-cert-tag">Tactical Fitness</span>
+                    </div>
+
+                    <p class="trainer-bio">
+                        Builds unstoppable athletic engines through functional compound circuits, kettlebell complexes, and lactate threshold training.
+                    </p>
+
+                    <div class="trainer-details">
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">290+</span>
+                            <span class="trainer-stat-lbl">Athletes</span>
+                        </div>
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">4.8 ★</span>
+                            <span class="trainer-stat-lbl">Rating</span>
+                        </div>
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">Raw Power</span>
+                            <span class="trainer-stat-lbl">Output</span>
+                        </div>
+                    </div>
+
+                    <div class="trainer-actions-row">
+                        <a href="{% url 'contact' %}" class="trainer-btn-primary">
+                            <i class="fa-solid fa-calendar-check"></i> Book Session
+                        </a>
+                        <a href="{% url 'programs' %}" class="trainer-btn-secondary">
+                            <i class="fa-solid fa-play"></i> Workouts
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Coach 6: Viktor Stone -->
+            <article class="trainer-card" data-category="strength">
+                <div class="trainer-image-wrap">
+                    <img src="{% static 'images/trainer_strength.jpg' %}" alt="Coach Viktor Stone">
+                    <div class="trainer-image-overlay"></div>
+                    <div class="trainer-badge-specialty">
+                        <i class="fa-solid fa-weight-hanging"></i> Olympic Lifting
+                    </div>
+                    <div class="trainer-badge-rating">
+                        <i class="fa-solid fa-star"></i> 5.0
+                    </div>
+                    <div class="trainer-badge-exp">11+ Yrs Exp</div>
+                </div>
+
+                <div class="trainer-info">
+                    <div class="trainer-name-row">
+                        <h2>Viktor Stone <i class="fa-solid fa-circle-check trainer-verified-icon" title="FitMaster Verified Coach"></i></h2>
+                    </div>
+                    <span class="trainer-role-subhead">Olympic Lifting & Powerlifting Lead</span>
+
+                    <div class="trainer-certs-row">
+                        <span class="trainer-cert-tag">USAW Senior Coach</span>
+                        <span class="trainer-cert-tag">CSCS Certified</span>
+                        <span class="trainer-cert-tag">Powerlifting</span>
+                    </div>
+
+                    <p class="trainer-bio">
+                        Master the squat, deadlift, and clean & jerk with strict biomechanical cues designed to bulletproof joints and maximize pure power.
+                    </p>
+
+                    <div class="trainer-details">
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">310+</span>
+                            <span class="trainer-stat-lbl">Lifters</span>
+                        </div>
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">5.0 ★</span>
+                            <span class="trainer-stat-lbl">Rating</span>
+                        </div>
+                        <div class="trainer-stat-col">
+                            <span class="trainer-stat-val">Max Form</span>
+                            <span class="trainer-stat-lbl">Mastery</span>
+                        </div>
+                    </div>
+
+                    <div class="trainer-actions-row">
+                        <a href="{% url 'contact' %}" class="trainer-btn-primary">
+                            <i class="fa-solid fa-calendar-check"></i> Book Session
+                        </a>
+                        <a href="{% url 'programs' %}" class="trainer-btn-secondary">
+                            <i class="fa-solid fa-play"></i> Workouts
+                        </a>
+                    </div>
+                </div>
+            </article>
 
         </div>
 
-    </div>
+        <!-- =====================================================
+             3. WHY TRAIN WITH FITMASTER (COACHING STANDARDS)
+        ====================================================== -->
+        <section class="trainer-standards-section">
+            <div class="trainer-standards-header">
+                <h3>The FitMaster Coaching Standard</h3>
+                <p>Every coach undergoes rigorous biometric and form certification to deliver verified results.</p>
+            </div>
 
+            <div class="trainer-standards-grid">
+                <div class="trainer-feature-card">
+                    <div class="trainer-feature-icon">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h4>1-on-1 Customized Protocols</h4>
+                    <p>No cookie-cutter routines. Workouts and meal guidance are engineered to match your schedule, biometrics, and body composition targets.</p>
+                </div>
+
+                <div class="trainer-feature-card">
+                    <div class="trainer-feature-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h4>Real-Time Form & Rep Analytics</h4>
+                    <p>Track heart rate zones, tempo velocity, and progressive overload metrics directly inside your FitMaster athlete dashboard.</p>
+                </div>
+
+                <div class="trainer-feature-card">
+                    <div class="trainer-feature-icon">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h4>Continuous Dedicated Guidance</h4>
+                    <p>Direct communication with your lead coach for form video check-ins, routine adjustments, and accountability anytime.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             4. COACH CONSULTATION CTA BANNER
+        ====================================================== -->
+        <div class="trainer-cta-banner">
+            <div>
+                <h3 class="trainer-cta-title">Ready to Train with a Master Coach?</h3>
+                <p class="trainer-cta-desc">
+                    Book a free introductory fitness and mobility consultation. Get paired with the coach who matches your goals.
+                </p>
+            </div>
+            <a href="{% url 'contact' %}" class="trainer-cta-btn">
+                <span>Request Free Consultation</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+    </div>
 </section>
+
+<!-- =====================================================
+     SCRIPTS: CATEGORY FILTER FOR COACHES
+====================================================== -->
+<script>
+function filterTrainers(event, category) {
+    document.querySelectorAll('.trainer-filter-pill').forEach(btn => btn.classList.remove('active'));
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+    }
+
+    const cards = document.querySelectorAll('.trainer-card');
+    cards.forEach(card => {
+        const cardCat = card.getAttribute('data-category');
+        if (category === 'all' || cardCat === category) {
+            card.style.display = 'flex';
+            card.style.animation = 'coachCardFadeIn 0.35s ease both';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+</script>
 
 {% endblock %}

@@ -49,25 +49,25 @@
 
 @keyframes greenBreathing {
   0%, 100% {
-    box-shadow: 0 4px 18px rgba(0, 245, 155, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   }
   50% {
-    box-shadow: 0 6px 24px rgba(0, 245, 155, 0.55), 0 0 12px rgba(0, 255, 196, 0.35);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
   }
 }
 
 @keyframes pingDotGreen {
   0% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(0, 245, 155, 0.6);
+    box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.5);
   }
   70% {
     transform: scale(1);
-    box-shadow: 0 0 0 7px rgba(0, 245, 155, 0);
+    box-shadow: 0 0 0 6px rgba(48, 209, 88, 0);
   }
   100% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(0, 245, 155, 0);
+    box-shadow: 0 0 0 0 rgba(48, 209, 88, 0);
   }
 }
 
@@ -154,14 +154,14 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--primary, #ff5540);
-  animation: pingDotGreen 2s infinite;
+  background: var(--primary, #30d158);
+  
   margin-right: 6px;
 }
 
 /* Timeline Center Flowing Light */
 .timeline-center-line {
-  background: linear-gradient(180deg, rgba(255,85,64,0.1) 0%, #ff5540 50%, rgba(255,138,122,0.1) 100%) !important;
+  background: linear-gradient(180deg, rgba(48,209,88,0.1) 0%, #30d158 50%, rgba(0,113,227,0.1) 100%) !important;
   background-size: 100% 200% !important;
   animation: timelineFlowGreen 3.5s linear infinite !important;
 }
@@ -205,7 +205,7 @@
 }
 
 .faq-card-item:hover {
-  border-color: rgba(255, 85, 64, 0.4);
+  border-color: rgba(48, 209, 88, 0.4);
 }
 
 /* ─── 4. UNIVERSAL BUTTON SHIMMER & CARD LIFT ─────────────────────────── */
@@ -260,5 +260,5 @@
 .membership-card:hover,
 .notice-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 85, 64, 0.15);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 20px rgba(48, 209, 88, 0.15);
 }

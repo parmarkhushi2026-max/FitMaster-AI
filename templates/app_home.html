@@ -15,13 +15,13 @@
                     "colors": {
                         "on-primary-fixed": "#410000",
                         "error-container": "#93000a",
-                        "on-error-container": "#ffdad6",
+                        "on-error-container": "#d0e8ff",
                         "on-tertiary-fixed-variant": "#234479",
                         "surface": "#0e0e0e",
                         "inverse-surface": "#f9f9f9",
-                        "primary-fixed-dim": "#ffb4aa",
+                        "primary-fixed-dim": "#a4d4ff",
                         "surface-dim": "#0e0e0e",
-                        "error": "#ffb4ab",
+                        "error": "#a4d4ff",
                         "tertiary": "#acc7ff",
                         "on-surface-variant": "#c9c5c4",
                         "on-tertiary-fixed": "#001b3e",
@@ -34,24 +34,24 @@
                         "on-secondary-fixed": "#3c0000",
                         "on-tertiary-container": "#002b5c",
                         "surface-container-high": "#181818",
-                        "secondary-fixed": "#ffdad4",
+                        "secondary-fixed": "#d0e8ff",
                         "on-surface": "#e2e2e2",
                         "tertiary-container": "#488fff",
-                        "secondary": "#ffb4a9",
+                        "secondary": "#a4d4ff",
                         "on-primary-container": "#680003",
                         "surface-variant": "#262626",
-                        "surface-tint": "#ffb4aa",
+                        "surface-tint": "#a4d4ff",
                         "surface-container-highest": "#1e1e1e",
                         "surface-bright": "#222222",
                         "on-secondary-fixed-variant": "#920003",
-                        "primary-fixed": "#ffdad4",
+                        "primary-fixed": "#d0e8ff",
                         "background": "#0e0e0e",
                         "on-tertiary": "#002f65",
                         "inverse-primary": "#c0000c",
-                        "primary-container": "#ff5540",
+                        "primary-container": "#0071e3",
                         "on-background": "#e2e2e2",
-                        "primary": "#ff8a7a",
-                        "secondary-fixed-dim": "#ffb4a9",
+                        "primary": "#30d158",
+                        "secondary-fixed-dim": "#a4d4ff",
                         "secondary-container": "#670002",
                         "on-secondary": "#680003",
                         "tertiary-fixed-dim": "#acc7ff",
@@ -59,7 +59,7 @@
                         "on-primary": "#690005",
                         "surface-container-lowest": "#000000",
                         "surface-container-low": "#101010",
-                        "on-secondary-container": "#ffdad4"
+                        "on-secondary-container": "#d0e8ff"
                     },
                     "fontFamily": {
                         "headline": ["Sora"],
@@ -94,10 +94,10 @@
             color: #e2e2e2;
         }
         .glow-effect {
-            box-shadow: 0 0 25px -5px rgba(255, 85, 64, 0.4);
+            box-shadow: 0 0 25px -5px rgba(0, 113, 227, 0.4);
         }
         .mesh-bg {
-            background-image: radial-gradient(circle at top right, rgba(255, 85, 64, 0.12), transparent 40%),
+            background-image: radial-gradient(circle at top right, rgba(0, 113, 227, 0.12), transparent 40%),
                               radial-gradient(circle at bottom left, rgba(72, 143, 255, 0.08), transparent 40%);
         }
     </style>
@@ -110,7 +110,7 @@
         <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary-container to-secondary flex items-center justify-center shadow-lg shadow-primary-container/20">
             <span class="material-symbols-outlined text-white text-2xl font-bold">bolt</span>
         </div>
-        <span class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-white via-on-surface to-primary bg-clip-text text-transparent">FITMASTER AI</span>
+        <span class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-white via-on-surface to-primary bg-clip-text text-transparent">FITMASTER</span>
     </div>
     
     <div class="flex items-center gap-4">
@@ -123,15 +123,15 @@
     <!-- Hero Section -->
     <div class="text-center max-w-3xl mx-auto space-y-6">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant/40 text-xs font-semibold text-primary">
-            <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
-            Next-Gen AI Fitness Architecture
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            Personalized Training & Fitness Studio
         </div>
         <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">
-            Forged in Fire. <br/>
-            <span class="bg-gradient-to-r from-primary-container via-secondary to-tertiary bg-clip-text text-transparent">Engineered by AI.</span>
+            Transform Your Body. <br/>
+            <span class="bg-gradient-to-r from-primary-container via-secondary to-tertiary bg-clip-text text-transparent">Master Your Fitness.</span>
         </h1>
         <p class="text-on-surface-variant text-base md:text-lg leading-relaxed">
-            Experience real-time biomechanical intelligence, personalized macronutrient synthesis, and progressive overload automation.
+            Personalized workout routines, real-time activity tracking, and custom nutrition plans designed for real results.
         </p>
         <div class="flex items-center justify-center gap-4 pt-4">
             <a href="{% url 'signup' %}" class="px-8 py-3.5 rounded-xl text-base font-bold bg-primary-container hover:bg-primary text-white shadow-xl glow-effect transition-all">Start Free Protocol</a>

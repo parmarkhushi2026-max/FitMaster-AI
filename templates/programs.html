@@ -1,16 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Programs | FitMaster{% endblock %}
+{% block title %}Workout Programs | Apple Fitness+ | FitMaster{% endblock %}
 
 {% block extra_css %}
-
-<link rel="stylesheet" href="{% static 'css/programs.css' %}?v=5">
-
+<link rel="stylesheet" href="{% static 'css/programs.css' %}?v=8">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 {% endblock %}
-
 
 {% block content %}
 
@@ -18,444 +14,504 @@
 
     <div class="fm-program-wrapper">
 
+        <!-- =====================================================
+             APPLE FITNESS+ STYLE HEADER & CATEGORY FILTER PILLS
+        ====================================================== -->
+        <header class="fm-apple-header">
+            <div class="fm-apple-eyebrow">
+                <span class="fm-apple-dot"></span>
+                <span>FitMaster Studio • Fitness+ Protocols</span>
+            </div>
+            <h1 class="fm-apple-title">Workout Programs</h1>
+            <p class="fm-apple-subtitle">
+                Engineered for maximum calorie expenditure, progressive hypertrophy, and athletic longevity.
+            </p>
+
+            <!-- Category Filter Pills -->
+            <div class="fm-apple-filters" id="programFilters">
+                <button type="button" class="fm-filter-pill active" onclick="filterPrograms(event, 'all')">
+                    <i class="fa-solid fa-layer-group"></i> All Programs
+                </button>
+                <button type="button" class="fm-filter-pill" onclick="filterPrograms(event, 'fat-burn')">
+                    <i class="fa-solid fa-fire"></i> Fat Burn
+                </button>
+                <button type="button" class="fm-filter-pill" onclick="filterPrograms(event, 'muscle')">
+                    <i class="fa-solid fa-dumbbell"></i> Muscle Gain
+                </button>
+                <button type="button" class="fm-filter-pill" onclick="filterPrograms(event, 'hiit')">
+                    <i class="fa-solid fa-bolt"></i> HIIT & CrossFit
+                </button>
+                <button type="button" class="fm-filter-pill" onclick="filterPrograms(event, 'yoga')">
+                    <i class="fa-solid fa-spa"></i> Yoga & Recovery
+                </button>
+                <button type="button" class="fm-filter-pill" onclick="filterPrograms(event, 'cardio')">
+                    <i class="fa-solid fa-heart-pulse"></i> Cardio Endurance
+                </button>
+            </div>
+        </header>
 
 
         <!-- =====================================================
-             PROGRAM GRID
+             PROGRAM GRID (STRUCTURE PRESERVED)
         ====================================================== -->
 
-        <main class="fm-program-grid">
-
+        <main class="fm-program-grid" id="programsGrid">
 
             <!-- =================================================
                  1. WEIGHT LOSS
             ================================================== -->
-
-            <article class="fm-program-card">
-
-                <div class="fm-program-image">
-
+            <article class="fm-program-card" data-category="fat-burn">
+                <div class="fm-program-image" onclick="openWorkoutVideo('weight-loss')" title="Watch Workout Video">
                     <img src="{% static 'images/weight-loss.jpg' %}?v=2026" alt="Weight Loss Program">
-
                     <div class="fm-program-image-overlay"></div>
-
+                    <div class="fm-program-duration">
+                        <i class="fa-regular fa-clock"></i> 35-45 MIN
+                    </div>
                     <div class="fm-program-tag">
                         <i class="fa-solid fa-fire"></i>
                         Fat Burn
                     </div>
-
                 </div>
 
-
                 <div class="fm-program-content">
-
                     <div class="fm-program-icon fm-green">
                         <i class="fa-solid fa-fire"></i>
                     </div>
-
+                    <div class="fm-program-eyebrow">METABOLIC CONDITIONING</div>
                     <h2>Weight Loss</h2>
-
                     <p>
-                        Burn calories, improve stamina and achieve
-                        a healthier body with effective workouts.
+                        Burn calories, improve stamina, and achieve a healthier body with effective high-burn protocols.
                     </p>
-
                     <div class="fm-program-features">
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            HIIT
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Cardio
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Fat Burn
-                        </span>
-
+                        <span><i class="fa-solid fa-check"></i> HIIT</span>
+                        <span><i class="fa-solid fa-check"></i> Cardio</span>
+                        <span><i class="fa-solid fa-check"></i> Fat Burn</span>
                     </div>
-
-                    <a href="{% url 'membership' %}" class="fm-program-button">
-
-                        Start Program
-
-                        <i class="fa-solid fa-arrow-right"></i>
-
-                    </a>
-
+                    <div class="fm-program-meta-bar">
+                        <span><i class="fa-solid fa-fire-flame-curved"></i> ~520 kcal burn</span>
+                        <span><i class="fa-solid fa-signal"></i> All Levels</span>
+                    </div>
+                    <div class="fm-program-actions">
+                        <a href="{% url 'membership' %}" class="fm-program-button fm-btn-primary">
+                            <span>Start Program</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <button type="button" class="fm-program-button fm-btn-video" onclick="openWorkoutVideo('weight-loss')">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Watch Video</span>
+                        </button>
+                    </div>
                 </div>
-
             </article>
-
 
             <!-- =================================================
                  2. MUSCLE GAIN
             ================================================== -->
-
-            <article class="fm-program-card">
-
-                <div class="fm-program-image">
-
+            <article class="fm-program-card" data-category="muscle">
+                <div class="fm-program-image" onclick="openWorkoutVideo('muscle-gain')" title="Watch Workout Video">
                     <img src="{% static 'images/muscle.jpg' %}?v=2026" alt="Muscle Gain Program">
-
                     <div class="fm-program-image-overlay"></div>
-
+                    <div class="fm-program-duration">
+                        <i class="fa-regular fa-clock"></i> 45-60 MIN
+                    </div>
                     <div class="fm-program-tag">
                         <i class="fa-solid fa-dumbbell"></i>
-                        Build Muscle
+                        Hypertrophy
                     </div>
-
                 </div>
 
-
                 <div class="fm-program-content">
-
                     <div class="fm-program-icon fm-purple">
                         <i class="fa-solid fa-dumbbell"></i>
                     </div>
-
+                    <div class="fm-program-eyebrow">STRENGTH & HYPERTROPHY</div>
                     <h2>Muscle Gain</h2>
-
                     <p>
-                        Build lean muscle, increase strength and
-                        improve your overall physical performance.
+                        Build lean muscle, increase strength, and improve your overall athletic physical performance.
                     </p>
-
                     <div class="fm-program-features">
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Strength
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Muscle
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Power
-                        </span>
-
+                        <span><i class="fa-solid fa-check"></i> Strength</span>
+                        <span><i class="fa-solid fa-check"></i> Hypertrophy</span>
+                        <span><i class="fa-solid fa-check"></i> Power</span>
                     </div>
-
-                    <a href="{% url 'membership' %}" class="fm-program-button">
-
-                        Start Program
-
-                        <i class="fa-solid fa-arrow-right"></i>
-
-                    </a>
-
+                    <div class="fm-program-meta-bar">
+                        <span><i class="fa-solid fa-fire-flame-curved"></i> ~420 kcal burn</span>
+                        <span><i class="fa-solid fa-signal"></i> Intermediate</span>
+                    </div>
+                    <div class="fm-program-actions">
+                        <a href="{% url 'membership' %}" class="fm-program-button fm-btn-primary">
+                            <span>Start Program</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <button type="button" class="fm-program-button fm-btn-video" onclick="openWorkoutVideo('muscle-gain')">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Watch Video</span>
+                        </button>
+                    </div>
                 </div>
-
             </article>
-
 
             <!-- =================================================
                  3. YOGA
             ================================================== -->
-
-            <article class="fm-program-card">
-
-                <div class="fm-program-image">
-
+            <article class="fm-program-card" data-category="yoga">
+                <div class="fm-program-image" onclick="openWorkoutVideo('yoga')" title="Watch Workout Video">
                     <img src="{% static 'images/yoga.jpg' %}?v=2026" alt="Yoga Program">
-
                     <div class="fm-program-image-overlay"></div>
-
+                    <div class="fm-program-duration">
+                        <i class="fa-regular fa-clock"></i> 30-45 MIN
+                    </div>
                     <div class="fm-program-tag">
                         <i class="fa-solid fa-spa"></i>
                         Mind & Body
                     </div>
-
                 </div>
-
 
                 <div class="fm-program-content">
-
-                    <div class="fm-program-icon fm-pink">
+                    <div class="fm-program-icon fm-teal">
                         <i class="fa-solid fa-spa"></i>
                     </div>
-
+                    <div class="fm-program-eyebrow">MINDFUL MOVEMENT</div>
                     <h2>Yoga</h2>
-
                     <p>
-                        Improve flexibility, balance, posture and
-                        mental relaxation through guided yoga sessions.
+                        Improve flexibility, balance, core posture, and mental relaxation through guided sessions.
                     </p>
-
                     <div class="fm-program-features">
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Flexibility
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Balance
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Relaxation
-                        </span>
-
+                        <span><i class="fa-solid fa-check"></i> Flexibility</span>
+                        <span><i class="fa-solid fa-check"></i> Balance</span>
+                        <span><i class="fa-solid fa-check"></i> Relaxation</span>
                     </div>
-
-                    <a href="{% url 'membership' %}" class="fm-program-button">
-
-                        Start Program
-
-                        <i class="fa-solid fa-arrow-right"></i>
-
-                    </a>
-
+                    <div class="fm-program-meta-bar">
+                        <span><i class="fa-solid fa-fire-flame-curved"></i> ~220 kcal burn</span>
+                        <span><i class="fa-solid fa-signal"></i> All Levels</span>
+                    </div>
+                    <div class="fm-program-actions">
+                        <a href="{% url 'membership' %}" class="fm-program-button fm-btn-primary">
+                            <span>Start Program</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <button type="button" class="fm-program-button fm-btn-video" onclick="openWorkoutVideo('yoga')">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Watch Video</span>
+                        </button>
+                    </div>
                 </div>
-
             </article>
-
 
             <!-- =================================================
                  4. CROSSFIT
             ================================================== -->
-
-            <article class="fm-program-card">
-
-                <div class="fm-program-image">
-
+            <article class="fm-program-card" data-category="hiit">
+                <div class="fm-program-image" onclick="openWorkoutVideo('crossfit')" title="Watch Workout Video">
                     <img src="{% static 'images/crossfit.jpg' %}?v=2026" alt="CrossFit Program">
-
                     <div class="fm-program-image-overlay"></div>
-
+                    <div class="fm-program-duration">
+                        <i class="fa-regular fa-clock"></i> 40-50 MIN
+                    </div>
                     <div class="fm-program-tag">
                         <i class="fa-solid fa-bolt"></i>
                         High Intensity
                     </div>
-
                 </div>
 
-
                 <div class="fm-program-content">
-
                     <div class="fm-program-icon fm-orange">
                         <i class="fa-solid fa-bolt"></i>
                     </div>
-
+                    <div class="fm-program-eyebrow">FUNCTIONAL ATHLETICISM</div>
                     <h2>CrossFit</h2>
-
                     <p>
-                        Challenge yourself with high-intensity
-                        workouts focused on strength and endurance.
+                        Challenge yourself with high-intensity compound workouts focused on stamina and power.
                     </p>
-
                     <div class="fm-program-features">
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            HIIT
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Endurance
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Strength
-                        </span>
-
+                        <span><i class="fa-solid fa-check"></i> HIIT</span>
+                        <span><i class="fa-solid fa-check"></i> Endurance</span>
+                        <span><i class="fa-solid fa-check"></i> Strength</span>
                     </div>
-
-                    <a href="{% url 'membership' %}" class="fm-program-button">
-
-                        Start Program
-
-                        <i class="fa-solid fa-arrow-right"></i>
-
-                    </a>
-
+                    <div class="fm-program-meta-bar">
+                        <span><i class="fa-solid fa-fire-flame-curved"></i> ~650 kcal burn</span>
+                        <span><i class="fa-solid fa-signal"></i> Advanced</span>
+                    </div>
+                    <div class="fm-program-actions">
+                        <a href="{% url 'membership' %}" class="fm-program-button fm-btn-primary">
+                            <span>Start Program</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <button type="button" class="fm-program-button fm-btn-video" onclick="openWorkoutVideo('crossfit')">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Watch Video</span>
+                        </button>
+                    </div>
                 </div>
-
             </article>
-
 
             <!-- =================================================
                  5. CARDIO
             ================================================== -->
-
-            <article class="fm-program-card">
-
-                <div class="fm-program-image">
-
+            <article class="fm-program-card" data-category="cardio">
+                <div class="fm-program-image" onclick="openWorkoutVideo('cardio')" title="Watch Workout Video">
                     <img src="{% static 'images/cardio.jpg' %}?v=2026" alt="Cardio Program">
-
                     <div class="fm-program-image-overlay"></div>
-
+                    <div class="fm-program-duration">
+                        <i class="fa-regular fa-clock"></i> 30-40 MIN
+                    </div>
                     <div class="fm-program-tag">
                         <i class="fa-solid fa-heart-pulse"></i>
                         Heart Health
                     </div>
-
                 </div>
 
-
                 <div class="fm-program-content">
-
-                    <div class="fm-program-icon fm-red">
+                    <div class="fm-program-icon fm-cyan">
                         <i class="fa-solid fa-heart-pulse"></i>
                     </div>
-
+                    <div class="fm-program-eyebrow">AEROBIC CAPACITY</div>
                     <h2>Cardio</h2>
-
                     <p>
-                        Improve heart health, stamina and energy
-                        with fun and effective cardio sessions.
+                        Elevate cardiovascular health, VO2 max, stamina, and energy with high-tempo cardio intervals.
                     </p>
-
                     <div class="fm-program-features">
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Endurance
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Stamina
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Cardio
-                        </span>
-
+                        <span><i class="fa-solid fa-check"></i> Endurance</span>
+                        <span><i class="fa-solid fa-check"></i> Stamina</span>
+                        <span><i class="fa-solid fa-check"></i> Cardio</span>
                     </div>
-
-                    <a href="{% url 'membership' %}" class="fm-program-button">
-
-                        Start Program
-
-                        <i class="fa-solid fa-arrow-right"></i>
-
-                    </a>
-
+                    <div class="fm-program-meta-bar">
+                        <span><i class="fa-solid fa-fire-flame-curved"></i> ~480 kcal burn</span>
+                        <span><i class="fa-solid fa-signal"></i> All Levels</span>
+                    </div>
+                    <div class="fm-program-actions">
+                        <a href="{% url 'membership' %}" class="fm-program-button fm-btn-primary">
+                            <span>Start Program</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <button type="button" class="fm-program-button fm-btn-video" onclick="openWorkoutVideo('cardio')">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Watch Video</span>
+                        </button>
+                    </div>
                 </div>
-
             </article>
 
-
             <!-- =================================================
-                 6. STRENGTH
+                 6. STRENGTH TRAINING
             ================================================== -->
-
-            <article class="fm-program-card">
-
-                <div class="fm-program-image">
-
+            <article class="fm-program-card" data-category="muscle">
+                <div class="fm-program-image" onclick="openWorkoutVideo('strength')" title="Watch Workout Video">
                     <img src="{% static 'images/strength.jpg' %}?v=2026" alt="Strength Training Program">
-
                     <div class="fm-program-image-overlay"></div>
-
+                    <div class="fm-program-duration">
+                        <i class="fa-regular fa-clock"></i> 50-60 MIN
+                    </div>
                     <div class="fm-program-tag">
                         <i class="fa-solid fa-weight-hanging"></i>
-                        Power
+                        Powerlifting
                     </div>
-
                 </div>
 
-
                 <div class="fm-program-content">
-
                     <div class="fm-program-icon fm-blue">
                         <i class="fa-solid fa-weight-hanging"></i>
                     </div>
-
+                    <div class="fm-program-eyebrow">MAXIMAL STRENGTH</div>
                     <h2>Strength Training</h2>
-
                     <p>
-                        Increase power, stamina and muscular strength
-                        with professional training routines.
+                        Increase raw neuromuscular power, structural bone density, and heavy lifting proficiency.
                     </p>
-
                     <div class="fm-program-features">
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Power
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Stamina
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-check"></i>
-                            Training
-                        </span>
-
+                        <span><i class="fa-solid fa-check"></i> Heavy Lifting</span>
+                        <span><i class="fa-solid fa-check"></i> Form Mastery</span>
+                        <span><i class="fa-solid fa-check"></i> Core Stability</span>
                     </div>
-
-                    <a href="{% url 'membership' %}" class="fm-program-button">
-
-                        Start Program
-
-                        <i class="fa-solid fa-arrow-right"></i>
-
-                    </a>
-
+                    <div class="fm-program-meta-bar">
+                        <span><i class="fa-solid fa-fire-flame-curved"></i> ~450 kcal burn</span>
+                        <span><i class="fa-solid fa-signal"></i> Intermediate</span>
+                    </div>
+                    <div class="fm-program-actions">
+                        <a href="{% url 'membership' %}" class="fm-program-button fm-btn-primary">
+                            <span>Start Program</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <button type="button" class="fm-program-button fm-btn-video" onclick="openWorkoutVideo('strength')">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Watch Video</span>
+                        </button>
+                    </div>
                 </div>
-
             </article>
-
 
         </main>
 
-
         <!-- =====================================================
-             AI CTA
+             COACH CONSULTATION CTA (APPLE STYLE)
         ====================================================== -->
-
         <section class="fm-program-ai">
-
             <div class="fm-program-ai-icon">
-                <i class="fa-solid fa-robot"></i>
+                <i class="fa-solid fa-user-doctor"></i>
             </div>
-
             <div class="fm-program-ai-text">
-
                 <h3>
                     Not sure which program is right for you?
                 </h3>
-
                 <p>
-                    FitMaster can help you choose a program
-                    according to your fitness goals.
+                    Our certified fitness coaches will help you select the ideal workout and nutrition plan tailored to your body goals.
                 </p>
-
             </div>
-
             <a href="{% url 'membership' %}" class="fm-program-ai-button">
-
-                Explore Plans
-
+                <span>Consult Trainer</span>
                 <i class="fa-solid fa-arrow-right"></i>
-
             </a>
-
         </section>
 
-
     </div>
-
 </div>
+
+<!-- =====================================================
+     CLEAN FITNESS WORKOUT VIDEO MODAL (PROFESSIONAL & NORMAL)
+====================================================== -->
+<div id="workoutVideoModal" class="fm-normal-video-modal" style="display: none;" role="dialog" aria-modal="true">
+    <div class="fm-normal-modal-backdrop" onclick="closeWorkoutVideo()"></div>
+    <div class="fm-normal-modal-box">
+        <div class="fm-normal-modal-header">
+            <div class="fm-normal-modal-titles">
+                <span id="modalCategoryBadge" class="fm-normal-modal-tag">Workout Preview</span>
+                <h3 id="modalWorkoutTitle" class="fm-normal-modal-heading">Workout Routine</h3>
+            </div>
+            <button type="button" class="fm-normal-modal-close" onclick="closeWorkoutVideo()" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="fm-normal-video-player">
+            <iframe id="modalVideoFrame" src="" title="Workout Video Preview" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="fm-normal-modal-footer">
+            <div class="fm-normal-modal-specs">
+                <span id="modalDuration"><i class="fa-regular fa-clock"></i> 30-45 MIN</span>
+                <span id="modalCalories"><i class="fa-solid fa-fire-flame-curved"></i> ~520 kcal</span>
+                <span id="modalLevel"><i class="fa-solid fa-signal"></i> All Levels</span>
+            </div>
+            <a href="{% url 'membership' %}" class="fm-normal-modal-enroll-btn">
+                <span>Start Full Program</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     SCRIPTS: FILTER & WORKOUT VIDEO PLAYER
+====================================================== -->
+<script>
+function filterPrograms(event, category) {
+    document.querySelectorAll('.fm-filter-pill').forEach(btn => btn.classList.remove('active'));
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+    }
+
+    const cards = document.querySelectorAll('.fm-program-card');
+    cards.forEach(card => {
+        const cardCat = card.getAttribute('data-category');
+        if (category === 'all' || cardCat === category) {
+            card.style.display = 'flex';
+            card.style.animation = 'cardSlideFadeIn 0.35s ease both';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+const WORKOUT_VIDEOS = {
+    'weight-loss': {
+        title: 'Weight Loss • Full Body HIIT Fat Burn',
+        category: 'Fat Burn Protocol',
+        duration: '35-45 MIN',
+        calories: '~520 kcal',
+        level: 'All Levels',
+        videoUrl: 'https://www.youtube.com/embed/ml6cT4AZdqI?autoplay=1&rel=0'
+    },
+    'muscle-gain': {
+        title: 'Muscle Gain • Hypertrophy Routine',
+        category: 'Strength & Hypertrophy',
+        duration: '45-60 MIN',
+        calories: '~420 kcal',
+        level: 'Intermediate',
+        videoUrl: 'https://www.youtube.com/embed/U9ENCvFf9yQ?autoplay=1&rel=0'
+    },
+    'yoga': {
+        title: 'Yoga & Flexibility • Mobility Flow',
+        category: 'Yoga & Recovery',
+        duration: '30-45 MIN',
+        calories: '~220 kcal',
+        level: 'All Levels',
+        videoUrl: 'https://www.youtube.com/embed/v7AYKMP6rOE?autoplay=1&rel=0'
+    },
+    'crossfit': {
+        title: 'CrossFit • High Intensity Metabolic Conditioning',
+        category: 'CrossFit & HIIT',
+        duration: '40-50 MIN',
+        calories: '~650 kcal',
+        level: 'Advanced',
+        videoUrl: 'https://www.youtube.com/embed/1BZM2Vre5oc?autoplay=1&rel=0'
+    },
+    'cardio': {
+        title: 'Cardio • Aerobic Endurance Session',
+        category: 'Cardio Endurance',
+        duration: '30-40 MIN',
+        calories: '~480 kcal',
+        level: 'All Levels',
+        videoUrl: 'https://www.youtube.com/embed/jpizoUy4K9s?autoplay=1&rel=0'
+    },
+    'strength': {
+        title: 'Strength Training • Power & Lifting Form',
+        category: 'Maximal Strength',
+        duration: '50-60 MIN',
+        calories: '~450 kcal',
+        level: 'Intermediate',
+        videoUrl: 'https://www.youtube.com/embed/ixkQaZXVQjs?autoplay=1&rel=0'
+    }
+};
+
+function openWorkoutVideo(programKey) {
+    const data = WORKOUT_VIDEOS[programKey];
+    if (!data) return;
+
+    const titleEl = document.getElementById('modalWorkoutTitle');
+    const badgeEl = document.getElementById('modalCategoryBadge');
+    const durEl = document.getElementById('modalDuration');
+    const calEl = document.getElementById('modalCalories');
+    const lvlEl = document.getElementById('modalLevel');
+    const iframe = document.getElementById('modalVideoFrame');
+    const modal = document.getElementById('workoutVideoModal');
+
+    if (titleEl) titleEl.textContent = data.title;
+    if (badgeEl) badgeEl.textContent = data.category;
+    if (durEl) durEl.innerHTML = '<i class="fa-regular fa-clock"></i> ' + data.duration;
+    if (calEl) calEl.innerHTML = '<i class="fa-solid fa-fire-flame-curved"></i> ' + data.calories;
+    if (lvlEl) lvlEl.innerHTML = '<i class="fa-solid fa-signal"></i> ' + data.level;
+    if (iframe) iframe.src = data.videoUrl;
+
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeWorkoutVideo() {
+    const modal = document.getElementById('workoutVideoModal');
+    const iframe = document.getElementById('modalVideoFrame');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+    if (iframe) {
+        iframe.src = '';
+    }
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeWorkoutVideo();
+    }
+});
+</script>
 
 {% endblock %}

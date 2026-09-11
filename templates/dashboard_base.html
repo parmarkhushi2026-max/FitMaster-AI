@@ -19,9 +19,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/dashboard_base.css' %}?v=5">
-    <link rel="stylesheet" href="{% static 'css/theme_toggle.css' %}?v=5">
-    <link rel="stylesheet" href="{% static 'css/animations.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'css/dashboard_base.css' %}?v=11">
+    <link rel="stylesheet" href="{% static 'css/theme_toggle.css' %}?v=11">
+    <link rel="stylesheet" href="{% static 'css/animations.css' %}?v=11">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -38,7 +38,7 @@
                 <span class="brand-name" style="font-family:'Poppins','Inter',sans-serif;font-size:15px;font-weight:800;display:flex;align-items:center;gap:6px;">
                     FitMaster
                 </span>
-                <span class="brand-sub">Kinetic SaaS Platform</span>
+                <span class="brand-sub">Fitness & Coaching Studio</span>
             </div>
         </a>
 
@@ -78,13 +78,13 @@
             <div class="topbar-right">
                 {% block topbar_status %}{% endblock %}
                 <!-- 🌐 Language & 💱 Currency Toggle Pill -->
-                <div class="lang-currency-pill" style="display:inline-flex;align-items:center;gap:6px;background:var(--surface, rgba(255,255,255,0.06));border:1px solid var(--border, rgba(255,255,255,0.12));padding:4px 10px;border-radius:20px;backdrop-filter:blur(8px);">
+                <div class="lang-currency-pill" style="display:inline-flex;align-items:center;gap:6px;background:var(--surface, #18181b);border:1px solid var(--border, rgba(255,255,255,0.18));padding:4px 10px;border-radius:20px;">
                     <button type="button" class="lang-toggle-btn" onclick="window.FitMasterI18n.setLanguage(window.FitMasterI18n.currentLang === 'en' ? 'hi' : 'en')" title="Change Language (English / हिंदी)" style="background:none;border:none;color:var(--text, #f8fafc);font-size:12px;font-weight:700;cursor:pointer;padding:2px 4px;">
                         <span id="currentLangLabel">🇬🇧 EN</span>
                     </button>
                     <span style="color:var(--text-muted, rgba(255,255,255,0.25));font-size:11px;">|</span>
-                    <button type="button" class="currency-toggle-btn" onclick="window.FitMasterCurrency.setCurrency(window.FitMasterCurrency.currentCurrency === 'INR' ? 'USD' : 'INR')" title="Change Currency (India ₹ / US $)" style="background:none;border:none;color:var(--primary, #ff5540);font-size:12px;font-weight:700;cursor:pointer;padding:2px 4px;">
-                        <span id="currentCurrencyLabel">🇮🇳 ₹ INR</span>
+                    <button type="button" class="currency-toggle-btn" onclick="window.FitMasterCurrency.cycleCountry()" title="Select Region / Country (US 🇺🇸, India 🇮🇳, UK 🇬🇧, UAE 🇦🇪)" style="background:none;border:none;color:var(--primary, #0071e3);font-size:12px;font-weight:700;cursor:pointer;padding:2px 4px;">
+                        <span id="currentCurrencyLabel">🇺🇸 US ($)</span>
                     </button>
                 </div>
 

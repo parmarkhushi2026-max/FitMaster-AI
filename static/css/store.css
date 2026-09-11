@@ -13,9 +13,7 @@
 }
 
 .product {
-    background: var(--dark-card, rgba(13, 27, 42, 0.78));
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: #121216;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 20px;
     padding: 28px 24px;
@@ -30,8 +28,8 @@
 
 .product:hover {
     transform: translateY(-8px);
-    border-color: rgba(255, 85, 64, 0.4);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 85, 64, 0.2);
+    border-color: rgba(0, 113, 227, 0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 113, 227, 0.2);
 }
 
 .product-img-wrap {
@@ -73,11 +71,10 @@
 }
 
 .product p.price {
-    color: var(--primary, #ff5540);
+    color: var(--primary, #0071e3);
     font-size: 24px;
     font-weight: 800;
     margin-bottom: 20px;
-    text-shadow: 0 0 15px rgba(255, 85, 64, 0.3);
 }
 
 .product a, .product button {
@@ -86,7 +83,7 @@
     justify-content: center;
     gap: 8px;
     padding: 12px 28px;
-    background: linear-gradient(135deg, var(--primary, #ff5540) 0%, #e03e2a 100%);
+    background: linear-gradient(135deg, var(--primary, #0071e3) 0%, #005bb5 100%);
     color: #ffffff;
     border-radius: 50px;
     text-decoration: none;
@@ -95,12 +92,12 @@
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(255, 85, 64, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3);
 }
 
 .product a:hover, .product button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(255, 85, 64, 0.45);
+    box-shadow: 0 10px 25px rgba(0, 113, 227, 0.45);
     color: #ffffff;
 }
 
@@ -112,4 +109,4 @@
     .product {
         padding: 20px 16px;
     }
-}
+}

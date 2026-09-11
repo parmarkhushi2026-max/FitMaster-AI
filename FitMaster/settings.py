@@ -127,11 +127,14 @@ CSP_CONNECT_SRC = (
     "'self'",
     "https://generativelanguage.googleapis.com",
     "https://api.razorpay.com",
+    "https://checkout.razorpay.com",
     "https://lumberjack.razorpay.com",
+    "https://lumberjack-cx.razorpay.com",
 )
 CSP_FRAME_SRC = (
     "'self'",
     "https://api.razorpay.com",
+    "https://checkout.razorpay.com",
 )
 CSP_FRAME_ANCESTORS = ("'none'",)
 CSP_BASE_URI = ("'self'",)

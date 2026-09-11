@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
   <defs>
-    <!-- Rich Vibrant Red Gradient matching user reference image -->
+    <!-- Vibrant Apple Blue Gradient matching new theme -->
     <linearGradient id="redLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ff3333" />
-      <stop offset="100%" stop-color="#e61919" />
+      <stop offset="0%" stop-color="#0071e3" />
+      <stop offset="100%" stop-color="#30d158" />
     </linearGradient>
   </defs>
 

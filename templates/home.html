@@ -6,15 +6,15 @@
 {% block extra_css %}
 <style>
 /* ==========================================================================
-   FITMASTER AI — PROTOCOL ALPHA STITCH DESIGN SYSTEM (CORAL FLAME THEME)
+   FITMASTER — MODERN GYM & FITNESS DESIGN SYSTEM
    ========================================================================== */
 
 :root {
-    --stitch-primary: #ff5540;
-    --stitch-primary-glow: rgba(255, 85, 64, 0.4);
-    --stitch-primary-container: #5c0000;
-    --stitch-secondary: #ff8a7a;
-    --stitch-secondary-glow: rgba(255, 138, 122, 0.4);
+    --stitch-primary: #30d158;
+    --stitch-primary-glow: rgba(48, 209, 88, 0.3);
+    --stitch-primary-container: #0071e3;
+    --stitch-secondary: #0071e3;
+    --stitch-secondary-glow: rgba(0, 113, 227, 0.3);
     --stitch-accent-purple: #488fff;
     
     --stitch-surface: #131313;
@@ -23,18 +23,18 @@
     --stitch-surface-lowest: #0e0e0e;
     
     --stitch-border: rgba(255, 255, 255, 0.08);
-    --stitch-border-glow: rgba(255, 85, 64, 0.25);
+    --stitch-border-glow: rgba(48, 209, 88, 0.25);
     --stitch-text: #ffffff;
     --stitch-text-muted: #a1a1aa;
     --stitch-text-dim: #71717a;
 }
 
 [data-theme="light"] {
-    --stitch-primary: #ff5540;
-    --stitch-primary-glow: rgba(255, 85, 64, 0.3);
-    --stitch-primary-container: #d93824;
-    --stitch-secondary: #2563eb;
-    --stitch-secondary-glow: rgba(37, 99, 235, 0.3);
+    --stitch-primary: #28cd41;
+    --stitch-primary-glow: rgba(40, 205, 65, 0.25);
+    --stitch-primary-container: #0071e3;
+    --stitch-secondary: #0071e3;
+    --stitch-secondary-glow: rgba(0, 113, 227, 0.25);
     --stitch-accent-purple: #488fff;
 
     --stitch-surface: #ffffff;
@@ -42,7 +42,7 @@
     --stitch-surface-high: #ffffff;
     --stitch-surface-lowest: #f1f5f9;
     --stitch-border: rgba(0, 0, 0, 0.08);
-    --stitch-border-glow: rgba(255, 85, 64, 0.35);
+    --stitch-border-glow: rgba(0, 113, 227, 0.25);
     --stitch-text: #0f172a;
     --stitch-text-muted: #475569;
     --stitch-text-dim: #64748b;
@@ -51,15 +51,15 @@
 /* Light Theme Overrides */
 [data-theme="light"] .stitch-hero {
     background-image: 
-        radial-gradient(circle at 80% 25%, rgba(255, 85, 64, 0.12) 0%, transparent 60%),
-        radial-gradient(circle at 20% 70%, rgba(37, 99, 235, 0.12) 0%, transparent 55%),
+        radial-gradient(circle at 80% 25%, rgba(48, 209, 88, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 20% 70%, rgba(0, 113, 227, 0.12) 0%, transparent 55%),
         linear-gradient(to top, rgba(248,250,252,0.96) 0%, rgba(248,250,252,0.65) 50%, rgba(248,250,252,0.3) 100%), 
         url('https://lh3.googleusercontent.com/aida-public/AB6AXuCQuIZnrJ-pMLDqBIcY7Qw5XxnNGL-dp2yx144dJdwyno66IFu4MyO1VRkV_3o39JRADP97IlCpzannqsgG6GgNhmursKGWKiNp2Q2amfYxAOUks98fl388T4Xr90ku6ddrTJ7tAQOo6MZuGbXCEIsQWxTQczQD2g0E0frR9jYSrahjF_mN4O4d67R-yvxC4r4pRrtcJ67O-GZKgULd9EsF4VBOJ1aiG6rZseY7k89QdZpeqRyvx9ia4Q') !important;
 }
 
 [data-theme="light"] .stitch-hero-title {
     color: #0f172a !important;
-    background: linear-gradient(135deg, #0f172a 40%, #ff5540 100%) !important;
+    background: linear-gradient(135deg, #0f172a 40%, #0071e3 100%) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
 }
@@ -70,34 +70,51 @@
 }
 
 [data-theme="light"] .stitch-badge-text {
-    color: #ff5540 !important;
+    color: #30d158 !important;
 }
 
 [data-theme="light"] .stitch-badge-line {
-    background: linear-gradient(90deg, #ff5540, #2563eb) !important;
+    background: linear-gradient(90deg, #30d158, #0071e3) !important;
 }
 
-[data-theme="light"] .btn-stitch-primary {
-    background: linear-gradient(135deg, #ff5540 0%, #d93824 100%) !important;
+[data-theme="light"] .btn-stitch-primary,
+[data-theme="light"] .btn-stitch-primary span,
+[data-theme="light"] .btn-stitch-primary i,
+[data-theme="light"] .btn-pkg-buy,
+[data-theme="light"] .btn-pkg-buy span,
+[data-theme="light"] .btn-pkg-buy i {
+    background: #0071e3 !important;
     color: #ffffff !important;
-    box-shadow: 0 4px 18px rgba(255, 85, 64, 0.3) !important;
+    box-shadow: 0 2px 10px rgba(0, 113, 227, 0.25) !important;
 }
 
-[data-theme="light"] .btn-stitch-outline {
+[data-theme="light"] .btn-stitch-outline,
+[data-theme="light"] .btn-stitch-outline span,
+[data-theme="light"] .btn-stitch-outline i,
+[data-theme="light"] .btn-pkg-outline,
+[data-theme="light"] .btn-pkg-outline span,
+[data-theme="light"] .btn-pkg-outline i {
     background: #ffffff !important;
-    border: 1.5px solid #ff5540 !important;
-    color: #ff5540 !important;
+    border: 1.5px solid #0071e3 !important;
+    color: #0071e3 !important;
 }
 
-[data-theme="light"] .btn-stitch-outline:hover {
-    background: rgba(255, 85, 64, 0.08) !important;
-    color: #d93824 !important;
+[data-theme="light"] .btn-stitch-outline:hover,
+[data-theme="light"] .btn-stitch-outline:hover span,
+[data-theme="light"] .btn-stitch-outline:hover i,
+[data-theme="light"] .btn-pkg-outline:hover,
+[data-theme="light"] .btn-pkg-outline:hover span,
+[data-theme="light"] .btn-pkg-outline:hover i {
+    background: #0071e3 !important;
+    border-color: #0071e3 !important;
+    color: #ffffff !important;
 }
 
 [data-theme="light"] .paradigm-img-box {
     filter: none !important;
     border-radius: 14px;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 [data-theme="light"] .timeline-media-side {
@@ -114,13 +131,13 @@
 }
 
 [data-theme="light"] .timeline-center-line {
-    background: linear-gradient(180deg, rgba(255,85,64,0.15) 0%, #ff5540 50%, rgba(255,85,64,0.15) 100%) !important;
+    background: linear-gradient(180deg, rgba(48,209,88,0.15) 0%, #30d158 50%, rgba(48,209,88,0.15) 100%) !important;
 }
 
 [data-theme="light"] .timeline-node-pill {
-    background: linear-gradient(135deg, #ff5540, #2563eb) !important;
+    background: linear-gradient(135deg, #30d158, #0071e3) !important;
     color: #ffffff !important;
-    box-shadow: 0 0 14px rgba(255, 85, 64, 0.35) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15); !important;
 }
 
 [data-theme="light"] .timeline-node-pill.dim {
@@ -138,14 +155,28 @@
 }
 
 [data-theme="light"] p,
-[data-theme="light"] li,
-[data-theme="light"] span:not(.material-symbols-outlined):not(.product-stock-tag):not(.product-rating-tag) {
-    color: #334155;
+[data-theme="light"] li {
+    color: #334155 !important;
 }
 
 [data-theme="light"] .stitch-quote {
-    border-left-color: #ff5540 !important;
-    color: #ff5540 !important;
+    border-left-color: #0071e3 !important;
+    color: #c2410c !important;
+    font-weight: 500 !important;
+}
+
+/* Light Mode Specific Sections */
+[data-theme="light"] .bmi-engine-section {
+    background-color: #f1f5f9 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] #packages {
+    background-color: #f1f5f9 !important;
+}
+
+[data-theme="light"] .faq-wrap-dark {
+    background-color: #f8fafc !important;
 }
 
 [data-theme="light"] .calc-box-glass,
@@ -158,24 +189,56 @@
 }
 
 [data-theme="light"] .calc-input-dark {
-    background: #f8fafc !important;
-    border-color: rgba(0, 0, 0, 0.12) !important;
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .calc-input-dark option {
+    background: #ffffff !important;
     color: #0f172a !important;
 }
 
 [data-theme="light"] .calc-field-group label {
     color: #0f172a !important;
-    font-weight: 700;
+    font-weight: 700 !important;
+}
+
+[data-theme="light"] .calc-summary-card [style*="border-radius:6px"] {
+    background: #f8fafc !important;
+    border-color: #e2e8f0 !important;
 }
 
 [data-theme="light"] .paradigm-telemetry-badge {
-    background: rgba(255, 255, 255, 0.95) !important;
+    background: #ffffff !important;
     border: 1px solid rgba(0,0,0,0.08) !important;
     box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
 }
 
+[data-theme="light"] .paradigm-telemetry-badge span {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .paradigm-telemetry-badge span:first-child {
+    color: #0071e3 !important;
+}
+
 [data-theme="light"] .paradigm-telemetry-badge span:nth-child(2) {
     color: #0f172a !important;
+}
+
+[data-theme="light"] .paradigm-telemetry-badge span:nth-child(3) {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .architect-bio span[style*="font-size:26px"] {
+    color: #94a3b8 !important;
+}
+
+[data-theme="light"] .faq-wrap-dark [style*="border-radius:14px"] {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05) !important;
 }
 
 /* Transformation Cards */
@@ -212,8 +275,8 @@
 
 .transform-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(0, 245, 155, 0.45);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 25px rgba(0, 245, 155, 0.15);
+    border-color: rgba(0, 113, 227, 0.45);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 25px rgba(0, 113, 227, 0.15);
 }
 
 .transform-card:hover::before {
@@ -226,9 +289,30 @@
     box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.05) !important;
 }
 
+[data-theme="light"] .transform-card h4 {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .transform-card p {
+    color: #334155 !important;
+}
+
+[data-theme="light"] .transform-card [style*="grid-template-columns:1fr 1fr"] {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+[data-theme="light"] .transform-card [style*="grid-template-columns:1fr 1fr"] span {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .transform-card [style*="grid-template-columns:1fr 1fr"] div {
+    color: #0f172a !important;
+}
+
 [data-theme="light"] .transform-card:hover {
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08) !important;
-    border-color: rgba(5, 150, 105, 0.4) !important;
+    border-color: rgba(0, 113, 227, 0.4) !important;
 }
 
 /* Transformation Filters */
@@ -254,16 +338,16 @@
 }
 
 .transform-filter-btn:hover {
-    color: #ff5540;
-    border-color: #ff5540;
-    box-shadow: 0 0 15px rgba(255, 85, 64, 0.25);
+    color: #0071e3;
+    border-color: #0071e3;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
 .transform-filter-btn.active {
-    background: linear-gradient(135deg, #ff5540, #e03e2a);
+    background: linear-gradient(135deg, #0071e3, #005bb5);
     color: #ffffff;
-    border-color: #ff5540;
-    box-shadow: 0 4px 16px rgba(255, 85, 64, 0.4);
+    border-color: #0071e3;
+    box-shadow: 0 4px 16px rgba(0, 113, 227, 0.4);
 }
 
 [data-theme="light"] .transform-filter-btn {
@@ -273,10 +357,10 @@
 }
 
 [data-theme="light"] .transform-filter-btn.active {
-    background: linear-gradient(135deg, #ff5540, #d93824) !important;
+    background: linear-gradient(135deg, #0071e3, #005bb5) !important;
     color: #ffffff !important;
-    border-color: #ff5540 !important;
-    box-shadow: 0 4px 15px rgba(255, 85, 64, 0.3) !important;
+    border-color: #0071e3 !important;
+    box-shadow: 0 4px 15px rgba(0, 113, 227, 0.3) !important;
 }
 
 /* Packaging / Membership Pricing Grid on Home Page */
@@ -303,14 +387,14 @@
 
 .pkg-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 85, 64, 0.2);
-    border-color: rgba(255, 85, 64, 0.45);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(0, 113, 227, 0.2);
+    border-color: rgba(0, 113, 227, 0.45);
 }
 
 .pkg-card.popular {
-    border: 2px solid #ff5540;
-    background: linear-gradient(180deg, rgba(255, 85, 64, 0.08) 0%, rgba(15, 23, 42, 0.85) 100%);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 85, 64, 0.25);
+    border: 2px solid #0071e3;
+    background: linear-gradient(180deg, rgba(0, 113, 227, 0.08) 0%, rgba(15, 23, 42, 0.85) 100%);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(0, 113, 227, 0.25);
 }
 
 .pkg-popular-tag {
@@ -318,7 +402,7 @@
     top: -12px;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(135deg, #ff5540, #ff8a7a);
+    background: linear-gradient(135deg, #0071e3, #30d158);
     color: #ffffff;
     font-size: 10.5px;
     font-weight: 800;
@@ -327,7 +411,7 @@
     padding: 4px 14px;
     border-radius: 20px;
     white-space: nowrap;
-    box-shadow: 0 0 16px rgba(255, 85, 64, 0.5);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
 .pkg-header {
@@ -363,9 +447,9 @@
 .pkg-price {
     font-size: 34px;
     font-weight: 900;
-    color: #ff5540;
+    color: #0071e3;
     letter-spacing: -0.5px;
-    text-shadow: 0 0 18px rgba(255, 85, 64, 0.35);
+    text-shadow: none;
 }
 
 .pkg-duration {
@@ -392,7 +476,7 @@
 }
 
 .pkg-features li i {
-    color: #ff5540;
+    color: #0071e3;
     font-size: 11px;
 }
 
@@ -402,7 +486,7 @@
     justify-content: center;
     gap: 6px;
     width: 100%;
-    background: linear-gradient(135deg, #ff5540 0%, #e03e2a 100%);
+    background: linear-gradient(135deg, #0071e3 0%, #005bb5 100%);
     color: #ffffff;
     padding: 10px 14px;
     border-radius: 8px;
@@ -410,25 +494,25 @@
     font-size: 12.5px;
     text-decoration: none;
     transition: all 0.25s ease;
-    box-shadow: 0 4px 16px rgba(255, 85, 64, 0.35);
+    box-shadow: 0 4px 16px rgba(0, 113, 227, 0.35);
 }
 
 .btn-pkg-buy:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(255, 85, 64, 0.55);
-    background: linear-gradient(135deg, #ff8a7a 0%, #ff5540 100%);
+    box-shadow: 0 8px 24px rgba(0, 113, 227, 0.55);
+    background: linear-gradient(135deg, #30d158 0%, #0071e3 100%);
 }
 
 .btn-pkg-outline {
     background: rgba(255, 255, 255, 0.05);
-    border: 1.5px solid rgba(255, 85, 64, 0.5);
+    border: 1.5px solid rgba(0, 113, 227, 0.5);
     color: #ffffff;
 }
 
 .btn-pkg-outline:hover {
-    background: #ff5540;
+    background: #0071e3;
     color: #ffffff;
-    border-color: #ff5540;
+    border-color: #0071e3;
 }
 
 [data-theme="light"] .pkg-card {
@@ -438,46 +522,54 @@
 }
 
 [data-theme="light"] .pkg-card.popular {
-    border: 2px solid #ff5540 !important;
-    background: linear-gradient(180deg, rgba(255, 85, 64, 0.06) 0%, #ffffff 100%) !important;
+    border: 2px solid #0071e3 !important;
+    background: linear-gradient(180deg, rgba(0, 113, 227, 0.06) 0%, #ffffff 100%) !important;
 }
 
 [data-theme="light"] .pkg-title {
     color: #0f172a !important;
 }
 
+[data-theme="light"] .pkg-desc {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .pkg-duration {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .pkg-features li {
+    color: #334155 !important;
+}
+
+[data-theme="light"] .pkg-features li i {
+    color: #0071e3 !important;
+}
+
 [data-theme="light"] .pkg-price {
-    color: #ff5540 !important;
+    color: #0071e3 !important;
     text-shadow: none !important;
 }
 
 [data-theme="light"] .btn-pkg-buy {
-    background: linear-gradient(135deg, #ff5540, #d93824) !important;
+    background: linear-gradient(135deg, #0071e3, #005bb5) !important;
     color: #ffffff !important;
 }
 
 [data-theme="light"] .btn-pkg-outline {
     background: #ffffff !important;
-    border: 1.5px solid #ff5540 !important;
-    color: #ff5540 !important;
+    border: 1.5px solid #0071e3 !important;
+    color: #0071e3 !important;
 }
 
 [data-theme="light"] .btn-pkg-outline:hover {
-    background: #ff5540 !important;
+    background: #0071e3 !important;
     color: #ffffff !important;
 }
 
-/* Unique Aurora Obsidian Background Canvas */
+/* Clean Obsidian Background Canvas */
 .stitch-wrapper {
-    background-color: #0e0e0e;
-    background-image: 
-        radial-gradient(at 10% 15%, rgba(255, 85, 64, 0.14) 0px, transparent 50%),
-        radial-gradient(at 90% 25%, rgba(72, 143, 255, 0.15) 0px, transparent 55%),
-        radial-gradient(at 50% 60%, rgba(255, 138, 122, 0.09) 0px, transparent 50%),
-        radial-gradient(at 20% 85%, rgba(255, 85, 64, 0.11) 0px, transparent 50%),
-        radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 32px 32px;
-    background-attachment: fixed;
+    background-color: #0d0f14;
     color: var(--stitch-text);
     font-family: 'Inter', system-ui, sans-serif;
     overflow-x: hidden;
@@ -486,13 +578,8 @@
 
 [data-theme="light"] .stitch-wrapper {
     background-color: #f8fafc;
-    background-image: 
-        radial-gradient(at 12% 15%, rgba(255, 85, 64, 0.08) 0px, transparent 50%),
-        radial-gradient(at 88% 25%, rgba(37, 99, 235, 0.08) 0px, transparent 50%),
-        radial-gradient(at 50% 65%, rgba(72, 143, 255, 0.05) 0px, transparent 50%),
-        radial-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 100% 100%, 30px 30px;
-    background-attachment: fixed;
+    background-image: none;
+    color: #0f172a;
 }
 
 /* Hero Section (Expansive & Sleek Aurora Backdrop) */
@@ -507,7 +594,7 @@
     background-position: center 25%;
     background-repeat: no-repeat;
     background-image: 
-        radial-gradient(circle at 75% 30%, rgba(255, 85, 64, 0.28) 0%, transparent 60%),
+        radial-gradient(circle at 75% 30%, rgba(0, 113, 227, 0.28) 0%, transparent 60%),
         radial-gradient(circle at 20% 65%, rgba(72, 143, 255, 0.22) 0%, transparent 55%),
         linear-gradient(to top, #0e0e0e 0%, rgba(14,14,14,0.65) 45%, rgba(14,14,14,0.35) 100%), 
         url('https://lh3.googleusercontent.com/aida-public/AB6AXuCQuIZnrJ-pMLDqBIcY7Qw5XxnNGL-dp2yx144dJdwyno66IFu4MyO1VRkV_3o39JRADP97IlCpzannqsgG6GgNhmursKGWKiNp2Q2amfYxAOUks98fl388T4Xr90ku6ddrTJ7tAQOo6MZuGbXCEIsQWxTQczQD2g0E0frR9jYSrahjF_mN4O4d67R-yvxC4r4pRrtcJ67O-GZKgULd9EsF4VBOJ1aiG6rZseY7k89QdZpeqRyvx9ia4Q');
@@ -535,7 +622,7 @@
 .stitch-badge-line {
     width: 32px;
     height: 2px;
-    background: linear-gradient(90deg, #ff5540, #ff8a7a);
+    background: linear-gradient(90deg, #0071e3, #30d158);
 }
 
 .stitch-badge-text {
@@ -543,8 +630,8 @@
     font-weight: 800;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #ff5540;
-    text-shadow: 0 0 12px rgba(255, 85, 64, 0.4);
+    color: #0071e3;
+    text-shadow: none;
 }
 
 .stitch-hero-title {
@@ -574,7 +661,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #ff5540 0%, #e03e2a 100%);
+    background: linear-gradient(135deg, #0071e3 0%, #005bb5 100%);
     color: #ffffff;
     padding: 11px 24px;
     font-size: 12.5px;
@@ -583,7 +670,7 @@
     text-transform: uppercase;
     text-decoration: none;
     border-radius: 8px;
-    box-shadow: 0 4px 18px rgba(255, 85, 64, 0.4);
+    box-shadow: 0 4px 18px rgba(0, 113, 227, 0.4);
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     border: none;
     cursor: pointer;
@@ -591,8 +678,8 @@
 
 .btn-stitch-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 85, 64, 0.6);
-    background: linear-gradient(135deg, #ff8a7a 0%, #ff5540 100%);
+    box-shadow: 0 8px 25px rgba(0, 113, 227, 0.6);
+    background: linear-gradient(135deg, #30d158 0%, #0071e3 100%);
 }
 
 .btn-stitch-outline {
@@ -601,7 +688,7 @@
     gap: 8px;
     background: rgba(15, 23, 42, 0.6);
     color: #f8fafc;
-    border: 1px solid rgba(255, 85, 64, 0.4);
+    border: 1px solid rgba(0, 113, 227, 0.4);
     padding: 11px 24px;
     font-size: 12.5px;
     font-weight: 700;
@@ -609,15 +696,15 @@
     text-transform: uppercase;
     text-decoration: none;
     border-radius: 8px;
-    backdrop-filter: blur(10px);
+    background: #18181b;
     transition: all 0.2s ease;
 }
 
 .btn-stitch-outline:hover {
-    border-color: #ff5540;
-    color: #ff5540;
-    background: rgba(255, 85, 64, 0.12);
-    box-shadow: 0 0 18px rgba(255, 85, 64, 0.3);
+    border-color: #0071e3;
+    color: #0071e3;
+    background: rgba(0, 113, 227, 0.12);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
 /* Generic Section Styles (Compact Spacing) */
@@ -633,15 +720,13 @@
 
 /* Section 2: Smart BMI & Calorie Calculator */
 .bmi-engine-section {
-    background-color: rgba(10, 15, 29, 0.6);
-    backdrop-filter: blur(12px);
+    background-color: #0d1117;
     padding: 38px 20px 42px;
     border-bottom: 1px solid var(--stitch-border);
 }
 
 .calc-box-glass {
-    background: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(20px);
+    background: #161b22;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     padding: 20px 24px;
@@ -685,14 +770,13 @@
 }
 
 .calc-input-dark:focus {
-    border-color: #ff5540;
-    box-shadow: 0 0 0 2px rgba(255, 85, 64, 0.25);
+    border-color: #0071e3;
+    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.25);
 }
 
 .calc-summary-card {
-    background: rgba(10, 15, 29, 0.85);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 85, 64, 0.25);
+    background: #161b22;
+    border: 1px solid rgba(0, 113, 227, 0.25);
     border-radius: 12px;
     padding: 18px 18px;
     display: flex;
@@ -726,17 +810,16 @@
     border-radius: 16px;
     overflow: hidden;
     background-color: #0d1527;
-    box-shadow: 0 16px 36px rgba(0,0,0,0.55), 0 0 25px rgba(255, 85, 64, 0.12);
-    border: 1px solid rgba(255, 85, 64, 0.25);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.55), 0 0 25px rgba(0, 113, 227, 0.12);
+    border: 1px solid rgba(0, 113, 227, 0.25);
 }
 
 .paradigm-telemetry-badge {
     position: absolute;
     bottom: 16px;
     left: 16px;
-    background: rgba(8, 12, 22, 0.88);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 85, 64, 0.35);
+    background: #0d1117;
+    border: 1px solid rgba(0, 113, 227, 0.35);
     border-radius: 8px;
     padding: 10px 14px;
     display: flex;
@@ -746,11 +829,11 @@
 }
 
 .stitch-quote {
-    border-left: 3px solid #ff5540;
+    border-left: 3px solid #0071e3;
     padding-left: 14px;
     font-style: italic;
     font-size: 14px;
-    color: #ff5540;
+    color: #0071e3;
     line-height: 1.5;
 }
 
@@ -764,7 +847,7 @@
     position: absolute;
     top: 0; bottom: 0; left: 50%;
     width: 2px;
-    background: linear-gradient(180deg, rgba(255,85,64,0.1) 0%, #ff5540 50%, rgba(255,138,122,0.2) 100%);
+    background: linear-gradient(180deg, rgba(0, 113, 227,0.1) 0%, #0071e3 50%, rgba(48, 209, 88,0.2) 100%);
     transform: translateX(-50%);
 }
 
@@ -800,14 +883,14 @@
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background: #ff5540;
+    background: #0071e3;
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
     font-size: 12px;
-    box-shadow: 0 0 16px rgba(255, 85, 64, 0.5);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
     z-index: 5;
 }
 
@@ -854,8 +937,7 @@
 
 /* Section 5: Architect */
 .architect-card {
-    background: rgba(15, 23, 42, 0.78);
-    backdrop-filter: blur(18px);
+    background: #161b22;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
     display: flex;
@@ -894,14 +976,12 @@
 
 /* Section 6: FAQ */
 .faq-wrap-dark {
-    background-color: rgba(7, 11, 20, 0.7);
-    backdrop-filter: blur(12px);
+    background-color: #0d1117;
     padding: 40px 20px 46px;
 }
 
 .faq-card-item {
-    background: rgba(15, 23, 42, 0.7);
-    backdrop-filter: blur(14px);
+    background: #161b22;
     border: 1px solid rgba(255, 255, 255, 0.08);
     padding: 14px 16px;
     border-radius: 12px;
@@ -933,42 +1013,339 @@
 {% block content %}
 <div class="stitch-wrapper">
 
-    <!-- ================= 1. HERO SECTION ================= -->
-    <section class="stitch-hero">
-        <div class="stitch-hero-content">
-            
-            <div class="stitch-protocol-badge">
-                <span class="stitch-badge-line"></span>
-                <span class="stitch-badge-text">✨ Trusted by 10,000+ Happy Fitness Members</span>
+    <!-- ================= 1. SCANDINAVIAN ICE CINEMATIC HERO ================= -->
+    <section class="scandi-hero-section">
+        <style>
+        .scandi-hero-section {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: #090c12;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 40px 0 0;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        [data-theme="light"] .scandi-hero-section {
+            background: #f7f9fc;
+            border-bottom-color: #cbd5e1;
+            color: #0b1320;
+        }
+
+        .scandi-grid-bg {
+            position: absolute;
+            inset: 0;
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            pointer-events: none;
+        }
+
+        [data-theme="light"] .scandi-grid-bg {
+            background-image: 
+                linear-gradient(to right, rgba(226, 232, 240, 0.6) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(226, 232, 240, 0.6) 1px, transparent 1px);
+        }
+
+        .scandi-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .scandi-telemetry-top {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: monospace;
+            font-size: 11px;
+            gap: 12px;
+        }
+
+        [data-theme="light"] .scandi-telemetry-top {
+            border-bottom-color: #e2e8f0;
+        }
+
+        .scandi-hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            padding: 48px 0;
+            align-items: center;
+        }
+
+        @media (min-width: 992px) {
+            .scandi-hero-grid {
+                grid-template-columns: 1.2fr 0.8fr;
+            }
+        }
+
+        .scandi-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #0071e3;
+            margin-bottom: 20px;
+        }
+
+        [data-theme="light"] .scandi-badge {
+            background: #ffffff;
+            border-color: #cbd5e1;
+            color: #0071e3;
+        }
+
+        .scandi-hero-title {
+            font-size: clamp(32px, 4.5vw, 56px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            color: var(--stitch-text, #ffffff);
+            margin-bottom: 20px;
+        }
+
+        .scandi-hero-desc {
+            font-size: clamp(14px, 1.2vw, 16.5px);
+            line-height: 1.6;
+            color: #94a3b8;
+            max-width: 580px;
+            margin-bottom: 28px;
+        }
+
+        [data-theme="light"] .scandi-hero-desc {
+            color: #475569;
+        }
+
+        .scandi-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #0071e3;
+            color: #ffffff;
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 14px 28px;
+            border: 1px solid #0071e3;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .scandi-btn-primary:hover {
+            background: #005bb5;
+            border-color: #005bb5;
+            color: #ffffff;
+        }
+
+        .scandi-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 14px 28px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        [data-theme="light"] .scandi-btn-secondary {
+            background: #ffffff;
+            color: #0b1320;
+            border-color: #cbd5e1;
+        }
+
+        .scandi-btn-secondary:hover {
+            border-color: #0071e3;
+            color: #0071e3;
+        }
+
+        .scandi-card-preview {
+            background: #0e1420;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="light"] .scandi-card-preview {
+            background: #ffffff;
+            border-color: #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .scandi-img-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            background: #141b2d;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 16px;
+        }
+
+        .scandi-img-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(80%) contrast(115%);
+        }
+
+        .scandi-telemetry-bar {
+            width: 100%;
+            background: #0d121c;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        [data-theme="light"] .scandi-telemetry-bar {
+            background: #ffffff;
+            border-top-color: #e2e8f0;
+        }
+
+        .scandi-stat-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .scandi-stat-icon {
+            width: 42px;
+            height: 42px;
+            background: rgba(0, 113, 227, 0.12);
+            border: 1px solid rgba(0, 113, 227, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0071e3;
+            flex-shrink: 0;
+        }
+        </style>
+
+        <div class="scandi-grid-bg"></div>
+
+        <div class="scandi-container">
+
+            <!-- Hero Body -->
+            <div class="scandi-hero-grid">
+                <div>
+                    <div class="scandi-badge">
+                        <span>NORWEGIAN BIOMECHANICS & PLATINUM ARCHITECTURE</span>
+                    </div>
+                    <h1 class="scandi-hero-title">
+                        RIGID PRECISION.<br>
+                        <span style="color:#0071e3;font-style:italic;font-weight:300;">SCANDINAVIAN</span> RECOVERY.
+                    </h1>
+                    <p class="scandi-hero-desc">
+                        Industrial-grade strength architecture built with raw Swedish Eleiko steel, sensory contrast cryo-labs, and diagnostic biomechanical tracking. Calibrated for calculated, measurable human performance.
+                    </p>
+
+                    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'dashboard' %}" class="scandi-btn-primary">
+                            <span>INITIATE LAB ADMISSION</span>
+                            <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'signup' %}" class="scandi-btn-primary">
+                            <span>INITIATE LAB ADMISSION</span>
+                            <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span>
+                        </a>
+                        {% endif %}
+
+                        <a href="#bmi-calculator" class="scandi-btn-secondary">
+                            <span>EXAMINE DROP 04 SPECS</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Metric Dashboard / Architectural Canvas -->
+                <div>
+                    <div class="scandi-card-preview">
+                        <div class="scandi-img-frame">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG9VSXHnIIWXTxNs3vSB4HbZYgALsXdVLapn7gimEm_yzfLNORtR2kRgnD6rx7jggSRmQyrtk2SIE9oFYVynRh3D0EYNIDXSjKjC7T_ZWUwLKceG0dFv6uCypf2NDtopi2mav80KRcSasKxbApEb8djJMHlIeGoCPvwhSR6dDvGTW4zRiHaSojFh3jvctAJniXcIgLAXJ2SPqP1txtpFeKG94FmX3YC7mPV75dTPu78BxjCorJ5Im5Ng" alt="Scandinavian Athletic Barbell Rack">
+                            <div style="position:absolute;bottom:8px;left:10px;right:10px;display:flex;justify-content:space-between;font-family:monospace;font-size:10px;color:#ffffff;background:rgba(0,0,0,0.6);padding:4px 8px;">
+                                <span>STRENGTH SANCTUARY // PLATINUM RIG 01</span>
+                                <span style="color:#30d158;font-weight:700;">CALIBRATED ELEIKO</span>
+                            </div>
+                        </div>
+
+                        <!-- Telemetry Specs Table -->
+                        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;border-top:1px solid rgba(255,255,255,0.1);padding-top:12px;font-family:monospace;">
+                            <div style="padding:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);">
+                                <div style="font-size:8.5px;color:#71717a;text-transform:uppercase;">ACOUSTIC DAMPING</div>
+                                <div style="font-size:11px;font-weight:700;color:var(--stitch-text);margin-top:2px;">42 dB ISOLATED</div>
+                            </div>
+                            <div style="padding:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);">
+                                <div style="font-size:8.5px;color:#71717a;text-transform:uppercase;">SUB-FLOOR SHOCK</div>
+                                <div style="font-size:11px;font-weight:700;color:var(--stitch-text);margin-top:2px;">&lt; 0.04 G-FORCE</div>
+                            </div>
+                            <div style="padding:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);">
+                                <div style="font-size:8.5px;color:#71717a;text-transform:uppercase;">AIR TURNOVER</div>
+                                <div style="font-size:11px;font-weight:700;color:#0071e3;margin-top:2px;">100% HEPA 14</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <h1 class="stitch-hero-title">
-                Transform Your Body.<br>Elevate Your Life.
-            </h1>
-
-            <p class="stitch-hero-desc">
-                Personalized workouts, balanced nutrition plans, and caring 1-on-1 coach support to help you get fitter, stronger, and full of energy every single day.
-            </p>
-
-            <div class="stitch-hero-actions">
-                {% if user.is_authenticated %}
-                <a href="{% url 'dashboard' %}" class="btn-stitch-primary">
-                    <span>Go to My Dashboard</span>
-                    <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
-                </a>
-                {% else %}
-                <a href="{% url 'signup' %}" class="btn-stitch-primary">
-                    <span>Start Your Journey Free</span>
-                    <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
-                </a>
-                {% endif %}
-
-                <a href="#packages" class="btn-stitch-outline">
-                    <span class="material-symbols-outlined" style="font-size:18px;">card_membership</span>
-                    <span>View Membership Plans</span>
-                </a>
+        <!-- Telemetry Bottom Bar -->
+        <div class="scandi-telemetry-bar">
+            <div class="scandi-stat-item">
+                <div class="scandi-stat-icon">
+                    <span class="material-symbols-outlined">monitoring</span>
+                </div>
+                <div>
+                    <div style="font-weight:800;font-size:13.5px;text-transform:uppercase;color:var(--stitch-text);">98.4% Documented PR Index</div>
+                    <div style="font-family:monospace;font-size:10.5px;color:#71717a;">Verified via 12-week closed barbell telemetry</div>
+                </div>
             </div>
-
+            <div class="scandi-stat-item">
+                <div class="scandi-stat-icon">
+                    <span class="material-symbols-outlined">device_thermostat</span>
+                </div>
+                <div>
+                    <div style="font-weight:800;font-size:13.5px;text-transform:uppercase;color:var(--stitch-text);">Sub-Zero Metabolic Suites</div>
+                    <div style="font-family:monospace;font-size:10.5px;color:#71717a;">3°C cold immersion & medical InBody 770</div>
+                </div>
+            </div>
+            <div class="scandi-stat-item">
+                <div class="scandi-stat-icon">
+                    <span class="material-symbols-outlined">verified_user</span>
+                </div>
+                <div>
+                    <div style="font-weight:800;font-size:13.5px;text-transform:uppercase;color:var(--stitch-text);">Accredited CSCS Clinicians</div>
+                    <div style="font-family:monospace;font-size:10.5px;color:#71717a;">Direct 1:1 kinematic velocity prescription</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -978,7 +1355,7 @@
         <div class="stitch-container">
             
             <div style="text-align:center;max-width:680px;margin:0 auto 22px;">
-                <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:24px;background:rgba(255,85,64,0.12);border:1px solid rgba(255,85,64,0.3);color:#ff5540;font-size:11px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:8px;">
+                <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:24px;background:rgba(0, 113, 227,0.12);border:1px solid rgba(0, 113, 227,0.3);color:#0071e3;font-size:11px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:8px;">
                     <span class="material-symbols-outlined" style="font-size:15px;">calculate</span>
                     <span>🥗 Daily Health Calculator</span>
                 </div>
@@ -1000,18 +1377,18 @@
                         <div class="calc-field-group">
                             <div style="display:flex;justify-content:space-between;align-items:center;">
                                 <label for="calcHeight">Height (cm)</label>
-                                <span id="heightValLabel" style="font-size:11.5px;font-weight:700;color:#ff5540;">175 cm</span>
+                                <span id="heightValLabel" style="font-size:11.5px;font-weight:700;color:#0071e3;">175 cm</span>
                             </div>
-                            <input type="range" id="calcHeightSlider" min="120" max="230" value="175" step="1" oninput="syncHeight(this.value)" style="accent-color:#ff5540;cursor:pointer;margin:2px 0 6px;">
+                            <input type="range" id="calcHeightSlider" min="120" max="230" value="175" step="1" oninput="syncHeight(this.value)" style="accent-color:#0071e3;cursor:pointer;margin:2px 0 6px;">
                             <input type="number" id="calcHeight" class="calc-input-dark" value="175" min="100" max="250" oninput="syncHeightSlider(this.value)">
                         </div>
 
                         <div class="calc-field-group">
                             <div style="display:flex;justify-content:space-between;align-items:center;">
                                 <label for="calcWeight">Weight (kg)</label>
-                                <span id="weightValLabel" style="font-size:11.5px;font-weight:700;color:#ff5540;">74 kg</span>
+                                <span id="weightValLabel" style="font-size:11.5px;font-weight:700;color:#0071e3;">74 kg</span>
                             </div>
-                            <input type="range" id="calcWeightSlider" min="35" max="180" value="74" step="0.5" oninput="syncWeight(this.value)" style="accent-color:#ff5540;cursor:pointer;margin:2px 0 6px;">
+                            <input type="range" id="calcWeightSlider" min="35" max="180" value="74" step="0.5" oninput="syncWeight(this.value)" style="accent-color:#0071e3;cursor:pointer;margin:2px 0 6px;">
                             <input type="number" id="calcWeight" class="calc-input-dark" value="74" min="30" max="250" oninput="syncWeightSlider(this.value)">
                         </div>
                     </div>
@@ -1060,14 +1437,14 @@
                     <div>
                         <div style="display:flex;justify-content:space-between;align-items:center;">
                             <span style="font-size:11px;font-weight:800;color:var(--stitch-text-muted);text-transform:uppercase;letter-spacing:0.8px;">Your Health Summary</span>
-                            <span style="font-size:10.5px;font-weight:700;color:#ff5540;">✨ Instant Analysis</span>
+                            <span style="font-size:10.5px;font-weight:700;color:#0071e3;">✨ Instant Analysis</span>
                         </div>
 
                         <div style="margin:12px 0 8px;display:flex;align-items:baseline;gap:10px;">
-                            <div id="bmiValDisplay" style="font-size:42px;font-weight:900;color:#ff5540;line-height:1;letter-spacing:-0.5px;">24.2</div>
+                            <div id="bmiValDisplay" style="font-size:42px;font-weight:900;color:#0071e3;line-height:1;letter-spacing:-0.5px;">24.2</div>
                             <div style="display:flex;flex-direction:column;">
                                 <span style="font-size:11.5px;font-weight:800;text-transform:uppercase;color:var(--stitch-text);">BMI Score</span>
-                                <span id="bmiCategoryBadge" style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:10.5px;font-weight:800;background:rgba(255,85,64,0.15);color:#ff5540;margin-top:2px;">
+                                <span id="bmiCategoryBadge" style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:10.5px;font-weight:800;background:rgba(0, 113, 227,0.15);color:#0071e3;margin-top:2px;">
                                     Optimal Healthy Weight
                                 </span>
                             </div>
@@ -1081,8 +1458,8 @@
                                 <span>Over (25-30)</span>
                                 <span>High (30+)</span>
                             </div>
-                            <div style="position:relative;height:7px;border-radius:4px;background:linear-gradient(90deg, #60efff 0%, #ff5540 30%, #ffb703 70%, #ef4444 100%);overflow:hidden;">
-                                <div id="spectrumMarker" style="position:absolute;top:0;bottom:0;width:4px;background:#ffffff;box-shadow:0 0 8px #ffffff;border-radius:2px;left:45%;transition:left 0.3s cubic-bezier(0.16,1,0.3,1);"></div>
+                            <div style="position:relative;height:7px;border-radius:4px;background:linear-gradient(90deg, #60efff 0%, #0071e3 30%, #ffb703 70%, #ef4444 100%);overflow:hidden;">
+                                <div id="spectrumMarker" style="position:absolute;top:0;bottom:0;width:4px;background:#ffffff;box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);border-radius:2px;left:45%;transition:left 0.3s cubic-bezier(0.16,1,0.3,1);"></div>
                             </div>
                         </div>
                     </div>
@@ -1097,7 +1474,7 @@
                         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center;">
                             <div style="padding:6px 4px;border-radius:6px;background:var(--stitch-surface-low);border:1px solid var(--stitch-border);">
                                 <div style="font-size:9.5px;color:var(--stitch-text-muted);font-weight:700;">PROTEIN</div>
-                                <div style="font-weight:800;color:#ff5540;font-size:13px;" id="proteinValDisplay">150g</div>
+                                <div style="font-weight:800;color:#0071e3;font-size:13px;" id="proteinValDisplay">150g</div>
                             </div>
                             <div style="padding:6px 4px;border-radius:6px;background:var(--stitch-surface-low);border:1px solid var(--stitch-border);">
                                 <div style="font-size:9.5px;color:var(--stitch-text-muted);font-weight:700;">CARBS</div>
@@ -1130,22 +1507,22 @@
                 <!-- Left: Warm human trainer photo with live badge -->
                 <div class="paradigm-img-box" style="background-image: url('{% static 'images/human_coach.jpg' %}');">
                     <div class="paradigm-telemetry-badge">
-                        <span style="font-size:10.5px;font-weight:700;color:#ff5540;text-transform:uppercase;letter-spacing:0.06em;">🌟 Coach Guided</span>
-                        <span style="font-size:30px;font-weight:800;color:#ffffff;line-height:1;">94%</span>
-                        <span style="font-size:11.5px;color:#bbcabf;">Member Consistency Rate</span>
+                        <span style="font-size:10.5px;font-weight:700;color:#0071e3;text-transform:uppercase;letter-spacing:0.06em;">🌟 Coach Guided</span>
+                        <span style="font-size:30px;font-weight:800;color:var(--stitch-text);line-height:1;">94%</span>
+                        <span style="font-size:11.5px;color:var(--stitch-text-muted);">Member Consistency Rate</span>
                     </div>
                 </div>
 
                 <!-- Right: Friendly Philosophy Copy -->
                 <div style="display:flex;flex-direction:column;gap:16px;">
                     <div>
-                        <span style="font-size:11.5px;font-weight:700;color:#ff5540;text-transform:uppercase;letter-spacing:0.1em;">[ 01 ] Our Philosophy</span>
-                        <h2 style="font-size:clamp(24px, 3.2vw, 34px);font-weight:800;color:#dde4dd;margin-top:4px;line-height:1.2;">
+                        <span style="font-size:11.5px;font-weight:700;color:#0071e3;text-transform:uppercase;letter-spacing:0.1em;">[ 01 ] Our Philosophy</span>
+                        <h2 style="font-size:clamp(24px, 3.2vw, 34px);font-weight:800;color:var(--stitch-text);margin-top:4px;line-height:1.2;">
                             Fitness Made Simple, Sustainable & Enjoyable
                         </h2>
                     </div>
 
-                    <div style="font-size:14.5px;color:#bbcabf;line-height:1.6;display:flex;flex-direction:column;gap:10px;">
+                    <div style="font-size:14.5px;color:var(--stitch-text-muted);line-height:1.6;display:flex;flex-direction:column;gap:10px;">
                         <p>
                             No crash diets. No extreme burnout. We believe true transformation happens when enjoyable workouts and balanced nutrition seamlessly fit into your everyday life.
                         </p>
@@ -1169,10 +1546,10 @@
         <div class="stitch-container" style="max-width:1080px;">
             
             <div style="text-align:center;max-width:650px;margin:0 auto 24px;">
-                <h2 style="font-size:clamp(24px, 3.2vw, 32px);font-weight:800;color:#dde4dd;margin-bottom:8px;">
+                <h2 style="font-size:clamp(24px, 3.2vw, 32px);font-weight:800;color:var(--stitch-text);margin-bottom:8px;">
                     Your 3-Step Fitness Journey
                 </h2>
-                <p style="font-size:14.5px;color:#bbcabf;line-height:1.5;">
+                <p style="font-size:14.5px;color:var(--stitch-text-muted);line-height:1.5;">
                     A simple, supportive path designed to take you from where you are today to your dream health and strength.
                 </p>
             </div>
@@ -1184,8 +1561,8 @@
                 <div class="timeline-row">
                     <div class="timeline-node-pill">01</div>
                     <div class="timeline-content-side">
-                        <h3 style="font-size:19px;font-weight:700;color:#dde4dd;margin-bottom:6px;">Discover Your Goals</h3>
-                        <p style="font-size:13.5px;color:#bbcabf;line-height:1.55;">
+                        <h3 style="font-size:19px;font-weight:700;color:var(--stitch-text);margin-bottom:6px;">Discover Your Goals</h3>
+                        <p style="font-size:13.5px;color:var(--stitch-text-muted);line-height:1.55;">
                             We learn about your lifestyle, food preferences, and personal fitness goals to build a routine that feels exciting, comfortable, and tailored just for you.
                         </p>
                     </div>
@@ -1196,8 +1573,8 @@
                 <div class="timeline-row reverse">
                     <div class="timeline-node-pill dim">02</div>
                     <div class="timeline-content-side">
-                        <h3 style="font-size:19px;font-weight:700;color:#dde4dd;margin-bottom:6px;">Tailored Workouts & Meals</h3>
-                        <p style="font-size:13.5px;color:#bbcabf;line-height:1.55;">
+                        <h3 style="font-size:19px;font-weight:700;color:var(--stitch-text);margin-bottom:6px;">Tailored Workouts & Meals</h3>
+                        <p style="font-size:13.5px;color:var(--stitch-text-muted);line-height:1.55;">
                             Follow easy-to-understand workout routines and delicious, balanced meal plans that keep your metabolism active and your energy high throughout the day.
                         </p>
                     </div>
@@ -1208,8 +1585,8 @@
                 <div class="timeline-row">
                     <div class="timeline-node-pill dim">03</div>
                     <div class="timeline-content-side">
-                        <h3 style="font-size:19px;font-weight:700;color:#dde4dd;margin-bottom:6px;">Lifelong Habits & Confidence</h3>
-                        <p style="font-size:13.5px;color:#bbcabf;line-height:1.55;">
+                        <h3 style="font-size:19px;font-weight:700;color:var(--stitch-text);margin-bottom:6px;">Lifelong Habits & Confidence</h3>
+                        <p style="font-size:13.5px;color:var(--stitch-text-muted);line-height:1.55;">
                             Celebrate weekly milestones with certified coach check-ins, steady progress updates, and a healthy lifestyle you'll love keeping for years to come.
                         </p>
                     </div>
@@ -1226,11 +1603,11 @@
         <div class="stitch-container">
             
             <div style="text-align:center;max-width:700px;margin:0 auto 18px;">
-                <span style="font-size:11.5px;font-weight:700;color:#ff5540;text-transform:uppercase;letter-spacing:0.1em;">[ 04 ] Real Stories & Results</span>
-                <h2 style="font-size:clamp(24px, 3.2vw, 34px);font-weight:800;color:#dde4dd;margin-top:4px;line-height:1.2;">
+                <span style="font-size:11.5px;font-weight:700;color:#0071e3;text-transform:uppercase;letter-spacing:0.1em;">[ 04 ] Real Stories & Results</span>
+                <h2 style="font-size:clamp(24px, 3.2vw, 34px);font-weight:800;color:var(--stitch-text);margin-top:4px;line-height:1.2;">
                     Real Transformations. Real People.
                 </h2>
-                <p style="font-size:14px;color:#bbcabf;line-height:1.5;margin-top:6px;">
+                <p style="font-size:14px;color:var(--stitch-text-muted);line-height:1.5;margin-top:6px;">
                     Heartfelt stories and quantified results from active members who transformed their health, body, and confidence with us.
                 </p>
             </div>
@@ -1257,29 +1634,29 @@
                 <div class="transform-card" data-category="hypertrophy">
                     <div style="display:flex;align-items:center;justify-content:space-between;">
                         <div style="display:flex;align-items:center;gap:10px;">
-                            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #ff5540, #ff8a7a);display:flex;align-items:center;justify-content:center;font-weight:800;color:#ffffff;font-size:14px;">AR</div>
+                            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #0071e3, #30d158);display:flex;align-items:center;justify-content:center;font-weight:800;color:#ffffff;font-size:14px;">AR</div>
                             <div>
-                                <h4 style="font-size:14px;font-weight:700;color:#dde4dd;margin:0;">Alex R.</h4>
-                                <span style="font-size:11px;color:#ff5540;font-weight:600;">Muscle & Tone &bull; 16 Wks</span>
+                                <h4 style="font-size:14px;font-weight:700;color:var(--stitch-text);margin:0;">Alex R.</h4>
+                                <span style="font-size:11px;color:#0071e3;font-weight:600;">Muscle & Tone &bull; 16 Wks</span>
                             </div>
                         </div>
-                        <span style="background:rgba(255,85,64,0.15);color:#ff5540;padding:3px 8px;border-radius:16px;font-size:10.5px;font-weight:700;border:1px solid rgba(255,85,64,0.3);">
+                        <span style="background:rgba(0, 113, 227,0.15);color:#0071e3;padding:3px 8px;border-radius:16px;font-size:10.5px;font-weight:700;border:1px solid rgba(0, 113, 227,0.3);">
                             <i class="fa-solid fa-circle-check"></i> Verified Member
                         </span>
                     </div>
 
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--stitch-surface);padding:10px 12px;border-radius:10px;border:1px solid var(--stitch-border);">
                         <div>
-                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Body Fat</span>
-                            <div style="font-size:15px;font-weight:800;color:#dde4dd;margin-top:1px;">18.4% → <span style="color:#ff5540;">9.1%</span></div>
+                            <span style="font-size:9.5px;font-weight:700;color:var(--stitch-text-muted);text-transform:uppercase;">Body Fat</span>
+                            <div style="font-size:15px;font-weight:800;color:var(--stitch-text);margin-top:1px;">18.4% → <span style="color:#0071e3;">9.1%</span></div>
                         </div>
                         <div>
-                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Lean Muscle</span>
-                            <div style="font-size:15px;font-weight:800;color:#ff5540;margin-top:1px;">+5.8 kg</div>
+                            <span style="font-size:9.5px;font-weight:700;color:var(--stitch-text-muted);text-transform:uppercase;">Lean Muscle</span>
+                            <div style="font-size:15px;font-weight:800;color:#0071e3;margin-top:1px;">+5.8 kg</div>
                         </div>
                     </div>
 
-                    <p style="font-size:13px;color:#bbcabf;line-height:1.55;font-style:italic;margin:0;">
+                    <p style="font-size:13px;color:var(--stitch-text-muted);line-height:1.55;font-style:italic;margin:0;">
                         "The daily coaching and clear workout steps completely changed my relationship with fitness. Feeling healthier and more confident than ever at 32!"
                     </p>
                 </div>
@@ -1288,29 +1665,29 @@
                 <div class="transform-card" data-category="fatloss">
                     <div style="display:flex;align-items:center;justify-content:space-between;">
                         <div style="display:flex;align-items:center;gap:10px;">
-                            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #ffb703, #ff7b00);display:flex;align-items:center;justify-content:center;font-weight:800;color:#002113;font-size:14px;">EK</div>
+                            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #d97706, #f59e0b);display:flex;align-items:center;justify-content:center;font-weight:800;color:#ffffff;font-size:14px;">EK</div>
                             <div>
-                                <h4 style="font-size:14px;font-weight:700;color:#dde4dd;margin:0;">Elena K.</h4>
-                                <span style="font-size:11px;color:#ffb703;font-weight:600;">Healthy Fat Loss &bull; 12 Wks</span>
+                                <h4 style="font-size:14px;font-weight:700;color:var(--stitch-text);margin:0;">Elena K.</h4>
+                                <span style="font-size:11px;color:#d97706;font-weight:700;">Healthy Fat Loss &bull; 12 Wks</span>
                             </div>
                         </div>
-                        <span style="background:rgba(255,183,3,0.15);color:#ffb703;padding:3px 8px;border-radius:16px;font-size:10.5px;font-weight:700;border:1px solid rgba(255,183,3,0.3);">
+                        <span style="background:rgba(217,119,6,0.15);color:#d97706;padding:3px 8px;border-radius:16px;font-size:10.5px;font-weight:700;border:1px solid rgba(217,119,6,0.3);">
                             <i class="fa-solid fa-circle-check"></i> Verified Member
                         </span>
                     </div>
 
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--stitch-surface);padding:10px 12px;border-radius:10px;border:1px solid var(--stitch-border);">
                         <div>
-                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Total Weight</span>
-                            <div style="font-size:15px;font-weight:800;color:#dde4dd;margin-top:1px;">74kg → <span style="color:#ff5540;">62kg</span></div>
+                            <span style="font-size:9.5px;font-weight:700;color:var(--stitch-text-muted);text-transform:uppercase;">Total Weight</span>
+                            <div style="font-size:15px;font-weight:800;color:var(--stitch-text);margin-top:1px;">74kg → <span style="color:#0071e3;">62kg</span></div>
                         </div>
                         <div>
-                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Resting HR</span>
-                            <div style="font-size:15px;font-weight:800;color:#ff5540;margin-top:1px;">54 BPM (-18)</div>
+                            <span style="font-size:9.5px;font-weight:700;color:var(--stitch-text-muted);text-transform:uppercase;">Resting HR</span>
+                            <div style="font-size:15px;font-weight:800;color:#0071e3;margin-top:1px;">54 BPM (-18)</div>
                         </div>
                     </div>
 
-                    <p style="font-size:13px;color:#bbcabf;line-height:1.55;font-style:italic;margin:0;">
+                    <p style="font-size:13px;color:var(--stitch-text-muted);line-height:1.55;font-style:italic;margin:0;">
                         "FitMaster made healthy eating and home workouts so simple to manage alongside my busy work schedule. My daily stamina is incredible!"
                     </p>
                 </div>
@@ -1319,29 +1696,29 @@
                 <div class="transform-card" data-category="strength">
                     <div style="display:flex;align-items:center;justify-content:space-between;">
                         <div style="display:flex;align-items:center;gap:10px;">
-                            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #60efff, #0061ff);display:flex;align-items:center;justify-content:center;font-weight:800;color:#002113;font-size:14px;">MD</div>
+                            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #0284c7, #2563eb);display:flex;align-items:center;justify-content:center;font-weight:800;color:#ffffff;font-size:14px;">MD</div>
                             <div>
-                                <h4 style="font-size:14px;font-weight:700;color:#dde4dd;margin:0;">Marcus D.</h4>
-                                <span style="font-size:11px;color:#60efff;font-weight:600;">Strength & Conditioning &bull; 20 Wks</span>
+                                <h4 style="font-size:14px;font-weight:700;color:var(--stitch-text);margin:0;">Marcus D.</h4>
+                                <span style="font-size:11px;color:#0284c7;font-weight:700;">Strength & Conditioning &bull; 20 Wks</span>
                             </div>
                         </div>
-                        <span style="background:rgba(96,239,255,0.15);color:#60efff;padding:3px 8px;border-radius:16px;font-size:10.5px;font-weight:700;border:1px solid rgba(96,239,255,0.3);">
+                        <span style="background:rgba(2,132,199,0.15);color:#0284c7;padding:3px 8px;border-radius:16px;font-size:10.5px;font-weight:700;border:1px solid rgba(2,132,199,0.3);">
                             <i class="fa-solid fa-circle-check"></i> Verified Member
                         </span>
                     </div>
 
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--stitch-surface);padding:10px 12px;border-radius:10px;border:1px solid var(--stitch-border);">
                         <div>
-                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Squat 1RM</span>
-                            <div style="font-size:15px;font-weight:800;color:#dde4dd;margin-top:1px;">140kg → <span style="color:#ff5540;">195kg</span></div>
+                            <span style="font-size:9.5px;font-weight:700;color:var(--stitch-text-muted);text-transform:uppercase;">Squat 1RM</span>
+                            <div style="font-size:15px;font-weight:800;color:var(--stitch-text);margin-top:1px;">140kg → <span style="color:#0071e3;">195kg</span></div>
                         </div>
                         <div>
-                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Bench 1RM</span>
-                            <div style="font-size:15px;font-weight:800;color:#ff5540;margin-top:1px;">145 kg (+35kg)</div>
+                            <span style="font-size:9.5px;font-weight:700;color:var(--stitch-text-muted);text-transform:uppercase;">Bench 1RM</span>
+                            <div style="font-size:15px;font-weight:800;color:#0071e3;margin-top:1px;">145 kg (+35kg)</div>
                         </div>
                     </div>
 
-                    <p style="font-size:13px;color:#bbcabf;line-height:1.55;font-style:italic;margin:0;">
+                    <p style="font-size:13px;color:var(--stitch-text-muted);line-height:1.55;font-style:italic;margin:0;">
                         "The personalized workout progression and progress tracking kept me motivated every single week without injury or burnouts."
                     </p>
                 </div>
@@ -1350,29 +1727,29 @@
                 <div class="transform-card" data-category="hypertrophy">
                     <div style="display:flex;align-items:center;justify-content:space-between;">
                         <div style="display:flex;align-items:center;gap:10px;">
-                            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #ff5540, #ff8a7a);display:flex;align-items:center;justify-content:center;font-weight:800;color:#ffffff;font-size:14px;">SK</div>
+                            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #0071e3, #30d158);display:flex;align-items:center;justify-content:center;font-weight:800;color:#ffffff;font-size:14px;">SK</div>
                             <div>
-                                <h4 style="font-size:14px;font-weight:700;color:#dde4dd;margin:0;">Sarah K.</h4>
-                                <span style="font-size:11px;color:#ff5540;font-weight:600;">Lifestyle Recomp &bull; 14 Wks</span>
+                                <h4 style="font-size:14px;font-weight:700;color:var(--stitch-text);margin:0;">Sarah K.</h4>
+                                <span style="font-size:11px;color:#0071e3;font-weight:600;">Lifestyle Recomp &bull; 14 Wks</span>
                             </div>
                         </div>
-                        <span style="background:rgba(255,85,64,0.15);color:#ff5540;padding:3px 8px;border-radius:16px;font-size:10.5px;font-weight:700;border:1px solid rgba(255,85,64,0.3);">
+                        <span style="background:rgba(0, 113, 227,0.15);color:#0071e3;padding:3px 8px;border-radius:16px;font-size:10.5px;font-weight:700;border:1px solid rgba(0, 113, 227,0.3);">
                             <i class="fa-solid fa-circle-check"></i> Verified Member
                         </span>
                     </div>
 
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--stitch-surface);padding:10px 12px;border-radius:10px;border:1px solid var(--stitch-border);">
                         <div>
-                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Waistline</span>
-                            <div style="font-size:15px;font-weight:800;color:#dde4dd;margin-top:1px;">32" → <span style="color:#ff5540;">26"</span></div>
+                            <span style="font-size:9.5px;font-weight:700;color:var(--stitch-text-muted);text-transform:uppercase;">Waistline</span>
+                            <div style="font-size:15px;font-weight:800;color:var(--stitch-text);margin-top:1px;">32" → <span style="color:#0071e3;">26"</span></div>
                         </div>
                         <div>
-                            <span style="font-size:9.5px;font-weight:700;color:#bbcabf;text-transform:uppercase;">Deadlift 1RM</span>
-                            <div style="font-size:15px;font-weight:800;color:#ff5540;margin-top:1px;">130 kg (+40kg)</div>
+                            <span style="font-size:9.5px;font-weight:700;color:var(--stitch-text-muted);text-transform:uppercase;">Deadlift 1RM</span>
+                            <div style="font-size:15px;font-weight:800;color:#0071e3;margin-top:1px;">130 kg (+40kg)</div>
                         </div>
                     </div>
 
-                    <p style="font-size:13px;color:#bbcabf;line-height:1.55;font-style:italic;margin:0;">
+                    <p style="font-size:13px;color:var(--stitch-text-muted);line-height:1.55;font-style:italic;margin:0;">
                         "Lost 6 inches off my waist and discovered a genuine love for fitness. The personal trainer support makes all the difference!"
                     </p>
                 </div>
@@ -1387,11 +1764,11 @@
         <div class="stitch-container">
             
             <div style="text-align:center;max-width:700px;margin:0 auto 16px;">
-                <span style="font-size:11.5px;font-weight:700;color:#ff5540;text-transform:uppercase;letter-spacing:0.1em;">💎 Membership Plans</span>
-                <h2 style="font-size:clamp(24px, 3.2vw, 34px);font-weight:800;color:#dde4dd;margin-top:4px;line-height:1.2;">
+                <span style="font-size:11.5px;font-weight:700;color:#0071e3;text-transform:uppercase;letter-spacing:0.1em;">💎 Membership Plans</span>
+                <h2 style="font-size:clamp(24px, 3.2vw, 34px);font-weight:800;color:var(--stitch-text);margin-top:4px;line-height:1.2;">
                     Simple, Transparent Pricing
                 </h2>
-                <p style="font-size:13.5px;color:#bbcabf;line-height:1.5;margin-top:6px;">
+                <p style="font-size:13.5px;color:var(--stitch-text-muted);line-height:1.5;margin-top:6px;">
                     Choose the plan that fits your lifestyle. Start your transformation today with certified trainer guidance.
                 </p>
             </div>
@@ -1446,7 +1823,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <div style="grid-column:1/-1;text-align:center;color:#bbcabf;padding:30px;">
+                <div style="grid-column:1/-1;text-align:center;color:var(--stitch-text-muted);padding:30px;">
                     No packages loaded currently.
                 </div>
                 {% endfor %}
@@ -1465,25 +1842,25 @@
 
                 <div class="architect-bio">
                     <div>
-                        <h2 style="font-size:clamp(22px, 2.8vw, 30px);font-weight:800;color:#dde4dd;line-height:1.15;margin-bottom:4px;">A Message From Our Head Coach</h2>
-                        <span style="font-size:11px;font-weight:700;color:#ff5540;text-transform:uppercase;letter-spacing:0.1em;">Marcus Vance // Head Coach & Co-Founder</span>
+                        <h2 style="font-size:clamp(22px, 2.8vw, 30px);font-weight:800;color:var(--stitch-text);line-height:1.15;margin-bottom:4px;">A Message From Our Head Coach</h2>
+                        <span style="font-size:11px;font-weight:700;color:#0071e3;text-transform:uppercase;letter-spacing:0.1em;">Marcus Vance // Head Coach & Co-Founder</span>
                     </div>
 
-                    <div style="font-size:14px;color:#bbcabf;line-height:1.6;display:flex;flex-direction:column;gap:10px;">
+                    <div style="font-size:14px;color:var(--stitch-text-muted);line-height:1.6;display:flex;flex-direction:column;gap:10px;">
                         <p>
                             When we built FitMaster, our dream was simple: to make world-class personal training, caring coach guidance, and healthy nutrition accessible to everyone.
                         </p>
                         <p>
                             Fitness shouldn't feel intimidating, confusing, or lonely. It should empower you, boost your daily energy, and help you live with unstoppable confidence.
                         </p>
-                        <p style="color:#dde4dd;font-weight:600;">
+                        <p style="color:var(--stitch-text);font-weight:600;">
                             You don't have to be great to start, but you have to start to be great. We're excited to welcome you to our fitness family!
                         </p>
                     </div>
 
                     <div style="margin-top:6px;display:flex;flex-direction:column;gap:2px;">
-                        <span style="font-size:26px;font-weight:700;color:rgba(221,228,221,0.4);font-style:italic;letter-spacing:-0.5px;">Marcus Vance</span>
-                        <span style="font-size:10px;font-weight:700;color:#ff5540;text-transform:uppercase;letter-spacing:0.08em;">FitMaster Team &bull; Certified Master Trainers</span>
+                        <span style="font-size:26px;font-weight:700;color:var(--stitch-text-dim);font-style:italic;letter-spacing:-0.5px;">Marcus Vance</span>
+                        <span style="font-size:10px;font-weight:700;color:#0071e3;text-transform:uppercase;letter-spacing:0.08em;">FitMaster Team &bull; Certified Master Trainers</span>
                     </div>
                 </div>
 
@@ -1498,8 +1875,8 @@
         <div class="stitch-container" style="max-width:860px;">
             
             <div style="text-align:center;margin-bottom:20px;">
-                <h2 style="font-size:clamp(22px, 2.8vw, 30px);font-weight:800;color:#dde4dd;margin-bottom:4px;">Frequently Asked Questions</h2>
-                <p style="font-size:13.5px;color:#bbcabf;">Got questions? We're here to help you every step of the way!</p>
+                <h2 style="font-size:clamp(22px, 2.8vw, 30px);font-weight:800;color:var(--stitch-text);margin-bottom:4px;">Frequently Asked Questions</h2>
+                <p style="font-size:13.5px;color:var(--stitch-text-muted);">Got questions? We're here to help you every step of the way!</p>
             </div>
 
             <!-- FAQ Container -->
@@ -1508,11 +1885,11 @@
                 <!-- FAQ 1 -->
                 <div class="faq-card-item" onclick="toggleStitchFaq(this)">
                     <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <h3 style="font-size:14.5px;font-weight:700;color:#dde4dd;margin:0;">Is FitMaster suitable for complete beginners?</h3>
-                        <span class="material-symbols-outlined faq-icon-sym" style="color:#ff5540;font-size:20px;transition:transform 0.3s;">add</span>
+                        <h3 style="font-size:14.5px;font-weight:700;color:var(--stitch-text);margin:0;">Is FitMaster suitable for complete beginners?</h3>
+                        <span class="material-symbols-outlined faq-icon-sym" style="color:#0071e3;font-size:20px;transition:transform 0.3s;">add</span>
                     </div>
                     <div class="faq-answer-collapse">
-                        <p style="font-size:13px;color:#bbcabf;line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--stitch-border);">
+                        <p style="font-size:13px;color:var(--stitch-text-muted);line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--stitch-border);">
                             Yes, absolutely! Every workout plan is tailored to your current fitness level. Whether you are stepping into a gym for the very first time or have years of experience, your workouts start at a comfortable pace and progress naturally.
                         </p>
                     </div>
@@ -1521,11 +1898,11 @@
                 <!-- FAQ 2 -->
                 <div class="faq-card-item" onclick="toggleStitchFaq(this)">
                     <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <h3 style="font-size:14.5px;font-weight:700;color:#dde4dd;margin:0;">How do the personalized meal and diet plans work?</h3>
-                        <span class="material-symbols-outlined faq-icon-sym" style="color:#ff5540;font-size:20px;transition:transform 0.3s;">add</span>
+                        <h3 style="font-size:14.5px;font-weight:700;color:var(--stitch-text);margin:0;">How do the personalized meal and diet plans work?</h3>
+                        <span class="material-symbols-outlined faq-icon-sym" style="color:#0071e3;font-size:20px;transition:transform 0.3s;">add</span>
                     </div>
                     <div class="faq-answer-collapse">
-                        <p style="font-size:13px;color:#bbcabf;line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--stitch-border);">
+                        <p style="font-size:13px;color:var(--stitch-text-muted);line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--stitch-border);">
                             You receive simple, delicious meal plans built around your dietary preferences (vegetarian, non-veg, vegan, etc.) and daily calorie targets. No extreme starvation or complicated recipes—just wholesome, energizing foods.
                         </p>
                     </div>
@@ -1534,11 +1911,11 @@
                 <!-- FAQ 3 -->
                 <div class="faq-card-item" onclick="toggleStitchFaq(this)">
                     <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <h3 style="font-size:14.5px;font-weight:700;color:#dde4dd;margin:0;">Can I workout at home or do I need a gym membership?</h3>
-                        <span class="material-symbols-outlined faq-icon-sym" style="color:#ff5540;font-size:20px;transition:transform 0.3s;">add</span>
+                        <h3 style="font-size:14.5px;font-weight:700;color:var(--stitch-text);margin:0;">Can I workout at home or do I need a gym membership?</h3>
+                        <span class="material-symbols-outlined faq-icon-sym" style="color:#0071e3;font-size:20px;transition:transform 0.3s;">add</span>
                     </div>
                     <div class="faq-answer-collapse">
-                        <p style="font-size:13px;color:#bbcabf;line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--stitch-border);">
+                        <p style="font-size:13px;color:var(--stitch-text-muted);line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--stitch-border);">
                             You can do both! FitMaster offers bodyweight and dumbbell home workout routines as well as comprehensive gym training programs. You choose what fits your schedule best.
                         </p>
                     </div>
@@ -1547,11 +1924,11 @@
                 <!-- FAQ 4 -->
                 <div class="faq-card-item" onclick="toggleStitchFaq(this)">
                     <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <h3 style="font-size:14.5px;font-weight:700;color:#dde4dd;margin:0;">How do I get in touch with my assigned trainer?</h3>
-                        <span class="material-symbols-outlined faq-icon-sym" style="color:#ff5540;font-size:20px;transition:transform 0.3s;">add</span>
+                        <h3 style="font-size:14.5px;font-weight:700;color:var(--stitch-text);margin:0;">How do I get in touch with my assigned trainer?</h3>
+                        <span class="material-symbols-outlined faq-icon-sym" style="color:#0071e3;font-size:20px;transition:transform 0.3s;">add</span>
                     </div>
                     <div class="faq-answer-collapse">
-                        <p style="font-size:13px;color:#bbcabf;line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--stitch-border);">
+                        <p style="font-size:13px;color:var(--stitch-text-muted);line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--stitch-border);">
                             Once you log in, your dedicated trainer's details, schedules, and custom plans are available directly in your dashboard. You can track your progress, request routine adjustments, and get personalized advice anytime.
                         </p>
                     </div>
@@ -1561,8 +1938,8 @@
 
             <!-- Warm Human CTA Banner -->
             <div style="display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:28px;padding:24px 20px;border-radius:14px;background:var(--stitch-surface);border:1px solid var(--stitch-border);">
-                <h3 style="font-size:21px;font-weight:800;color:#dde4dd;margin-bottom:6px;">Ready to Transform Your Fitness?</h3>
-                <p style="font-size:13.5px;color:#bbcabf;max-width:520px;margin-bottom:14px;line-height:1.5;">
+                <h3 style="font-size:21px;font-weight:800;color:var(--stitch-text);margin-bottom:6px;">Ready to Transform Your Fitness?</h3>
+                <p style="font-size:13.5px;color:var(--stitch-text-muted);max-width:520px;margin-bottom:14px;line-height:1.5;">
                     Join thousands of members who are reaching their health and strength goals with expert coach guidance.
                 </p>
                 {% if user.is_authenticated %}
@@ -1631,22 +2008,23 @@ function calculateBMI() {
         marker.style.left = markerPos + '%';
     }
 
+    var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
     if (bmi < 18.5) {
         badge.textContent = 'Underweight Baseline';
-        badge.style.background = 'rgba(96,239,255,0.15)';
-        badge.style.color = '#60efff';
+        badge.style.background = isLight ? 'rgba(2,132,199,0.12)' : 'rgba(96,239,255,0.15)';
+        badge.style.color = isLight ? '#0284c7' : '#60efff';
     } else if (bmi < 25) {
         badge.textContent = 'Optimal Healthy Weight';
-        badge.style.background = 'rgba(255,85,64,0.15)';
-        badge.style.color = '#ff5540';
+        badge.style.background = isLight ? 'rgba(0, 113, 227,0.12)' : 'rgba(0, 113, 227,0.15)';
+        badge.style.color = '#0071e3';
     } else if (bmi < 30) {
         badge.textContent = 'Overweight Range';
-        badge.style.background = 'rgba(255,183,3,0.15)';
-        badge.style.color = '#ffb703';
-    } else {
-        badge.textContent = 'High Weight / Obese';
-        badge.style.background = 'rgba(239,68,68,0.15)';
-        badge.style.color = '#ef4444';
+        badge.style.background = isLight ? 'rgba(217,119,6,0.12)' : 'rgba(255,183,3,0.15)';
+        badge.style.color = isLight ? '#d97706' : '#ffb703';
+        badge.textContent = 'High Weight Range';
+        badge.style.background = isLight ? 'rgba(217,119,6,0.12)' : 'rgba(255,183,3,0.15)';
+        badge.style.color = isLight ? '#d97706' : '#ffb703';
     }
 
     // Mifflin-St Jeor Equation
@@ -1669,8 +2047,12 @@ function calculateBMI() {
     var carbs = Math.max(50, Math.round((calories - (protein * 4) - (fats * 9)) / 4));
 
     document.getElementById('proteinValDisplay').textContent = protein + 'g';
-    document.getElementById('carbsValDisplay').textContent = carbs + 'g';
-    document.getElementById('fatsValDisplay').textContent = fats + 'g';
+    var carbsEl = document.getElementById('carbsValDisplay');
+    var fatsEl = document.getElementById('fatsValDisplay');
+    carbsEl.textContent = carbs + 'g';
+    carbsEl.style.color = isLight ? '#0284c7' : '#60efff';
+    fatsEl.textContent = fats + 'g';
+    fatsEl.style.color = isLight ? '#d97706' : '#ffb703';
 }
 
 function toggleStitchFaq(card) {
@@ -1713,6 +2095,12 @@ function filterTransformations(cat, btn) {
 
 document.addEventListener('DOMContentLoaded', function() {
     calculateBMI();
+    if (window.MutationObserver) {
+        var themeObserver = new MutationObserver(function() {
+            calculateBMI();
+        });
+        themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    }
 });
 </script>
 {% endblock %}

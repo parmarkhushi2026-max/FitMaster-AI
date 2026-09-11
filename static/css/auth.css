@@ -19,8 +19,8 @@ LOGIN & SIGNUP PAGES
 [data-theme="light"] .login-section {
     background: #f8fafc;
     background-image: 
-        radial-gradient(at 12% 15%, rgba(255, 85, 64, 0.08) 0px, transparent 50%),
-        radial-gradient(at 88% 25%, rgba(37, 99, 235, 0.08) 0px, transparent 50%),
+        radial-gradient(at 12% 15%, rgba(0, 113, 227, 0.08) 0px, transparent 50%),
+        radial-gradient(at 88% 25%, rgba(48, 209, 88, 0.08) 0px, transparent 50%),
         radial-gradient(at 50% 65%, rgba(72, 143, 255, 0.05) 0px, transparent 50%),
         radial-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px);
     background-size: 100% 100%, 100% 100%, 100% 100%, 30px 30px;
@@ -50,7 +50,7 @@ LOGIN & SIGNUP PAGES
 }
 
 .login-left h1 span {
-    background: linear-gradient(135deg, #ff5540 0%, #ff8a7a 100%);
+    background: linear-gradient(135deg, #0071e3 0%, #30d158 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -66,7 +66,7 @@ LOGIN & SIGNUP PAGES
     width: 100%;
     max-width: 480px;
     animation: float 4s ease-in-out infinite;
-    filter: drop-shadow(0 15px 30px rgba(255, 85, 64, 0.2));
+    filter: drop-shadow(0 15px 30px rgba(0, 113, 227, 0.2));
 }
 
 .login-badge {
@@ -74,27 +74,26 @@ LOGIN & SIGNUP PAGES
     align-items: center;
     gap: 8px;
     padding: 8px 22px;
-    background: rgba(255, 85, 64, 0.12);
-    border: 1px solid rgba(255, 85, 64, 0.35);
+    background: rgba(0, 113, 227, 0.12);
+    border: 1px solid rgba(0, 113, 227, 0.35);
     border-radius: 30px;
-    color: #ff5540;
+    color: #0071e3;
     font-weight: 600;
     font-size: 13.5px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: none;
 }
 
 .login-card {
     background: #0e0e11;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
     padding: 40px;
     position: relative;
-    backdrop-filter: blur(20px);
 }
 
 .login-card:hover {
-    border-color: rgba(255, 85, 64, 0.35);
+    border-color: rgba(0, 113, 227, 0.35);
 }
 
 [data-theme="light"] .login-card {
@@ -126,7 +125,7 @@ LOGIN & SIGNUP PAGES
     left: 18px;
     top: 50%;
     transform: translateY(-50%);
-    color: #ff5540;
+    color: #0071e3;
     font-size: 16px;
     transition: all 0.3s ease;
 }
@@ -161,15 +160,15 @@ LOGIN & SIGNUP PAGES
 
 .input-box input:focus,
 .input-box select:focus {
-    border-color: #ff5540;
-    box-shadow: 0 0 0 4px rgba(255, 85, 64, 0.18);
+    border-color: #0071e3;
+    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.18);
     background: #18181f;
 }
 
 .login-card button {
     width: 100%;
     padding: 16px;
-    background: linear-gradient(135deg, #ff5540 0%, #e03e2a 100%);
+    background: linear-gradient(135deg, #0071e3 0%, #005bb5 100%);
     border: none;
     border-radius: 12px;
     font-size: 16px;
@@ -177,13 +176,13 @@ LOGIN & SIGNUP PAGES
     color: #ffffff;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 8px 25px rgba(255, 85, 64, 0.35);
+    box-shadow: 0 8px 25px rgba(0, 113, 227, 0.35);
 }
 
 .login-card button:hover {
-    background: linear-gradient(135deg, #ff8a7a 0%, #ff5540 100%);
+    background: linear-gradient(135deg, #2b8cf4 0%, #0071e3 100%);
     transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(255, 85, 64, 0.5);
+    box-shadow: 0 12px 30px rgba(0, 113, 227, 0.5);
 }
 
 .divider {
@@ -217,11 +216,11 @@ LOGIN & SIGNUP PAGES
 }
 
 .social-login a:hover {
-    background: #ff5540;
+    background: #0071e3;
     color: #ffffff;
-    border-color: #ff5540;
+    border-color: #0071e3;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 85, 64, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3);
 }
 
 .bottom-text {
@@ -231,7 +230,7 @@ LOGIN & SIGNUP PAGES
 }
 
 .bottom-text a {
-    color: #ff5540;
+    color: #0071e3;
     text-decoration: none;
     font-weight: 600;
     transition: all 0.2s ease;

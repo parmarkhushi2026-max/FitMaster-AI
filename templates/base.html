@@ -36,13 +36,13 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="{% static 'css/theme.css' %}?v=5">
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}?v=5">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=5">
-    <link rel="stylesheet" href="{% static 'css/membership.css' %}?v=5">
-    <link rel="stylesheet" href="{% static 'css/auth.css' %}?v=5">
-    <link rel="stylesheet" href="{% static 'css/theme_toggle.css' %}?v=5">
-    <link rel="stylesheet" href="{% static 'css/animations.css' %}?v=6">
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}?v=11">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}?v=11">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}?v=11">
+    <link rel="stylesheet" href="{% static 'css/membership.css' %}?v=11">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}?v=11">
+    <link rel="stylesheet" href="{% static 'css/theme_toggle.css' %}?v=11">
+    <link rel="stylesheet" href="{% static 'css/animations.css' %}?v=11">
 
     {% block extra_css %}
     {% endblock %}
@@ -51,25 +51,6 @@
 
 <body>
 
-<!-- ================= NEW FEATURES BANNER ================= -->
-<div class="features-banner" id="featuresBanner">
-    <div class="banner-content">
-        <i class="fa-solid fa-bolt"></i>
-        <span><strong>NEW:</strong> Mobile Menu &bull; Pauseable Energy Ticker &bull; Dark/Light Mode</span>
-        <button class="banner-close" onclick="document.getElementById('featuresBanner').style.display='none'" aria-label="Dismiss">×</button>
-    </div>
-</div>
-
-<!-- ================= HIGH ENERGY MOTIVATION TICKER ================= -->
-<div class="energy-ticker-bar" id="energyTickerBar" role="region" aria-label="Motivation ticker" aria-live="off">
-    <div class="energy-ticker-track">
-        ⚡ HIGH ENERGY MODE ACTIVE • 🔥 CRUSH YOUR LIMITS TODAY • 🏋️ 10,000+ CALORIES BURNED • 🦾 NO EXCUSES • 🥗 HEALTHY NUTRITION SYNC • ⚡ HIGH ENERGY MODE ACTIVE • 🔥 CRUSH YOUR LIMITS TODAY • 🏋️ 10,000+ CALORIES BURNED • 🦾 NO EXCUSES • 🥗 HEALTHY NUTRITION SYNC
-    </div>
-    <button class="energy-ticker-control" id="energyTickerControl" aria-label="Pause ticker" title="Pause/Resume ticker" type="button">
-        <i class="fa-solid fa-pause" id="energyTickerIcon"></i>
-        <span id="energyTickerText">Pause</span>
-    </button>
-</div>
 
 <!-- ================= NAVBAR ================= -->
 
@@ -107,15 +88,15 @@
         <!-- Buttons -->
         <div class="nav-btn">
             <!-- 🌐 Language & 💱 Currency Toggle Selector -->
-            <div class="lang-currency-pill" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);padding:4px 10px;border-radius:20px;backdrop-filter:blur(8px);">
+            <div class="lang-currency-pill">
                 <!-- Language Toggle -->
-                <button type="button" class="lang-toggle-btn" onclick="window.FitMasterI18n.setLanguage(window.FitMasterI18n.currentLang === 'en' ? 'hi' : 'en')" title="Change Language (English / हिंदी)" style="background:none;border:none;color:#f8fafc;font-size:12px;font-weight:700;cursor:pointer;padding:2px 4px;">
+                <button type="button" class="lang-toggle-btn" onclick="window.FitMasterI18n.setLanguage(window.FitMasterI18n.currentLang === 'en' ? 'hi' : 'en')" title="Change Language (English / हिंदी)">
                     <span id="currentLangLabel">🇬🇧 EN</span>
                 </button>
-                <span style="color:rgba(255,255,255,0.25);font-size:11px;">|</span>
-                <!-- Currency Toggle (India INR / US USD) -->
-                <button type="button" class="currency-toggle-btn" onclick="window.FitMasterCurrency.setCurrency(window.FitMasterCurrency.currentCurrency === 'INR' ? 'USD' : 'INR')" title="Change Region & Currency (India ₹ / US $)" style="background:none;border:none;color:#ff8a7a;font-size:12px;font-weight:700;cursor:pointer;padding:2px 4px;">
-                    <span id="currentCurrencyLabel">🇮🇳 ₹ INR</span>
+                <span class="lang-currency-divider">|</span>
+                <!-- Country / Region & Currency Selector (US 🇺🇸 / IN 🇮🇳 / UK 🇬🇧 / UAE 🇦🇪) -->
+                <button type="button" class="currency-toggle-btn" onclick="window.FitMasterCurrency.cycleCountry()" title="Select Country & Currency (US 🇺🇸, India 🇮🇳, UK 🇬🇧, UAE 🇦🇪)">
+                    <span id="currentCurrencyLabel">🇺🇸 US ($)</span>
                 </button>
             </div>
 
@@ -132,7 +113,7 @@
                 <a href="{% url 'dashboard' %}" class="login">
                     <i class="fa-solid fa-gauge-high"></i> <span data-i18n="Dashboard">Dashboard</span>
                 </a>
-                <a href="{% url 'logout' %}" class="signup" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); color: #ef4444;">
+                <a href="{% url 'logout' %}" class="signup" style="background: rgba(0, 113, 227, 0.15); border-color: rgba(0, 113, 227, 0.4); color: #0071e3;">
                     <i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="Logout">Logout</span>
                 </a>
             {% else %}
@@ -179,7 +160,7 @@
         <div class="mobile-menu-actions">
             {% if user.is_authenticated %}
                 <a href="{% url 'dashboard' %}" class="btn btn-primary mobile-btn">Dashboard</a>
-                <a href="{% url 'logout' %}" class="btn btn-danger mobile-btn" style="background: #ef4444; color: white; border: none;">Logout</a>
+                <a href="{% url 'logout' %}" class="btn btn-primary mobile-btn" style="background: #0071e3; color: white; border: none;">Logout</a>
             {% else %}
                 <a href="{% url 'login' %}" class="btn btn-outline mobile-btn">Login</a>
                 <a href="{% url 'signup' %}" class="btn btn-primary mobile-btn">Sign Up</a>
@@ -247,7 +228,7 @@
                     <a href="{% url 'membership' %}" title="Pay with Google Pay" style="color:inherit;text-decoration:none;"><i class="fa-brands fa-google-pay" style="font-size:22px;"></i></a>
                     <a href="{% url 'membership' %}" title="Pay with Visa" style="color:inherit;text-decoration:none;"><i class="fa-brands fa-cc-visa"></i></a>
                     <a href="{% url 'membership' %}" title="Pay with Mastercard" style="color:inherit;text-decoration:none;"><i class="fa-brands fa-cc-mastercard"></i></a>
-                    <a href="{% url 'contact' %}" title="Scan UPI QR Code & Direct Pay" style="color:#ff5540;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;margin-left:6px;"><i class="fa-solid fa-qrcode"></i> UPI QR</a>
+                    <a href="{% url 'contact' %}" title="Scan UPI QR Code & Direct Pay" style="color:#30d158;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;margin-left:6px;"><i class="fa-solid fa-qrcode"></i> UPI QR</a>
                 </div>
             </div>
         </div>
@@ -289,49 +270,7 @@
     }
 })();
 
-// Energy Ticker Control
-(function() {
-    const tickerBar = document.getElementById('energyTickerBar');
-    const controlBtn = document.getElementById('energyTickerControl');
-    const icon = document.getElementById('energyTickerIcon');
-    const text = document.getElementById('energyTickerText');
-    const track = tickerBar?.querySelector('.energy-ticker-track');
 
-    if (controlBtn && track) {
-        controlBtn.addEventListener('click', function() {
-            const isPaused = tickerBar.classList.toggle('paused');
-            
-            if (isPaused) {
-                icon.classList.replace('fa-pause', 'fa-play');
-                text.textContent = 'Resume';
-                controlBtn.setAttribute('aria-label', 'Resume ticker');
-            } else {
-                icon.classList.replace('fa-play', 'fa-pause');
-                text.textContent = 'Pause';
-                controlBtn.setAttribute('aria-label', 'Pause ticker');
-            }
-        });
-
-        // Pause on hover
-        tickerBar.addEventListener('mouseenter', function() {
-            track.style.animationPlayState = 'paused';
-        });
-
-        tickerBar.addEventListener('mouseleave', function() {
-            if (!tickerBar.classList.contains('paused')) {
-                track.style.animationPlayState = 'running';
-            }
-        });
-
-        // Keyboard support
-        controlBtn.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                controlBtn.click();
-            }
-        });
-    }
-})();
 </script>
 
 
@@ -394,6 +333,8 @@
     });
 })();
 </script>
+
+
 
 
 <!-- Global Kinetic Animations Script -->

@@ -40,37 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         statCards.forEach(card => observer.observe(card));
     }
 
-    // 2. Custom Neon Glow Cursor Trail (Subtle)
-    const cursor = document.createElement('div');
-    cursor.id = 'neon-cursor-glow';
-    cursor.style.cssText = `
-        position: fixed;
-        width: 320px;
-        height: 320px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(255, 85, 64, 0.12) 0%, rgba(255, 138, 122, 0.05) 40%, rgba(0,0,0,0) 70%);
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-        z-index: 9999;
-        transition: transform 0.08s ease-out, opacity 0.3s ease;
-        opacity: 0;
-    `;
-    document.body.appendChild(cursor);
 
-    let cursorVisible = false;
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-        if (!cursorVisible) {
-            cursor.style.opacity = '1';
-            cursorVisible = true;
-        }
-    });
-
-    document.addEventListener('mouseleave', () => {
-        cursor.style.opacity = '0';
-        cursorVisible = false;
-    });
 
     // 3. Navbar Scroll Effect
     const navbar = document.querySelector('.navbar');
@@ -120,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (valEl) valEl.textContent = bmi;
                 
                 let category = 'Healthy Weight';
-                let color = '#ff5540';
+                let color = '#0071e3';
                 let tip = 'Great job! Maintain your current balanced diet and exercise routine.';
 
                 if (bmi < 18.5) {
@@ -132,8 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     color = '#ffb703';
                     tip = 'Incorporate daily cardio sessions and moderate caloric deficit for fat loss.';
                 } else if (bmi >= 30) {
-                    category = 'Obese';
-                    color = '#ff4d6d';
+                    category = 'High Weight Range';
+                    color = '#0071e3';
                     tip = 'Consult with a certified FitMaster trainer for a personalized low-impact program.';
                 }
 

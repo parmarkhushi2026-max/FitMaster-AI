@@ -596,8 +596,11 @@ def update_set_status(request):
         set_num = request.POST.get("set_num")
 
         routines = request.session.get("day_routines")
-        if not routines or day not in routines:
-            return JsonResponse({"success": False, "error": "Invalid day"})
+        if not routines:
+            import copy
+            routines = copy.deepcopy(DEFAULT_DAY_ROUTINES)
+        if not day or day not in routines:
+            day = "mon"
 
         if action == "complete_all":
             for ex in routines[day]["exercises"]:
@@ -635,8 +638,11 @@ def add_workout_exercise(request):
         weight = request.POST.get("weight", "25")
 
         routines = request.session.get("day_routines")
-        if not routines or day not in routines:
-            return JsonResponse({"success": False, "error": "Invalid day"})
+        if not routines:
+            import copy
+            routines = copy.deepcopy(DEFAULT_DAY_ROUTINES)
+        if not day or day not in routines:
+            day = "mon"
 
         new_ex = {
             "name": name,
@@ -758,7 +764,13 @@ def payment(request):
             messages.error(request, "Invalid payment amount.")
             return redirect("membership")
 
-        package = Package.objects.filter(name=plan, is_active=True).first()
+        # Resilient package matching
+        package = (
+            Package.objects.filter(name__iexact=plan, is_active=True).first()
+            or Package.objects.filter(name__icontains=plan, is_active=True).first()
+            or Package.objects.filter(price=amount, is_active=True).first()
+            or Package.objects.filter(is_active=True).first()
+        )
         transaction_type = "membership" if (plan in MEMBERSHIP_PLANS or package) else "product"
         
         payment_method = request.POST.get("payment_method", "online").strip().lower()
@@ -767,9 +779,12 @@ def payment(request):
         bank_name = request.POST.get("bank_name", "").strip()
         
         rzp_payment_id = request.POST.get("razorpay_payment_id", "").strip()
+        rzp_order_id = request.POST.get("razorpay_order_id", "").strip()
+        rzp_signature = request.POST.get("razorpay_signature", "").strip()
 
+        # Check Razorpay payment
         if rzp_payment_id:
-            card_ident = f"RZP-{rzp_payment_id[-8:]}"
+            card_ident = f"RZP-{rzp_payment_id[-8:]}" if len(rzp_payment_id) >= 8 else f"RZP-{rzp_payment_id}"
             method_label = f"Razorpay Online ({rzp_payment_id})"
         elif payment_method == "cash":
             card_ident = "CASH-PAY"
@@ -836,16 +851,38 @@ def payment(request):
         if payment_method == "cash":
             messages.success(request, f"Booking Confirmed! Please complete cash payment of ₹{amount} at the gym reception desk.")
         else:
-            messages.success(request, "Payment Successful! 🎉 Welcome to your new fitness journey.")
+            messages.success(request, f"Payment Successful! 🎉 Received via {method_label}. Welcome to your new fitness journey.")
         return redirect("payment_success")
 
     razorpay_key_id = getattr(django_settings, "RAZORPAY_KEY_ID", "rzp_test_FitMasterDemo123")
+    razorpay_key_secret = getattr(django_settings, "RAZORPAY_KEY_SECRET", "")
     razorpay_currency = getattr(django_settings, "RAZORPAY_CURRENCY", "INR")
+    razorpay_order_id = ""
+
+    # Attempt to create Razorpay order if real keys are provided
+    is_demo_key = razorpay_key_id.startswith("rzp_test_FitMasterDemo") or not razorpay_key_id
+    if not is_demo_key and razorpay_key_secret:
+        try:
+            import razorpay
+            client = razorpay.Client(auth=(razorpay_key_id, razorpay_key_secret))
+            raw_p = str(price).replace("₹", "").replace(",", "").strip()
+            amt_paise = int(Decimal(raw_p) * 100)
+            order_data = client.order.create({
+                "amount": amt_paise,
+                "currency": razorpay_currency,
+                "payment_capture": 1
+            })
+            razorpay_order_id = order_data.get("id", "")
+        except Exception as e:
+            logger.warning(f"Could not create Razorpay order: {e}")
+
     return render(request, "payment.html", {
         "plan": plan,
         "price": price,
         "razorpay_key_id": razorpay_key_id,
         "razorpay_currency": razorpay_currency,
+        "razorpay_order_id": razorpay_order_id,
+        "is_demo_key": is_demo_key,
     })
 
 

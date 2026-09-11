@@ -18,10 +18,9 @@
     width:480px;
     padding:40px;
     border-radius:25px;
-    background:rgba(20,30,48,.75);
-    backdrop-filter:blur(20px);
-    border:1px solid rgba(0,255,170,.3);
-    box-shadow:0 0 35px rgba(0,255,170,.2);
+    background:#121216;
+    border:1px solid rgba(0, 113, 227, .3);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
     text-align:center;
 }
 
@@ -80,5 +79,5 @@
 
 .payment-box button:hover{
     transform:translateY(-3px);
-    box-shadow:0 0 20px #00ff99;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }

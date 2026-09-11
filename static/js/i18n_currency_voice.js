@@ -186,35 +186,80 @@
     };
 
     // =========================================================================
-    // 2. MULTI-CURRENCY & REGION (INDIA ₹ / US $) ENGINE
+    // 2. MULTI-COUNTRY REGION & CURRENCY ENGINE (US 🇺🇸 / IN 🇮🇳 / UK 🇬🇧 / UAE 🇦🇪)
     // =========================================================================
+    const COUNTRIES = {
+        US: { code: 'US', currency: 'USD', symbol: '$', name: 'United States', flag: '🇺🇸', hub: 'New York / Los Angeles', rate: 0.012, phone: '+1 (800) 555-FITM' },
+        IN: { code: 'IN', currency: 'INR', symbol: '₹', name: 'India', flag: '🇮🇳', hub: 'Mumbai / New Delhi', rate: 1, phone: '+91 (1800) 123-FITM' },
+        UK: { code: 'UK', currency: 'GBP', symbol: '£', name: 'United Kingdom', flag: '🇬🇧', hub: 'London / Manchester', rate: 0.0095, phone: '+44 (800) 999-FITM' },
+        UAE: { code: 'UAE', currency: 'AED', symbol: 'AED', name: 'United Arab Emirates', flag: '🇦🇪', hub: 'Dubai / Abu Dhabi', rate: 0.044, phone: '+971 (800) 888-FITM' }
+    };
+
     const CURRENCY = {
-        currentCurrency: localStorage.getItem('fitmaster-currency') || 'INR',
-        rateUSD: 0.012, // 1 INR ~ 0.012 USD (~$12 for ₹999, ~$24 for ₹1999, ~$49 for ₹3999)
-        rateINR: 83.33,
+        countries: COUNTRIES,
+        currentCountry: localStorage.getItem('fitmaster-country') || 'US',
+        currentCurrency: localStorage.getItem('fitmaster-currency') || 'USD',
 
         init() {
-            this.applyCurrency(this.currentCurrency);
+            if (!COUNTRIES[this.currentCountry]) {
+                this.currentCountry = 'US';
+                this.currentCurrency = 'USD';
+            }
+            this.applyCountry(this.currentCountry);
         },
 
-        setCurrency(currency) {
-            this.currentCurrency = currency;
-            localStorage.setItem('fitmaster-currency', currency);
-            this.applyCurrency(currency);
-            document.dispatchEvent(new CustomEvent('fitmaster:currency-change', { detail: { currency } }));
+        setCountry(countryCode) {
+            if (!COUNTRIES[countryCode]) countryCode = 'US';
+            this.currentCountry = countryCode;
+            this.currentCurrency = COUNTRIES[countryCode].currency;
+            localStorage.setItem('fitmaster-country', countryCode);
+            localStorage.setItem('fitmaster-currency', this.currentCurrency);
+            this.applyCountry(countryCode);
+            document.dispatchEvent(new CustomEvent('fitmaster:country-change', { detail: { country: countryCode, config: COUNTRIES[countryCode] } }));
         },
 
-        applyCurrency(currency) {
-            document.querySelectorAll('[data-currency-btn]').forEach(btn => {
-                btn.classList.toggle('active', btn.getAttribute('data-currency-btn') === currency);
+        setCurrency(currencyCode) {
+            let matched = Object.values(COUNTRIES).find(c => c.currency === currencyCode);
+            if (matched) {
+                this.setCountry(matched.code);
+            } else {
+                this.setCountry('US');
+            }
+        },
+
+        cycleCountry() {
+            const keys = Object.keys(COUNTRIES);
+            let idx = keys.indexOf(this.currentCountry);
+            let nextIdx = (idx + 1) % keys.length;
+            this.setCountry(keys[nextIdx]);
+        },
+
+        applyCountry(countryCode) {
+            const config = COUNTRIES[countryCode] || COUNTRIES.US;
+            this.currentCountry = config.code;
+            this.currentCurrency = config.currency;
+
+            document.querySelectorAll('[data-currency-btn], [data-country-btn]').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-currency-btn') === config.currency || btn.getAttribute('data-country-btn') === config.code);
             });
 
+            // Update Label in Navbar
             const currDisplay = document.getElementById('currentCurrencyLabel');
             if (currDisplay) {
-                currDisplay.textContent = currency === 'USD' ? '🇺🇸 USD ($)' : '🇮🇳 INR (₹)';
+                currDisplay.textContent = `${config.flag} ${config.code} (${config.symbol})`;
             }
 
-            // Convert all price elements with data-inr-price or formatted with ₹
+            // Update Country Hub Labels
+            document.querySelectorAll('.current-region-hub').forEach(el => {
+                el.textContent = config.hub;
+            });
+
+            // Update Support Phone
+            document.querySelectorAll('.current-region-phone').forEach(el => {
+                el.textContent = config.phone;
+            });
+
+            // Convert all price elements
             document.querySelectorAll('[data-inr-price], .price-val, .plan-price, .product-price, .currency-convert').forEach(el => {
                 let inrPrice = el.getAttribute('data-inr-price');
                 if (!inrPrice) {
@@ -228,16 +273,35 @@
 
                 if (inrPrice && !isNaN(inrPrice)) {
                     inrPrice = parseFloat(inrPrice);
-                    if (currency === 'USD') {
-                        let usdVal = Math.round(inrPrice * this.rateUSD);
+                    let finalPriceStr = '';
+                    
+                    if (config.code === 'US') {
+                        let usdVal = Math.round(inrPrice * config.rate);
                         if (inrPrice === 999) usdVal = 12;
                         if (inrPrice === 1999) usdVal = 24;
                         if (inrPrice === 3999) usdVal = 49;
                         if (usdVal < 1) usdVal = 1;
-                        el.textContent = `$${usdVal}`;
+                        finalPriceStr = `$${usdVal}`;
+                    } else if (config.code === 'UK') {
+                        let gbpVal = Math.round(inrPrice * config.rate);
+                        if (inrPrice === 999) gbpVal = 10;
+                        if (inrPrice === 1999) gbpVal = 19;
+                        if (inrPrice === 3999) gbpVal = 39;
+                        if (gbpVal < 1) gbpVal = 1;
+                        finalPriceStr = `£${gbpVal}`;
+                    } else if (config.code === 'UAE') {
+                        let aedVal = Math.round(inrPrice * config.rate);
+                        if (inrPrice === 999) aedVal = 45;
+                        if (inrPrice === 1999) aedVal = 89;
+                        if (inrPrice === 3999) aedVal = 179;
+                        if (aedVal < 1) aedVal = 5;
+                        finalPriceStr = `${aedVal} AED`;
                     } else {
-                        el.textContent = `₹${inrPrice.toLocaleString('en-IN')}`;
+                        // IN
+                        finalPriceStr = `₹${inrPrice.toLocaleString('en-IN')}`;
                     }
+
+                    el.textContent = finalPriceStr;
                 }
             });
         }
@@ -299,142 +363,14 @@
     };
 
     // =========================================================================
-    // 4. KINETIC CYBER CURSOR (CUSTOM ACCELERATED GLOW CURSOR)
+    // 4. CURSOR (NATIVE BROWSER CURSOR RESTORED)
     // =========================================================================
     const CYBER_CURSOR = {
-        dot: null,
-        ring: null,
-        enabled: localStorage.getItem('fitmaster-cursor') !== 'false',
-        mouseX: window.innerWidth / 2,
-        mouseY: window.innerHeight / 2,
-        ringX: window.innerWidth / 2,
-        ringY: window.innerHeight / 2,
-
+        enabled: false,
         init() {
-            if (window.matchMedia('(pointer: coarse)').matches) {
-                return; // Disable on touch screens
-            }
-
-            this.createElements();
-            this.bindEvents();
-            this.renderLoop();
+            // Disabled to use clean native browser cursor
         },
-
-        createElements() {
-            this.dot = document.createElement('div');
-            this.dot.className = 'cyber-cursor-dot';
-            this.dot.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 8px;
-                height: 8px;
-                background: #ff5540;
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 999999;
-                transform: translate(-50%, -50%);
-                transition: opacity 0.2s, transform 0.1s;
-                box-shadow: 0 0 12px #ff5540, 0 0 24px rgba(255, 85, 64, 0.6);
-            `;
-
-            this.ring = document.createElement('div');
-            this.ring.className = 'cyber-cursor-ring';
-            this.ring.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 34px;
-                height: 34px;
-                border: 1.5px solid rgba(255, 85, 64, 0.65);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 999998;
-                transform: translate(-50%, -50%);
-                transition: width 0.2s, height 0.2s, border-color 0.2s, background-color 0.2s;
-                backdrop-filter: blur(1px);
-            `;
-
-            document.body.appendChild(this.dot);
-            document.body.appendChild(this.ring);
-
-            if (!this.enabled) {
-                this.dot.style.display = 'none';
-                this.ring.style.display = 'none';
-            }
-        },
-
-        bindEvents() {
-            window.addEventListener('mousemove', e => {
-                this.mouseX = e.clientX;
-                this.mouseY = e.clientY;
-                if (this.dot) {
-                    this.dot.style.left = `${this.mouseX}px`;
-                    this.dot.style.top = `${this.mouseY}px`;
-                }
-            }, { passive: true });
-
-            document.addEventListener('mouseover', e => {
-                const target = e.target.closest('a, button, input, select, textarea, .clickable, .card, [role="button"]');
-                if (target && this.ring) {
-                    this.ring.style.width = '50px';
-                    this.ring.style.height = '50px';
-                    this.ring.style.borderColor = '#ff8a7a';
-                    this.ring.style.backgroundColor = 'rgba(255, 85, 64, 0.08)';
-                    if (this.dot) this.dot.style.transform = 'translate(-50%, -50%) scale(1.4)';
-                }
-            });
-
-            document.addEventListener('mouseout', e => {
-                const target = e.target.closest('a, button, input, select, textarea, .clickable, .card, [role="button"]');
-                if (target && this.ring) {
-                    this.ring.style.width = '34px';
-                    this.ring.style.height = '34px';
-                    this.ring.style.borderColor = 'rgba(255, 85, 64, 0.65)';
-                    this.ring.style.backgroundColor = 'transparent';
-                    if (this.dot) this.dot.style.transform = 'translate(-50%, -50%) scale(1)';
-                }
-            });
-
-            document.addEventListener('mousedown', () => {
-                if (this.ring) {
-                    this.ring.style.transform = 'translate(-50%, -50%) scale(0.8)';
-                }
-            });
-
-            document.addEventListener('mouseup', () => {
-                if (this.ring) {
-                    this.ring.style.transform = 'translate(-50%, -50%) scale(1)';
-                }
-            });
-        },
-
-        renderLoop() {
-            const lerp = (start, end, factor) => start + (end - start) * factor;
-            
-            const animate = () => {
-                this.ringX = lerp(this.ringX, this.mouseX, 0.18);
-                this.ringY = lerp(this.ringY, this.mouseY, 0.18);
-
-                if (this.ring) {
-                    this.ring.style.left = `${this.ringX}px`;
-                    this.ring.style.top = `${this.ringY}px`;
-                }
-
-                requestAnimationFrame(animate);
-            };
-
-            requestAnimationFrame(animate);
-        },
-
-        toggle() {
-            this.enabled = !this.enabled;
-            localStorage.setItem('fitmaster-cursor', this.enabled);
-            if (this.dot && this.ring) {
-                this.dot.style.display = this.enabled ? 'block' : 'none';
-                this.ring.style.display = this.enabled ? 'block' : 'none';
-            }
-        }
+        toggle() {}
     };
 
     // =========================================================================

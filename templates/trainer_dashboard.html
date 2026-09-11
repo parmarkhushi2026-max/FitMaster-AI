@@ -51,8 +51,6 @@
 
 .trainer-kpi-card {
     background: var(--surface);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 20px;
@@ -111,9 +109,7 @@
 
 /* Welcome Coach Banner */
 .coach-welcome-banner {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(22, 34, 56, 0.85) 100%);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: var(--surface);
     border: 1px solid var(--border);
     border-left: 4px solid var(--secondary);
     border-radius: 16px;
@@ -137,7 +133,7 @@
     font-size: 22px;
     font-weight: 800;
     color: #040810;
-    box-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
     flex-shrink: 0;
 }
 
@@ -156,8 +152,6 @@
 
 .chart-card {
     background: var(--surface);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 22px;
@@ -205,8 +199,6 @@
 
 .trainer-card {
     background: var(--surface);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 22px;
@@ -306,13 +298,13 @@
         <div class="trainer-kpi-card">
             <div class="trainer-kpi-card-header">
                 <span class="trainer-kpi-label">Today's Sessions</span>
-                <div class="trainer-kpi-icon-box" style="background:rgba(255,85,64,0.12);color:#ff5540;">
+                <div class="trainer-kpi-icon-box" style="background:rgba(0, 113, 227,0.12);color:#0071e3;">
                     <i class="fa-solid fa-calendar-day"></i>
                 </div>
             </div>
             <div>
                 <div class="trainer-kpi-val">{{ today_sessions|default:"0" }}</div>
-                <div class="trainer-kpi-sub" style="color:#ff5540;">Scheduled Consultations</div>
+                <div class="trainer-kpi-sub" style="color:#0071e3;">Scheduled Consultations</div>
             </div>
         </div>
 
@@ -353,7 +345,7 @@
         <div class="chart-card">
             <div class="chart-header">
                 <div class="chart-title">
-                    <i class="fa-solid fa-chart-column" style="color:#ff5540;"></i>
+                    <i class="fa-solid fa-chart-column" style="color:#0071e3;"></i>
                     Weekly Coaching Activity (Mon - Sun)
                 </div>
                 <span class="chart-badge">Live Sessions Tracker</span>
@@ -367,10 +359,10 @@
         <div class="chart-card">
             <div class="chart-header">
                 <div class="chart-title">
-                    <i class="fa-solid fa-bullseye" style="color:#ff5540;"></i>
+                    <i class="fa-solid fa-bullseye" style="color:#0071e3;"></i>
                     Athlete Focus & Goals
                 </div>
-                <span class="chart-badge" style="background:rgba(255,85,64,0.12);color:#ff5540;border-color:rgba(255,85,64,0.25);">Goal Ratio</span>
+                <span class="chart-badge" style="background:rgba(0, 113, 227,0.12);color:#0071e3;border-color:rgba(0, 113, 227,0.25);">Goal Ratio</span>
             </div>
             <div style="height: 240px; position: relative; display: flex; align-items: center; justify-content: center;">
                 <canvas id="trainerGoalsChart"></canvas>
@@ -485,8 +477,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const actData = {{ weekly_activity_data_json|default:"[]"|safe }};
 
         const gradient = actCtx.getContext('2d').createLinearGradient(0, 0, 0, 240);
-        gradient.addColorStop(0, 'rgba(255, 85, 64, 0.4)');
-        gradient.addColorStop(1, 'rgba(255, 85, 64, 0.0)');
+        gradient.addColorStop(0, 'rgba(0, 113, 227, 0.4)');
+        gradient.addColorStop(1, 'rgba(0, 113, 227, 0.0)');
 
         new Chart(actCtx, {
             type: 'bar',
@@ -496,7 +488,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     label: 'Sessions & Protocols Logged',
                     data: actData,
                     backgroundColor: gradient,
-                    borderColor: '#ff5540',
+                    borderColor: '#0071e3',
                     borderWidth: 2,
                     borderRadius: 8,
                     borderSkipped: false
@@ -510,8 +502,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     tooltip: {
                         backgroundColor: 'rgba(10, 15, 29, 0.95)',
                         titleColor: '#f8fafc',
-                        bodyColor: '#ff5540',
-                        borderColor: 'rgba(255, 85, 64, 0.4)',
+                        bodyColor: '#0071e3',
+                        borderColor: 'rgba(0, 113, 227, 0.4)',
                         borderWidth: 1,
                         padding: 10
                     }
@@ -546,7 +538,7 @@ document.addEventListener('DOMContentLoaded', function() {
             centerGoalCountElem.textContent = totalGoals.toLocaleString();
         }
 
-        const palette = ['#ff5540', '#ff8a7a', '#e03e2a', '#38bdf8', '#818cf8', '#fbbf24'];
+        const palette = ['#0071e3', '#30d158', '#005bb5', '#38bdf8', '#818cf8', '#fbbf24'];
 
         new Chart(goalsCtx, {
             type: 'doughnut',
@@ -560,7 +552,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     borderRadius: 5,
                     spacing: 3,
                     hoverOffset: 6,
-                    hoverBorderColor: '#ff5540'
+                    hoverBorderColor: '#0071e3'
                 }]
             },
             options: {
@@ -583,8 +575,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     tooltip: {
                         backgroundColor: 'rgba(8, 8, 12, 0.96)',
                         titleColor: '#ffffff',
-                        bodyColor: '#ff5540',
-                        borderColor: 'rgba(255, 85, 64, 0.4)',
+                        bodyColor: '#0071e3',
+                        borderColor: 'rgba(0, 113, 227, 0.4)',
                         borderWidth: 1,
                         padding: 12,
                         cornerRadius: 10,

@@ -1,7 +1,7 @@
 {% extends base_template|default:'base.html' %}
 {% load static %}
 
-{% block title %}Membership Plans | FitMaster{% endblock %}
+{% block title %}Membership Plans | Apple Fitness+ Style | FitMaster{% endblock %}
 
 {% if request.user.is_authenticated %}
 {% block topbar_class %}topbar-customer{% endblock %}
@@ -23,56 +23,279 @@
 
 {% block content %}
 <style>
-.mem-wrap { max-width: 1200px; margin: 0 auto; padding: {% if request.user.is_authenticated %}15px 0 40px{% else %}75px 20px 40px{% endif %}; }
-.plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 10px; }
-.plan-card { background: linear-gradient(145deg, #111116 0%, #0c0c10 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 22px 18px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); position: relative; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7); display: flex; flex-direction: column; }
-.plan-card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(0,0,0,0.85), 0 0 20px rgba(255, 85, 64, 0.15); border-color: #ff5540; }
-.plan-card.popular { border: 1.5px solid #ff5540; background: linear-gradient(135deg, rgba(255, 85, 64, 0.06), #0e0e11); }
-.popular-tag { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: #ff5540; color: #ffffff; font-size: 10px; font-weight: 800; padding: 3px 12px; border-radius: 20px; white-space: nowrap; box-shadow: 0 0 12px rgba(255, 85, 64, 0.35); }
-.plan-icon { font-size: 28px; margin-bottom: 8px; color: #ff5540; text-align: center; }
-.plan-name { font-size: 17px; font-weight: 800; color: #ffffff; margin-bottom: 4px; text-align: center; }
-.plan-desc { font-size: 12px; color: #94a3b8; margin-bottom: 12px; line-height: 1.45; text-align: center; }
-.plan-price { font-size: 28px; font-weight: 800; color: #ff5540; margin-bottom: 2px; text-align: center; text-shadow: 0 0 12px rgba(255, 85, 64, 0.25); }
-.plan-duration { font-size: 11.5px; color: #a1a1aa; margin-bottom: 16px; font-weight: 500; text-align: center; }
-.plan-features { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; padding: 0; flex: 1; }
-.plan-features li { font-size: 12.5px; color: #e2e8f0; display: flex; align-items: center; gap: 8px; }
-.plan-features li::before { content: '✓'; color: #ff5540; font-weight: 800; font-size: 12px; }
-.plan-btn { display: flex; align-items: center; justify-content: center; width: 100%; background: #ff5540; color: #ffffff; padding: 9px 14px; border-radius: 8px; font-weight: 700; font-size: 12.5px; text-decoration: none; transition: all 0.25s ease; box-shadow: 0 4px 14px rgba(255, 85, 64, 0.3); }
-.plan-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(255, 85, 64, 0.45); background: #ff8a7a; color: #ffffff; }
-.plan-btn.outline { background: transparent; border: 1.5px solid rgba(255, 85, 64, 0.4); color: #ffffff; }
-.plan-btn.outline:hover { background: #ff5540; color: #ffffff; border-color: #ff5540; }
+.mem-wrap {
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: {% if request.user.is_authenticated %}20px 0 50px{% else %}80px 24px 55px{% endif %};
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
+}
 
-[data-theme="light"] .plan-card { background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04); }
-[data-theme="light"] .plan-name { color: #0f172a; }
+.mem-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 36px;
+}
+
+.mem-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #30d158;
+    margin-bottom: 8px;
+}
+
+.mem-title {
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    color: #ffffff;
+    margin: 0 0 10px;
+}
+
+.mem-subtitle {
+    font-size: 15px;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.plan-card {
+    background: #141722;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 30px 24px 26px;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+}
+
+.plan-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+    border-color: rgba(48, 209, 88, 0.35);
+}
+
+.plan-card.popular {
+    border: 2px solid #30d158;
+    background: linear-gradient(180deg, rgba(48, 209, 88, 0.08) 0%, #141722 40%);
+}
+
+.popular-tag {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #30d158;
+    color: #000000;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 16px;
+    border-radius: 9999px;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 14px rgba(48, 209, 88, 0.35);
+}
+
+.plan-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.plan-name {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: #ffffff;
+    margin: 0 0 4px;
+    text-align: center;
+}
+
+.plan-desc {
+    font-size: 13px;
+    color: #94a3b8;
+    margin: 0 0 16px;
+    line-height: 1.45;
+    text-align: center;
+    min-height: 38px;
+}
+
+.plan-price-wrap {
+    padding: 14px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.plan-price {
+    font-size: 30px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    line-height: 1;
+}
+
+.plan-duration {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.plan-features li {
+    font-size: 13px;
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plan-features li::before {
+    content: '✓';
+    color: #30d158;
+    font-weight: 800;
+    font-size: 13px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(48, 209, 88, 0.12);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.plan-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: #0071e3;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 13.5px;
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 113, 227, 0.28);
+    box-sizing: border-box;
+}
+
+.plan-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 113, 227, 0.4);
+    background: #0077ed;
+    color: #ffffff;
+}
+
+.plan-btn.outline {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    box-shadow: none;
+}
+
+.plan-btn.outline:hover {
+    background: #0071e3;
+    color: #ffffff;
+    border-color: #0071e3;
+}
+
+/* Light Mode Overrides */
+[data-theme="light"] .mem-title { color: #1d1d1f; }
+[data-theme="light"] .mem-subtitle { color: #475569; }
+[data-theme="light"] .plan-card {
+    background: #ffffff !important;
+    border: 1px solid #e5e5ea;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+[data-theme="light"] .plan-card:hover {
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.09);
+    border-color: rgba(48, 209, 88, 0.45);
+}
+[data-theme="light"] .plan-card.popular {
+    background: #ffffff !important;
+    border: 2px solid #30d158;
+}
+[data-theme="light"] .plan-name { color: #1d1d1f; }
 [data-theme="light"] .plan-desc { color: #475569; }
+[data-theme="light"] .plan-price-wrap {
+    border-color: #e5e5ea;
+}
+[data-theme="light"] .plan-price { color: #1d1d1f; }
+[data-theme="light"] .plan-duration { color: #64748b; }
 [data-theme="light"] .plan-features li { color: #334155; }
-[data-theme="light"] .plan-btn.outline { color: #0f172a; border-color: rgba(255, 85, 64, 0.4); }
+[data-theme="light"] .plan-btn.outline {
+    background: #f1f5f9;
+    color: #1d1d1f;
+    border-color: #e2e8f0;
+}
+[data-theme="light"] .plan-btn.outline:hover {
+    background: #0071e3;
+    color: #ffffff;
+    border-color: #0071e3;
+}
 </style>
 
 <div class="mem-wrap">
 
+    <header class="mem-header">
+        <div class="mem-eyebrow">FITMASTER FITNESS+ PROTOCOLS</div>
+        <h1 class="mem-title">One Membership. Limitless Potential.</h1>
+        <p class="mem-subtitle">Select the protocol engineered for your timeline. Access certified trainers, personalized nutrition, and real-time biometrics.</p>
+    </header>
+
     <div class="plans-grid">
         {% for pkg in packages %}
         <div class="plan-card {% if forloop.counter == 2 %}popular{% endif %}">
-            {% if forloop.counter == 2 %}<div class="popular-tag">⭐ Most Popular</div>{% endif %}
+            {% if forloop.counter == 2 %}<div class="popular-tag">⭐ MOST POPULAR</div>{% endif %}
             <div class="plan-icon">
                 {% if pkg.duration_months <= 3 %}🌱{% elif pkg.duration_months <= 6 %}🏋️{% else %}👑{% endif %}
             </div>
             <div class="plan-name">{{ pkg.name }}</div>
             <div class="plan-desc">{{ pkg.description }}</div>
-            <div class="plan-price" data-inr-price="{{ pkg.price }}">₹{{ pkg.price }}</div>
-            <div class="plan-duration">for {{ pkg.duration_months }} months</div>
+            
+            <div class="plan-price-wrap">
+                <div class="plan-price" data-inr-price="{{ pkg.price }}">₹{{ pkg.price }}</div>
+                <div class="plan-duration">Full access for {{ pkg.duration_months }} months</div>
+            </div>
+
             <ul class="plan-features">
-                <li>Gym & facility access</li>
-                <li>AI workout plans</li>
-                <li>Personalized diet plans</li>
-                <li>Professional trainer</li>
-                {% if pkg.duration_months >= 6 %}<li>Progress tracking</li>{% endif %}
-                {% if pkg.duration_months >= 12 %}<li>Premium 24/7 support</li><li>Unlimited sessions</li>{% endif %}
+                <li>Gym & smart facility access pass</li>
+                <li>AI workout & neuromuscular protocols</li>
+                <li>Personalized macro nutrition calibration</li>
+                <li>Certified human trainer onboarding</li>
+                {% if pkg.duration_months >= 6 %}<li>Velocity & body metric tracking</li>{% endif %}
+                {% if pkg.duration_months >= 12 %}<li>VIP priority 24/7 coach support</li><li>Unlimited 1-on-1 consultations</li>{% endif %}
             </ul>
+
             {% if user.is_authenticated %}
             <a href="{% url 'payment' %}?plan={{ pkg.name|urlencode }}&price={{ pkg.price }}" class="plan-btn {% if forloop.counter != 2 %}outline{% endif %}">
-                Get {{ pkg.name }} Plan
+                Get {{ pkg.name }}
             </a>
             {% else %}
             <a href="{% url 'login' %}" class="plan-btn {% if forloop.counter != 2 %}outline{% endif %}">
