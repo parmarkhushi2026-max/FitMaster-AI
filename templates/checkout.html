@@ -17,7 +17,11 @@ Checkout
 
         <div class="product-info">
 
+            {% if product.image %}
             <img src="{% static product.image %}" alt="{{ product.name }}">
+            {% else %}
+            <img src="{% static 'images/protein.png' %}" alt="{{ product.name }}">
+            {% endif %}
 
             <div>
                 <h2>{{ product.name }}</h2>

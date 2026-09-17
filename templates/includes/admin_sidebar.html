@@ -1,9 +1,4 @@
 <ul>
-    <li class="nav-section">Overview</li>
-    <li class="{% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}">
-        <a href="{% url 'admin_dashboard' %}"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
-    </li>
-
     <li class="nav-section">Users</li>
     <li class="{% if request.resolver_match.url_name == 'users_list' %}active{% endif %}">
         <a href="{% url 'users_list' %}"><i class="fa-solid fa-users"></i><span>All Users</span></a>

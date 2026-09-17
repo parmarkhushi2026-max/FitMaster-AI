@@ -82,7 +82,6 @@
             <li><a href="{% url 'programs' %}">Programs</a></li>
             <li><a href="{% url 'trainers' %}">Trainers</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
-            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
         </ul>
 
         <!-- Buttons -->
@@ -154,7 +153,6 @@
                 <li><a href="{% url 'programs' %}"><i class="fa-solid fa-dumbbell"></i> Programs</a></li>
                 <li><a href="{% url 'trainers' %}"><i class="fa-solid fa-user-tie"></i> Trainers</a></li>
                 <li><a href="{% url 'contact' %}"><i class="fa-solid fa-envelope"></i> Contact</a></li>
-                <li><a href="{% url 'dashboard' %}"><i class="fa-solid fa-gauge-high"></i> Dashboard</a></li>
             </ul>
         </nav>
         <div class="mobile-menu-actions">
@@ -212,7 +210,9 @@
                     <li><a href="{% url 'programs' %}"><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i> Programs</a></li>
                     <li><a href="{% url 'trainers' %}"><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i> Trainers</a></li>
                     <li><a href="{% url 'contact' %}"><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i> Contact</a></li>
+                    {% if user.is_authenticated %}
                     <li><a href="{% url 'dashboard' %}"><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i> Dashboard</a></li>
+                    {% endif %}
                 </ul>
             </div>
 

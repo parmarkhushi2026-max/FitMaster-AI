@@ -1,0 +1,119 @@
+/* =========================================================
+   FITMASTER CHECKOUT STYLESHEET
+   ========================================================= */
+
+.checkout {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background: var(--bg-primary, #0d1117);
+}
+
+.checkout-card {
+    background: var(--bg-surface, #161b22);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.checkout-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 24px 60px rgba(0, 113, 227, 0.15);
+}
+
+.checkout-card h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary, #ffffff);
+    margin-bottom: 24px;
+    text-align: center;
+    letter-spacing: -0.5px;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+}
+
+.product-info img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product-info h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary, #ffffff);
+    margin-bottom: 4px;
+}
+
+.product-info p {
+    font-size: 15px;
+    font-weight: 700;
+    color: #30d158;
+}
+
+.checkout-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.checkout-card input[type="text"],
+.checkout-card textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: var(--text-primary, #ffffff);
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.checkout-card input[type="text"]:focus,
+.checkout-card textarea:focus {
+    outline: none;
+    border-color: #0071e3;
+    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25);
+}
+
+.checkout-card textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.checkout-card button[type="submit"] {
+    margin-top: 8px;
+    background: linear-gradient(135deg, #0071e3, #488fff);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 24px rgba(0, 113, 227, 0.3);
+}
+
+.checkout-card button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 113, 227, 0.45);
+}
