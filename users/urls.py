@@ -68,4 +68,12 @@ urlpatterns = [
     # Platform Sync & AI Chatbot APIs
     path('api/chatbot/', views.chatbot_api, name='chatbot_api'),
     path('api/platform-sync/', views.platform_sync_api, name='platform_sync_api'),
+
+    # In-App Real Notifications
+    path('notifications/', views.notifications_view, name='notifications'),
+    path('api/notifications/', views.api_notifications, name='api_notifications'),
+    path('api/notifications/<int:notification_id>/read/', views.api_mark_notification_read, name='api_mark_notification_read'),
+    path('api/notifications/mark-all-read/', views.api_mark_all_read, name='api_mark_all_read'),
+    path('api/notifications/clear/', views.api_clear_notifications, name='api_clear_notifications'),
 ]
+

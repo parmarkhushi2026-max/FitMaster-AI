@@ -1,0 +1,219 @@
+{% extends base_template %}
+{% load static %}
+
+{% block title %}Notification Center - FitMaster AI{% endblock %}
+
+{% block content %}
+<div class="notifications-page-container" style="max-width: 1000px; margin: 30px auto; padding: 0 20px;">
+    <!-- Top Header & Breadcrumbs -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 28px;">
+        <div>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); display: flex; align-items: center; justify-content: center; color: #38bdf8; font-size: 20px;">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+                <div>
+                    <h1 style="font-size: 26px; font-weight: 800; color: #ffffff; margin: 0; letter-spacing: -0.5px;">Notification Center</h1>
+                    <p style="margin: 0; font-size: 13px; color: #94a3b8;">Stay informed with real-time platform updates, workouts, and payment alerts</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px;">
+            {% if unread_count > 0 %}
+            <button id="pageMarkAllRead" type="button" class="btn" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 10px 18px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
+                <i class="fa-solid fa-check-double"></i>
+                <span>Mark All Read</span>
+            </button>
+            {% endif %}
+            <button id="pageClearAll" type="button" class="btn" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 10px; padding: 10px 18px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
+                <i class="fa-solid fa-trash-can"></i>
+                <span>Clear All</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 24px; scrollbar-width: none;">
+        <a href="?type=all{% if filter_status != 'all' %}&status={{ filter_status }}{% endif %}" 
+            class="filter-chip {% if filter_type == 'all' %}active{% endif %}">
+            All ({{ notifications.count }})
+        </a>
+        <a href="?type=payment{% if filter_status != 'all' %}&status={{ filter_status }}{% endif %}" 
+            class="filter-chip {% if filter_type == 'payment' %}active{% endif %}">
+            <i class="fa-solid fa-receipt"></i> Payments
+        </a>
+        <a href="?type=workout{% if filter_status != 'all' %}&status={{ filter_status }}{% endif %}" 
+            class="filter-chip {% if filter_type == 'workout' %}active{% endif %}">
+            <i class="fa-solid fa-dumbbell"></i> Workouts
+        </a>
+        <a href="?type=diet{% if filter_status != 'all' %}&status={{ filter_status }}{% endif %}" 
+            class="filter-chip {% if filter_type == 'diet' %}active{% endif %}">
+            <i class="fa-solid fa-apple-whole"></i> Diets
+        </a>
+        <a href="?type=schedule{% if filter_status != 'all' %}&status={{ filter_status }}{% endif %}" 
+            class="filter-chip {% if filter_type == 'schedule' %}active{% endif %}">
+            <i class="fa-solid fa-calendar-check"></i> Schedules
+        </a>
+        <a href="?type=notice{% if filter_status != 'all' %}&status={{ filter_status }}{% endif %}" 
+            class="filter-chip {% if filter_type == 'notice' %}active{% endif %}">
+            <i class="fa-solid fa-bullhorn"></i> Notices
+        </a>
+    </div>
+
+    <!-- Notification Cards List -->
+    <div class="notifications-list-grid" style="display: flex; flex-direction: column; gap: 14px;">
+        {% for notif in notifications %}
+        <div class="notif-card {% if not notif.is_read %}unread-card{% endif %}" id="notif-card-{{ notif.id }}"
+            style="position: relative; background: rgba(24, 24, 27, 0.7); backdrop-filter: blur(12px); border: 1px solid {% if not notif.is_read %}rgba(56, 189, 248, 0.3){% else %}rgba(255, 255, 255, 0.08){% endif %}; border-radius: 16px; padding: 20px; display: flex; gap: 18px; align-items: flex-start; transition: all 0.25s ease; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);">
+            
+            <!-- Type Icon Glow -->
+            <div style="width: 46px; height: 46px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: {{ notif.color_theme }}22; color: {{ notif.color_theme }}; border: 1px solid {{ notif.color_theme }}44; font-size: 18px; box-shadow: 0 0 15px {{ notif.color_theme }}22;">
+                <i class="fa-solid {{ notif.icon }}"></i>
+            </div>
+
+            <!-- Content -->
+            <div style="flex: 1; min-width: 0;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <h3 style="font-size: 15px; font-weight: 700; color: #ffffff; margin: 0;">{{ notif.title }}</h3>
+                        {% if not notif.is_read %}
+                        <span style="font-size: 10px; font-weight: 800; background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.3);">UNREAD</span>
+                        {% endif %}
+                    </div>
+                    <span style="font-size: 12px; color: #64748b;">
+                        <i class="fa-regular fa-clock" style="margin-right: 4px;"></i>{{ notif.created_at|date:"M d, Y - h:i A" }}
+                    </span>
+                </div>
+
+                <p style="margin: 0 0 12px 0; font-size: 13px; color: #94a3b8; line-height: 1.5;">
+                    {{ notif.message }}
+                </p>
+
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    {% if notif.link %}
+                    <a href="{{ notif.link }}" onclick="markNotifReadSingle({{ notif.id }})" 
+                        style="background: rgba(255, 255, 255, 0.08); hover: background: rgba(255, 255, 255, 0.15); color: #ffffff; font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s;">
+                        <span>View Details</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 10px;"></i>
+                    </a>
+                    {% endif %}
+
+                    {% if not notif.is_read %}
+                    <button type="button" onclick="markNotifReadSingle({{ notif.id }}, this)" 
+                        style="background: none; border: none; color: #38bdf8; font-size: 12px; font-weight: 600; cursor: pointer; padding: 6px 0; display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Mark as read</span>
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div style="background: rgba(24, 24, 27, 0.5); border: 1px dashed rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 60px 20px; text-align: center; color: #64748b;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 255, 255, 0.03); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; color: #475569;">
+                <i class="fa-solid fa-bell-slash"></i>
+            </div>
+            <h3 style="color: #cbd5e1; font-size: 16px; margin: 0 0 6px 0;">No notifications found</h3>
+            <p style="margin: 0; font-size: 13px; color: #64748b;">You're all caught up! New alerts and messages will appear right here.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.filter-chip {
+    padding: 8px 16px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+.filter-chip:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+.filter-chip.active {
+    background: linear-gradient(135deg, #0071e3, #38bdf8);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(0, 113, 227, 0.35);
+}
+.notif-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+.unread-card {
+    background: rgba(14, 25, 45, 0.75) !important;
+}
+</style>
+
+<script>
+function markNotifReadSingle(notifId, btnElement) {
+    fetch('/api/notifications/' + notifId + '/read/', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    }).then(r => r.json()).then(data => {
+        if (data.success) {
+            const card = document.getElementById('notif-card-' + notifId);
+            if (card) {
+                card.classList.remove('unread-card');
+                card.style.borderColor = 'rgba(255,255,255,0.08)';
+                const unreadBadge = card.querySelector('span[style*="UNREAD"]');
+                if (unreadBadge) unreadBadge.remove();
+                if (btnElement) btnElement.remove();
+            }
+            const globalBadge = document.getElementById('notificationBadge');
+            if (globalBadge) {
+                if (data.unread_count > 0) {
+                    globalBadge.textContent = data.unread_count;
+                    globalBadge.style.display = 'flex';
+                } else {
+                    globalBadge.style.display = 'none';
+                }
+            }
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const markAllBtn = document.getElementById('pageMarkAllRead');
+    if (markAllBtn) {
+        markAllBtn.addEventListener('click', function() {
+            fetch('/api/notifications/mark-all-read/', {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(r => r.json()).then(data => {
+                if (data.success) {
+                    window.location.reload();
+                }
+            });
+        });
+    }
+
+    const clearAllBtn = document.getElementById('pageClearAll');
+    if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', function() {
+            if (!confirm('Are you sure you want to clear all notifications?')) return;
+            fetch('/api/notifications/clear/', {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(r => r.json()).then(data => {
+                if (data.success) {
+                    window.location.reload();
+                }
+            });
+        });
+    }
+});
+</script>
+{% endblock %}

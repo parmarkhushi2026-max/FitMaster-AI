@@ -52,6 +52,7 @@ LOGIN & SIGNUP PAGES
 .login-left h1 span {
     background: linear-gradient(135deg, #0071e3 0%, #30d158 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 

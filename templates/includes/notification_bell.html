@@ -1,0 +1,274 @@
+{% load static %}
+<div class="notification-component-wrap" style="position: relative; display: inline-flex; align-items: center; vertical-align: middle;">
+    <!-- Topbar Icon Bell Button -->
+    <button class="topbar-icon-btn notif-bell-btn" type="button" aria-label="Notifications" title="Notifications"
+        style="position: relative; cursor: pointer; outline: none; border-radius: 10px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border, rgba(255, 255, 255, 0.12)); color: var(--text, #f8fafc); transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
+        <i class="fa-solid fa-bell" style="font-size: 16px;"></i>
+        
+        {% if unread_count > 0 %}
+        <span class="notif-badge-pill" 
+            style="position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; padding: 0 5px; background: linear-gradient(135deg, #ef4444, #dc2626); color: #ffffff; font-size: 10px; font-weight: 800; border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(239, 68, 68, 0.7); border: 2px solid var(--surface, #0f172a); animation: notifPulse 2s infinite;">
+            {{ unread_count }}
+        </span>
+        {% else %}
+        <span class="notif-badge-pill" 
+            style="display: none; position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; padding: 0 5px; background: linear-gradient(135deg, #ef4444, #dc2626); color: #ffffff; font-size: 10px; font-weight: 800; border-radius: 10px; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(239, 68, 68, 0.7); border: 2px solid var(--surface, #0f172a); animation: notifPulse 2s infinite;">
+            0
+        </span>
+        {% endif %}
+    </button>
+
+    <!-- Glassmorphic Dropdown Menu -->
+    <div class="notif-dropdown-box"
+        style="display: none; position: absolute; top: calc(100% + 10px); right: 0; width: 330px; max-width: 90vw; background: var(--surface2, #18181b); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border, rgba(255, 255, 255, 0.12)); border-radius: 14px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.2); z-index: 99999; overflow: hidden; transform-origin: top right;">
+        
+        <!-- Header -->
+        <div style="padding: 12px 16px; border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08)); display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.02);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-bell" style="font-size: 13px; color: var(--primary, #0071e3);"></i>
+                <span style="font-weight: 700; font-size: 13px; color: var(--text-bright, #ffffff);">Notifications</span>
+                <span class="notif-unread-text" style="font-size: 10px; padding: 2px 7px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-radius: 20px; font-weight: 700; border: 1px solid rgba(56, 189, 248, 0.25);">
+                    {{ unread_count }} unread
+                </span>
+            </div>
+            {% if unread_count > 0 %}
+            <button class="notif-mark-all-btn" type="button" style="background: none; border: none; color: #38bdf8; font-size: 11px; font-weight: 600; cursor: pointer; padding: 4px 6px; border-radius: 6px; transition: background 0.2s;">
+                Mark read
+            </button>
+            {% endif %}
+        </div>
+
+        <!-- Notification List -->
+        <div class="notif-items-scroll" style="max-height: 320px; overflow-y: auto; scrollbar-width: thin;">
+            {% for notif in notifications %}
+            <div class="notif-row-item {% if not notif.is_read %}is-unread{% endif %}" 
+                data-id="{{ notif.id }}" 
+                data-link="{{ notif.link }}"
+                style="padding: 11px 14px; border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.04)); display: flex; gap: 11px; align-items: flex-start; cursor: pointer; transition: all 0.2s ease; position: relative; background: {% if not notif.is_read %}rgba(56, 189, 248, 0.04){% else %}transparent{% endif %};">
+                
+                <!-- Category Icon -->
+                <div style="width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: {{ notif.color_theme }}22; color: {{ notif.color_theme }}; border: 1px solid {{ notif.color_theme }}44; font-size: 13px;">
+                    <i class="fa-solid {{ notif.icon }}"></i>
+                </div>
+
+                <!-- Text Content -->
+                <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;">
+                        <span style="font-size: 12px; font-weight: {% if not notif.is_read %}700{% else %}500{% endif %}; color: var(--text-bright, #ffffff); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 175px;">
+                            {{ notif.title }}
+                        </span>
+                        <span style="font-size: 10px; color: var(--text-muted, #64748b); margin-left: 6px; flex-shrink: 0;">
+                            {{ notif.created_at|timesince }}
+                        </span>
+                    </div>
+                    <p style="margin: 0; font-size: 11px; color: var(--text-dim, #94a3b8); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                        {{ notif.message }}
+                    </p>
+                </div>
+
+                <!-- Unread Dot Indicator -->
+                {% if not notif.is_read %}
+                <div class="unread-dot-indicator" style="width: 6px; height: 6px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 6px #38bdf8; position: absolute; top: 14px; right: 8px;"></div>
+                {% endif %}
+            </div>
+            {% empty %}
+            <div style="padding: 28px 16px; text-align: center; color: var(--text-muted, #64748b);">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.04); display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: var(--text-dim, #475569);">
+                    <i class="fa-solid fa-bell-slash" style="font-size: 16px;"></i>
+                </div>
+                <div style="font-size: 12px; font-weight: 600; color: var(--text-bright, #94a3b8);">No new notifications</div>
+                <div style="font-size: 10px; color: var(--text-muted, #64748b); margin-top: 2px;">You're completely up to date!</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 9px 14px; border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08)); background: rgba(255, 255, 255, 0.02); display: flex; align-items: center; justify-content: space-between;">
+            <a href="{% url 'notifications' %}" style="color: #38bdf8; font-size: 11px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 4px; transition: color 0.2s;">
+                <span>View all</span>
+                <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i>
+            </a>
+            <button class="notif-clear-all-btn" type="button" style="background: none; border: none; color: var(--text-muted, #64748b); font-size: 11px; cursor: pointer; transition: color 0.2s;">
+                Clear all
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes notifPulse {
+    0% { transform: scale(1); box-shadow: 0 0 4px rgba(239, 68, 68, 0.6); }
+    50% { transform: scale(1.1); box-shadow: 0 0 10px rgba(239, 68, 68, 0.9); }
+    100% { transform: scale(1); box-shadow: 0 0 4px rgba(239, 68, 68, 0.6); }
+}
+.notif-bell-btn:hover {
+    color: var(--accent, #0071e3) !important;
+    border-color: var(--accent, #0071e3) !important;
+    background: var(--accent-dim, rgba(0, 113, 227, 0.12)) !important;
+}
+.notif-row-item:hover {
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+[data-theme="light"] .notif-dropdown-box {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important;
+}
+[data-theme="light"] .notif-row-item {
+    border-bottom-color: #f1f5f9 !important;
+}
+[data-theme="light"] .notif-row-item:hover {
+    background: #f8fafc !important;
+}
+</style>
+
+<script>
+(function() {
+    function setupAllNotificationBells() {
+        document.querySelectorAll('.notification-component-wrap').forEach(wrap => {
+            if (wrap.dataset.initialized) return;
+            wrap.dataset.initialized = 'true';
+
+            const btn = wrap.querySelector('.notif-bell-btn');
+            const dropdown = wrap.querySelector('.notif-dropdown-box');
+            const badge = wrap.querySelector('.notif-badge-pill');
+            const unreadText = wrap.querySelector('.notif-unread-text');
+            const markAllBtn = wrap.querySelector('.notif-mark-all-btn');
+            const clearBtn = wrap.querySelector('.notif-clear-all-btn');
+            const scrollContainer = wrap.querySelector('.notif-items-scroll');
+
+            if (!btn || !dropdown) return;
+
+            // Toggle dropdown
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // Close other open dropdowns first
+                document.querySelectorAll('.notif-dropdown-box').forEach(d => {
+                    if (d !== dropdown) d.style.display = 'none';
+                });
+
+                const isHidden = dropdown.style.display === 'none' || dropdown.style.display === '';
+                dropdown.style.display = isHidden ? 'block' : 'none';
+                if (isHidden) {
+                    dropdown.style.opacity = '0';
+                    dropdown.style.transform = 'translateY(-6px) scale(0.98)';
+                    setTimeout(() => {
+                        dropdown.style.opacity = '1';
+                        dropdown.style.transform = 'translateY(0) scale(1)';
+                    }, 10);
+                }
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!wrap.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+
+            // Notification item click (Mark read + navigate)
+            if (scrollContainer) {
+                scrollContainer.addEventListener('click', function(e) {
+                    const item = e.target.closest('.notif-row-item');
+                    if (!item) return;
+
+                    const notifId = item.getAttribute('data-id');
+                    const link = item.getAttribute('data-link');
+
+                    if (notifId) {
+                        fetch('/api/notifications/' + notifId + '/read/', {
+                            method: 'POST',
+                            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                        }).then(r => r.json()).then(data => {
+                            if (data.success) {
+                                item.classList.remove('is-unread');
+                                item.style.background = 'transparent';
+                                const dot = item.querySelector('.unread-dot-indicator');
+                                if (dot) dot.remove();
+
+                                updateAllBadges(data.unread_count);
+                            }
+                            if (link && link !== '' && link !== 'null' && link !== 'None') {
+                                window.location.href = link;
+                            }
+                        }).catch(() => {
+                            if (link && link !== '' && link !== 'null' && link !== 'None') {
+                                window.location.href = link;
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Mark all read button
+            if (markAllBtn) {
+                markAllBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    fetch('/api/notifications/mark-all-read/', {
+                        method: 'POST',
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    }).then(r => r.json()).then(data => {
+                        if (data.success) {
+                            updateAllBadges(0);
+                            markAllBtn.style.display = 'none';
+                            wrap.querySelectorAll('.notif-row-item').forEach(el => {
+                                el.classList.remove('is-unread');
+                                el.style.background = 'transparent';
+                                const dot = el.querySelector('.unread-dot-indicator');
+                                if (dot) dot.remove();
+                            });
+                        }
+                    });
+                });
+            }
+
+            // Clear all notifications
+            if (clearBtn) {
+                clearBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (!confirm('Clear all notifications?')) return;
+                    fetch('/api/notifications/clear/', {
+                        method: 'POST',
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    }).then(r => r.json()).then(data => {
+                        if (data.success) {
+                            updateAllBadges(0);
+                            if (markAllBtn) markAllBtn.style.display = 'none';
+                            if (scrollContainer) {
+                                scrollContainer.innerHTML = `
+                                    <div style="padding: 28px 16px; text-align: center; color: var(--text-muted, #64748b);">
+                                        <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.04); display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: var(--text-dim, #475569);">
+                                            <i class="fa-solid fa-bell-slash" style="font-size: 16px;"></i>
+                                        </div>
+                                        <div style="font-size: 12px; font-weight: 600; color: var(--text-bright, #94a3b8);">All notifications cleared</div>
+                                    </div>
+                                `;
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+    function updateAllBadges(count) {
+        document.querySelectorAll('.notif-badge-pill').forEach(b => {
+            if (count > 0) {
+                b.textContent = count;
+                b.style.display = 'flex';
+            } else {
+                b.style.display = 'none';
+            }
+        });
+        document.querySelectorAll('.notif-unread-text').forEach(t => {
+            t.textContent = count + ' unread';
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupAllNotificationBells);
+    } else {
+        setupAllNotificationBells();
+    }
+})();
+</script>

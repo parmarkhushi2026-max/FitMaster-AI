@@ -304,6 +304,46 @@
                     el.textContent = finalPriceStr;
                 }
             });
+
+            // Dynamically update payment anchor links with correct price & currency
+            document.querySelectorAll('a').forEach(a => {
+                if (a.href && a.href.includes('price=')) {
+                    try {
+                        let url = new URL(a.href, window.location.origin);
+                        let origPrice = url.searchParams.get('orig_price');
+                        if (!origPrice) {
+                            origPrice = url.searchParams.get('price');
+                            url.searchParams.set('orig_price', origPrice);
+                        }
+                        let numPrice = parseFloat(origPrice);
+                        if (!isNaN(numPrice)) {
+                            let finalNumPrice = numPrice;
+                            if (config.code === 'US') {
+                                finalNumPrice = Math.round(numPrice * config.rate);
+                                if (numPrice === 999) finalNumPrice = 12;
+                                if (numPrice === 1999) finalNumPrice = 24;
+                                if (numPrice === 3999) finalNumPrice = 49;
+                                if (finalNumPrice < 1) finalNumPrice = 1;
+                            } else if (config.code === 'UK') {
+                                finalNumPrice = Math.round(numPrice * config.rate);
+                                if (numPrice === 999) finalNumPrice = 10;
+                                if (numPrice === 1999) finalNumPrice = 19;
+                                if (numPrice === 3999) finalNumPrice = 39;
+                                if (finalNumPrice < 1) finalNumPrice = 1;
+                            } else if (config.code === 'UAE') {
+                                finalNumPrice = Math.round(numPrice * config.rate);
+                                if (numPrice === 999) finalNumPrice = 45;
+                                if (numPrice === 1999) finalNumPrice = 89;
+                                if (numPrice === 3999) finalNumPrice = 179;
+                                if (finalNumPrice < 1) finalNumPrice = 5;
+                            }
+                            url.searchParams.set('price', finalNumPrice);
+                            url.searchParams.set('currency', config.currency);
+                            a.href = url.toString();
+                        }
+                    } catch(e) {}
+                }
+            });
         }
     };
 

@@ -52,10 +52,12 @@ class Payment(models.Model):
         default="membership",
     )
 
+    currency = models.CharField(max_length=10, default="INR")
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} - {self.plan}"
+        return f"{self.name} - {self.plan} ({self.currency})"
 
 
 class Product(models.Model):
@@ -98,8 +100,26 @@ class Profile(models.Model):
         default="customer"
     )
 
+    phone_number = models.CharField(
+        max_length=25,
+        blank=True,
+        default="",
+        help_text="International phone format e.g. +919876543210 or +14155552671"
+    )
+
+    sms_alerts_enabled = models.BooleanField(
+        default=True,
+        help_text="Receive transactional SMS notifications"
+    )
+
+    whatsapp_alerts_enabled = models.BooleanField(
+        default=True,
+        help_text="Receive WhatsApp notifications and invoice updates"
+    )
+
     def __str__(self):
         return f"{self.user.username} ({self.role})"
+
 
 
 class TrainerDetail(models.Model):
@@ -395,3 +415,98 @@ class EmailNotification(models.Model):
 
     def __str__(self):
         return f"{self.subject} to {self.recipient_email}"
+
+
+class Notification(models.Model):
+    TYPE_CHOICES = (
+        ("welcome", "Welcome"),
+        ("payment", "Payment"),
+        ("workout", "Workout"),
+        ("diet", "Diet Plan"),
+        ("schedule", "Schedule"),
+        ("notice", "Notice"),
+        ("trainer", "Trainer Assignment"),
+        ("progress", "Progress Update"),
+        ("system", "System"),
+    )
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="notifications"
+    )
+    title = models.CharField(max_length=255)
+    message = models.TextField()
+    notification_type = models.CharField(
+        max_length=50,
+        choices=TYPE_CHOICES,
+        default="system"
+    )
+    link = models.CharField(max_length=255, blank=True, default="")
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"[{self.notification_type}] {self.title} -> {self.user.username}"
+
+    @property
+    def icon(self):
+        icons = {
+            "welcome": "fa-hand-sparkles",
+            "payment": "fa-receipt",
+            "workout": "fa-dumbbell",
+            "diet": "fa-apple-whole",
+            "schedule": "fa-calendar-check",
+            "notice": "fa-bullhorn",
+            "trainer": "fa-user-tie",
+            "progress": "fa-chart-line",
+            "system": "fa-bell",
+        }
+        return icons.get(self.notification_type, "fa-bell")
+
+    @property
+    def color_theme(self):
+        colors = {
+            "welcome": "#38bdf8",
+            "payment": "#34d399",
+            "workout": "#f97316",
+            "diet": "#10b981",
+            "schedule": "#60a5fa",
+            "notice": "#a855f7",
+            "trainer": "#ec4899",
+            "progress": "#f59e0b",
+            "system": "#64748b",
+        }
+        return colors.get(self.notification_type, "#60a5fa")
+
+
+class AlertLog(models.Model):
+    CHANNEL_CHOICES = (
+        ("sms", "SMS"),
+        ("whatsapp", "WhatsApp"),
+    )
+    STATUS_CHOICES = (
+        ("sent", "Sent (Live API)"),
+        ("simulated", "Simulated (Sandbox/Log)"),
+        ("failed", "Failed"),
+    )
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="alert_logs")
+    channel = models.CharField(max_length=20, choices=CHANNEL_CHOICES, default="whatsapp")
+    recipient_phone = models.CharField(max_length=30)
+    message = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="simulated")
+    provider = models.CharField(max_length=50, default="Twilio / Gupshup")
+    response_payload = models.TextField(blank=True, default="")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"[{self.get_channel_display()}] to {self.recipient_phone} ({self.status})"
+
+

@@ -1,4 +1,5 @@
 {% load static %}
+{% load notification_tags %}
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -99,6 +100,7 @@
                 <a href="{% url 'home' %}" class="topbar-icon-btn" title="Go to Website">
                     <i class="fa-solid fa-globe"></i>
                 </a>
+                {% render_notifications %}
                 <div class="topbar-avatar">{{ request.user.username|first|upper }}</div>
             </div>
         </header>

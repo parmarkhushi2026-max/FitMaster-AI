@@ -832,7 +832,7 @@
             </div>
 
             <div class="pay-amount">
-                ₹{{ price }}
+                {{ currency }} {{ price }}
             </div>
 
             <ul class="pay-features">
@@ -921,7 +921,7 @@
                         All-in-one verified payment portal. Pay with any UPI app (GPay, PhonePe, Paytm), Debit/Credit cards, or 50+ NetBanking accounts.
                     </p>
                     <button type="button" onclick="triggerRazorpayCheckout()" style="background:#0071e3;color:#ffffff;border:none;padding:12px 32px;border-radius:24px;font-size:14px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(0, 113, 227,0.35);transition:all 0.2s;">
-                        <span>Pay ₹{{ price }} with Razorpay</span>
+                        <span>Pay {{ currency }} {{ price }} with Razorpay</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
@@ -937,7 +937,7 @@
 
                     <div class="qr-card-box">
                         <div class="qr-white-frame">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=fitmaster@okaxis&pn=FitMaster%20Fitness&am={{ price }}&cu=INR" alt="GPay QR Code" style="width:125px;height:125px;display:block;">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=fitmaster@okaxis&pn=FitMaster%20Fitness&am={{ price }}&cu={{ currency }}" alt="GPay QR Code" style="width:125px;height:125px;display:block;">
                         </div>
                         <div style="font-size:11.5px;color:#a1a1aa;margin-top:8px;">Scan with <strong>Google Pay (GPay)</strong> app</div>
 
@@ -960,7 +960,7 @@
                     </div>
 
                     <button type="submit" class="pay-submit-btn">
-                        <i class="fa-brands fa-google-pay" style="font-size:22px;"></i> Pay ₹{{ price }} with Google Pay
+                        <i class="fa-brands fa-google-pay" style="font-size:22px;"></i> Pay {{ currency }} {{ price }} with Google Pay
                     </button>
                 </form>
             </div>
@@ -975,7 +975,7 @@
 
                     <div class="qr-card-box">
                         <div class="qr-white-frame">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=fitmaster@ybl&pn=FitMaster%20Fitness&am={{ price }}&cu=INR" alt="PhonePe QR Code" style="width:125px;height:125px;display:block;">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=fitmaster@ybl&pn=FitMaster%20Fitness&am={{ price }}&cu={{ currency }}" alt="PhonePe QR Code" style="width:125px;height:125px;display:block;">
                         </div>
                         <div style="font-size:11.5px;color:#a1a1aa;margin-top:8px;">Scan with <strong>PhonePe</strong> app</div>
 
@@ -998,7 +998,7 @@
                     </div>
 
                     <button type="submit" class="pay-submit-btn" style="background:linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);color:#ffffff;">
-                        <i class="fa-solid fa-mobile-screen-button"></i> Pay ₹{{ price }} with PhonePe
+                        <i class="fa-solid fa-mobile-screen-button"></i> Pay {{ currency }} {{ price }} with PhonePe
                     </button>
                 </form>
             </div>
@@ -1013,7 +1013,7 @@
 
                     <div class="qr-card-box">
                         <div class="qr-white-frame">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=fitmaster@paytm&pn=FitMaster%20Fitness&am={{ price }}&cu=INR" alt="Paytm QR Code" style="width:125px;height:125px;display:block;">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=fitmaster@paytm&pn=FitMaster%20Fitness&am={{ price }}&cu={{ currency }}" alt="Paytm QR Code" style="width:125px;height:125px;display:block;">
                         </div>
                         <div style="font-size:11.5px;color:#a1a1aa;margin-top:8px;">Scan with <strong>Paytm Wallet or UPI</strong></div>
 
@@ -1036,7 +1036,7 @@
                     </div>
 
                     <button type="submit" class="pay-submit-btn" style="background:linear-gradient(135deg, #0284c7 0%, #0369a1 100%);color:#ffffff;">
-                        <i class="fa-solid fa-wallet"></i> Pay ₹{{ price }} with Paytm
+                        <i class="fa-solid fa-wallet"></i> Pay {{ currency }} {{ price }} with Paytm
                     </button>
                 </form>
             </div>
@@ -1051,7 +1051,7 @@
 
                     <div class="qr-card-box">
                         <div class="qr-white-frame">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=fitmaster@upi&pn=FitMaster%20Fitness&am={{ price }}&cu=INR" alt="BHIM UPI QR Code" style="width:125px;height:125px;display:block;">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=fitmaster@upi&pn=FitMaster%20Fitness&am={{ price }}&cu={{ currency }}" alt="BHIM UPI QR Code" style="width:125px;height:125px;display:block;">
                         </div>
                         <div style="font-size:11.5px;color:#a1a1aa;margin-top:8px;">Scan with <strong>BHIM, CRED, Amazon Pay, Any UPI App</strong></div>
 
@@ -1074,7 +1074,7 @@
                     </div>
 
                     <button type="submit" class="pay-submit-btn" style="background:linear-gradient(135deg, #fbbf24 0%, #d97706 100%);color:#050505;">
-                        <i class="fa-solid fa-qrcode"></i> Confirm BHIM UPI Payment ₹{{ price }}
+                        <i class="fa-solid fa-qrcode"></i> Confirm BHIM UPI Payment {{ currency }} {{ price }}
                     </button>
                 </form>
             </div>
@@ -1128,7 +1128,7 @@
                     </div>
 
                     <button type="submit" class="pay-submit-btn">
-                        <i class="fa-solid fa-lock"></i> Pay ₹{{ price }} Securely with Card
+                        <i class="fa-solid fa-lock"></i> Pay {{ currency }} {{ price }} Securely with Card
                     </button>
                 </form>
             </div>
@@ -1184,7 +1184,7 @@
                     </div>
 
                     <button type="submit" class="pay-submit-btn" style="background:linear-gradient(135deg, #a855f7 0%, #9333ea 100%);color:#ffffff;">
-                        <i class="fa-solid fa-arrow-right-to-bracket"></i> Continue to Bank Portal ₹{{ price }}
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i> Continue to Bank Portal {{ currency }} {{ price }}
                     </button>
                 </form>
             </div>
@@ -1202,7 +1202,7 @@
                             <i class="fa-solid fa-money-bill-wave"></i>
                         </div>
                         <h4 class="cash-title" style="font-size:15px;font-weight:800;color:#ffffff;margin-bottom:4px;">Pay Cash at Gym Reception</h4>
-                        <p class="cash-desc" style="font-size:12px;color:#a1a1aa;margin:0;line-height:1.5;">Book your membership online now and pay ₹{{ price }} in cash at our gym reception desk when you visit.</p>
+                        <p class="cash-desc" style="font-size:12px;color:#a1a1aa;margin:0;line-height:1.5;">Book your membership online now and pay {{ currency }} {{ price }} in cash at our gym reception desk when you visit.</p>
                     </div>
 
                     <div class="form-group">
@@ -1216,7 +1216,7 @@
                     </div>
 
                     <button type="submit" class="pay-submit-btn" style="background:linear-gradient(135deg, #22c55e 0%, #16a34a 100%);color:#ffffff;">
-                        <i class="fa-solid fa-circle-check"></i> Confirm Cash Order (₹{{ price }})
+                        <i class="fa-solid fa-circle-check"></i> Confirm Cash Order ({{ currency }} {{ price }})
                     </button>
                 </form>
             </div>
@@ -1259,7 +1259,7 @@
                     <div class="rzp-merchant">FitMaster AI Fitness</div>
                     <div class="rzp-plan-name">{{ plan }}</div>
                 </div>
-                <div class="rzp-amount-badge">₹{{ price }}</div>
+                <div class="rzp-amount-badge">{{ currency }} {{ price }}</div>
             </div>
         </div>
 
@@ -1284,11 +1284,11 @@
                 <div class="rzp-prefill-box">
                     <div class="rzp-prefill-row"><span>Athlete:</span><strong>{{ request.user.get_full_name|default:request.user.username }}</strong></div>
                     <div class="rzp-prefill-row"><span>Protocol:</span><strong>{{ plan }}</strong></div>
-                    <div class="rzp-prefill-row"><span>Payable:</span><strong style="color:#0284c7;">₹{{ price }} INR</strong></div>
+                    <div class="rzp-prefill-row"><span>Payable:</span><strong style="color:#0284c7;">{{ currency }} {{ price }} INR</strong></div>
                 </div>
                 <button type="button" id="rzp-pay-confirm-btn" onclick="executeRazorpayTestPayment(true, 'EXPRESS')" class="rzp-action-btn">
                     <i class="fa-solid fa-bolt"></i>
-                    <span>Complete Payment (₹{{ price }})</span>
+                    <span>Complete Payment ({{ currency }} {{ price }})</span>
                 </button>
             </div>
 
@@ -1296,7 +1296,7 @@
             <div id="rzp-tab-upi" class="rzp-tab-content">
                 <div style="text-align:center;padding:8px 0 14px;">
                     <div style="background:#f8fafc;padding:10px;border-radius:12px;display:inline-block;border:1px solid #e2e8f0;">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=upi://pay?pa=fitmaster@rzp&pn=FitMaster%20AI&am={{ price }}&cu=INR" alt="Razorpay UPI QR" style="width:115px;height:115px;display:block;">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=upi://pay?pa=fitmaster@rzp&pn=FitMaster%20AI&am={{ price }}&cu={{ currency }}" alt="Razorpay UPI QR" style="width:115px;height:115px;display:block;">
                     </div>
                     <div style="font-size:11.5px;color:#64748b;margin-top:8px;">Scan with Google Pay, PhonePe, Paytm, or CRED</div>
                 </div>
@@ -1324,7 +1324,7 @@
                 </div>
                 <button type="button" onclick="executeRazorpayTestPayment(true, 'CARD')" class="rzp-action-btn">
                     <i class="fa-solid fa-credit-card"></i>
-                    <span>Authorize Card (₹{{ price }})</span>
+                    <span>Authorize Card ({{ currency }} {{ price }})</span>
                 </button>
             </div>
 

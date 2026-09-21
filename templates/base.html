@@ -1,4 +1,5 @@
 {% load static %}
+{% load notification_tags %}
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 
@@ -69,8 +70,20 @@
             </a>
         </div>
 
+        <!-- Notification Bell (Mobile/Tablet Only) -->
+        <style>
+            @media (min-width: 992px) {
+                .mobile-notification { display: none !important; }
+            }
+        </style>
+        {% if user.is_authenticated %}
+        <div class="mobile-notification" style="margin-left: auto; margin-right: 15px; display: flex; align-items: center;">
+            {% render_notifications %}
+        </div>
+        {% endif %}
+
         <!-- Mobile Menu Toggle -->
-        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks" title="Menu">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks" title="Menu" {% if user.is_authenticated %}style="margin-left: 0;"{% endif %}>
             <i class="fa-solid fa-bars"></i>
             <span class="menu-label">Menu</span>
         </button>
@@ -109,6 +122,7 @@
             </div>
 
             {% if user.is_authenticated %}
+                {% render_notifications %}
                 <a href="{% url 'dashboard' %}" class="login">
                     <i class="fa-solid fa-gauge-high"></i> <span data-i18n="Dashboard">Dashboard</span>
                 </a>
@@ -157,6 +171,9 @@
         </nav>
         <div class="mobile-menu-actions">
             {% if user.is_authenticated %}
+                <div style="display: flex; justify-content: center; margin-bottom: 16px;">
+                    {% render_notifications %}
+                </div>
                 <a href="{% url 'dashboard' %}" class="btn btn-primary mobile-btn">Dashboard</a>
                 <a href="{% url 'logout' %}" class="btn btn-primary mobile-btn" style="background: #0071e3; color: white; border: none;">Logout</a>
             {% else %}
@@ -166,6 +183,29 @@
         </div>
     </div>
 </div>
+
+<!-- Flash Messages -->
+{% if messages %}
+<div class="msgs-wrap" style="position: fixed; top: 80px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px;">
+    {% for message in messages %}
+    <div class="msg msg-{{ message.tags }}" style="background: var(--surface2, #27272a); border-left: 4px solid {% if 'error' in message.tags %}#ef4444{% elif 'warning' in message.tags %}#f59e0b{% else %}#30d158{% endif %}; padding: 14px 20px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); color: white; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500;">
+        <i class="fa-solid {% if 'error' in message.tags %}fa-circle-xmark{% elif 'warning' in message.tags %}fa-triangle-exclamation{% else %}fa-circle-check{% endif %}" style="color: {% if 'error' in message.tags %}#ef4444{% elif 'warning' in message.tags %}#f59e0b{% else %}#30d158{% endif %}; font-size: 18px;"></i>
+        <span>{{ message }}</span>
+        <button onclick="this.parentElement.style.display='none'" class="msg-close" style="background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; margin-left: 10px;">&times;</button>
+    </div>
+    {% endfor %}
+</div>
+<script>
+setTimeout(() => {
+    document.querySelectorAll('.msg').forEach(el => {
+        el.style.transition = 'opacity 0.4s, transform 0.4s';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-8px)';
+        setTimeout(() => el.remove(), 400);
+    });
+}, 4500);
+</script>
+{% endif %}
 
 <!-- ================= PAGE CONTENT ================= -->
 

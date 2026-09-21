@@ -5,6 +5,7 @@ import urllib
 import urllib.request
 import urllib.error
 import os
+import re
 
 from django.http import JsonResponse
 from django.db import connection
@@ -23,9 +24,46 @@ from django.utils import timezone
 from .models import (
     Profile, Payment, Package, Membership, TrainerDetail,
     Client, WorkoutPlan, DietPlan, Schedule, Progress,
-    Measurement, Feedback, Notice, Product,
+    Measurement, Feedback, Notice, Product, Notification, AlertLog,
 )
 from .email_service import EmailService
+from .notification_service import (
+    create_notification,
+    broadcast_role_notification,
+    notify_welcome,
+    notify_payment_success,
+    notify_workout_assigned,
+    notify_diet_assigned,
+    notify_schedule_created,
+    notify_trainer_assignment,
+)
+from .sms_whatsapp_service import (
+    AlertService,
+    alert_signup_welcome,
+    alert_payment_success,
+    alert_workout_assigned,
+    alert_diet_assigned,
+    alert_schedule_session,
+)
+from .validators import (
+    sanitize_text,
+    validate_username,
+    validate_email_format,
+    validate_phone_format,
+    validate_password_strength,
+    validate_positive_number,
+    validate_date_string,
+    validate_time_string,
+)
+from .rate_limiter import (
+    get_client_ip,
+    check_rate_limit,
+    record_failed_attempt,
+    reset_rate_limit,
+)
+
+
+
 
 
 MEMBERSHIP_PLANS = {
@@ -100,29 +138,56 @@ def home(request):
 def signup(request):
     if request.method == "POST":
         role = request.POST.get("role", "customer")
-        username = request.POST.get("username", "").strip()
-        email = request.POST.get("email", "").strip()
+        if role not in ["customer", "trainer"]:
+            messages.error(request, "Please select a valid account role.")
+            return redirect("signup")
+
+        valid_u, u_res = validate_username(request.POST.get("username"))
+        if not valid_u:
+            messages.error(request, u_res)
+            return redirect("signup")
+        username = u_res
+
+        valid_e, e_res = validate_email_format(request.POST.get("email"))
+        if not valid_e:
+            messages.error(request, e_res)
+            return redirect("signup")
+        email = e_res
+
         password = request.POST.get("password")
         confirm_password = request.POST.get("confirm_password")
 
-        if role not in ["customer", "trainer"]:
-            messages.error(request, "Please select a valid role.")
+        valid_p, p_res = validate_password_strength(password)
+        if not valid_p:
+            messages.error(request, p_res)
             return redirect("signup")
-        if not username or not email or not password:
-            messages.error(request, "Please fill all fields.")
-            return redirect("signup")
+
         if password != confirm_password:
             messages.error(request, "Passwords do not match.")
             return redirect("signup")
+
         if User.objects.filter(username=username).exists():
-            messages.error(request, "Username already exists.")
-            return redirect("signup")
-        if User.objects.filter(email=email).exists():
-            messages.error(request, "Email already exists.")
+            messages.error(request, "Username already exists. Please choose a different username.")
             return redirect("signup")
 
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Email address is already registered. Please sign in or use another email.")
+            return redirect("signup")
+
+        phone = request.POST.get("phone_number", "").strip()
+        if phone:
+            valid_ph, ph_res = validate_phone_format(phone)
+            if not valid_ph:
+                messages.error(request, ph_res)
+                return redirect("signup")
+            phone = ph_res
+
         user = User.objects.create_user(username=username, email=email, password=password)
-        Profile.objects.update_or_create(user=user, defaults={"role": role})
+        profile, _ = Profile.objects.update_or_create(user=user, defaults={"role": role})
+        if phone:
+            profile.phone_number = phone
+            profile.save(update_fields=["phone_number"])
+
 
         if role == "trainer":
             TrainerDetail.objects.update_or_create(
@@ -130,7 +195,10 @@ def signup(request):
                 defaults={"category": request.POST.get("category", "gym")},
             )
             
-        # Send Welcome Email
+        # Send Welcome Notification & Email & SMS/WhatsApp Alert
+        notify_welcome(user)
+        alert_signup_welcome(user)
+
         EmailService.send_notification(
             subject=f"Welcome to FitMaster, {username}!",
             message=f"Hi {username},\n\nYour {role} account has been created successfully.\nWelcome to the FitMaster family!\n\nBest,\nFitMaster Team",
@@ -142,6 +210,13 @@ def signup(request):
         # Notify Admins
         admin_users = User.objects.filter(profile__role="admin").exclude(email="")
         for admin in admin_users:
+            create_notification(
+                user=admin,
+                title=f"New {role.capitalize()} Registered",
+                message=f"{username} ({email}) just registered as a {role}.",
+                notification_type="system",
+                link="/admin/users/",
+            )
             EmailService.send_notification(
                 subject=f"New {role.capitalize()} Registration: {username}",
                 message=f"A new {role} ({username}) has registered with email {email}.",
@@ -149,6 +224,7 @@ def signup(request):
                 recipient_user=admin,
                 notification_type="AdminAlert"
             )
+
 
         messages.success(request, "Account created successfully! Please log in.")
         return redirect("login")
@@ -163,24 +239,53 @@ def user_login(request):
         return redirect("dashboard")
 
     if request.method == "POST":
-        username = request.POST.get("username", "").strip()
+        username = sanitize_text(request.POST.get("username", ""))
         password = request.POST.get("password", "")
 
         if not username or not password:
-            messages.error(request, "Please fill all fields.")
+            messages.error(request, "Please enter both username and password.")
             return render(request, "login.html")
+
+        # ── Rate-limit check (brute-force protection) ────────────────
+        client_ip = get_client_ip(request)
+        is_blocked, remaining = check_rate_limit(client_ip, username)
+        if is_blocked:
+            minutes = remaining // 60
+            seconds = remaining % 60
+            if minutes:
+                wait_str = f"{minutes} min {seconds} sec"
+            else:
+                wait_str = f"{seconds} seconds"
+            messages.error(
+                request,
+                f"Too many failed login attempts. Please wait {wait_str} before trying again.",
+            )
+            return render(request, "login.html")
+        # ─────────────────────────────────────────────────────────────
 
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             if user.is_active:
+                reset_rate_limit(client_ip, username)  # Clear counter on success
                 login(request, user)
                 messages.success(request, f"Welcome back, {user.username}! 💪")
                 return redirect("dashboard")
             else:
                 messages.error(request, "Your account is inactive.")
         else:
-            messages.error(request, "Invalid username or password.")
+            attempt_count = record_failed_attempt(client_ip, username)
+            remaining_attempts = max(0, 5 - attempt_count)
+            if remaining_attempts > 0:
+                messages.error(
+                    request,
+                    f"Invalid username or password. {remaining_attempts} attempt(s) remaining.",
+                )
+            else:
+                messages.error(
+                    request,
+                    "Too many failed login attempts. Your account has been temporarily locked for 5 minutes.",
+                )
 
     return render(request, "login.html")
 
@@ -543,16 +648,15 @@ def customer_dashboard(request):
 @login_required(login_url="login")
 def log_measurement(request):
     if request.method == "POST":
-        weight = request.POST.get("weight")
-        if not weight:
-            return JsonResponse({"success": False, "error": "Weight is required"})
-        try:
-            weight = float(weight)
-        except ValueError:
-            return JsonResponse({"success": False, "error": "Invalid weight value"})
+        weight_raw = request.POST.get("weight")
+        valid_w, w_val = validate_positive_number(weight_raw, "Weight", min_val=1, max_val=500)
+        if not valid_w:
+            return JsonResponse({"success": False, "error": w_val})
+        weight = w_val
         
         latest = Measurement.objects.filter(customer=request.user).order_by("-created_at").first()
         height = latest.height if latest else 175.0
+
         
         m = Measurement.objects.create(
             customer=request.user,
@@ -628,14 +732,17 @@ def update_set_status(request):
 @login_required(login_url="login")
 def add_workout_exercise(request):
     if request.method == "POST":
-        day = request.POST.get("day", "mon")
-        name = request.POST.get("name", "Dumbbell Press")
-        try:
-            sets = int(request.POST.get("sets", 3))
-        except ValueError:
-            sets = 3
-        reps = request.POST.get("reps", "10")
-        weight = request.POST.get("weight", "25")
+        day = sanitize_text(request.POST.get("day", "mon"), max_len=10)
+        name = sanitize_text(request.POST.get("name", "Dumbbell Press"), max_len=100)
+        
+        valid_s, s_val = validate_positive_number(request.POST.get("sets", 3), "Sets", min_val=1, max_val=100)
+        if not valid_s:
+            return JsonResponse({"success": False, "error": s_val})
+        sets = int(s_val)
+
+        reps = sanitize_text(request.POST.get("reps", "10"), max_len=20)
+        weight = sanitize_text(request.POST.get("weight", "25"), max_len=20)
+
 
         routines = request.session.get("day_routines")
         if not routines:
@@ -751,13 +858,15 @@ def payment(request):
         request.POST.get("price") or request.POST.get("amount")
         or request.GET.get("price") or request.GET.get("amount")
     )
+    currency = request.POST.get("currency") or request.GET.get("currency") or "INR"
 
     if not plan or not price:
         messages.error(request, "Please choose a membership plan or product first.")
         return redirect("membership")
 
     if request.method == "POST":
-        raw_price = str(price).replace("₹", "").replace(",", "").strip()
+        raw_price = str(price)
+        raw_price = re.sub(r'[^\d.]', '', raw_price).strip()
         try:
             amount = int(Decimal(raw_price))
         except (InvalidOperation, TypeError, ValueError):
@@ -816,9 +925,23 @@ def payment(request):
             amount=amount,
             card=card_ident[:20],
             transaction_type=transaction_type,
+            currency=currency,
         )
 
         if request.user.is_authenticated:
+            notify_payment_success(
+                user=request.user,
+                amount_str=f"{amount} {currency}",
+                plan_name=plan,
+                invoice_id=payment_obj.id,
+            )
+            alert_payment_success(
+                user=request.user,
+                amount_str=f"{amount} {currency}",
+                plan_name=plan,
+                invoice_url=request.build_absolute_uri(f"/invoice/{payment_obj.id}/"),
+            )
+
             if package:
                 Membership.objects.filter(user=request.user, is_active=True).update(is_active=False)
                 Membership.objects.create(
@@ -837,19 +960,28 @@ def payment(request):
                     notification_type="Payment"
                 )
                 
-        # Email to Admins about the payment
+        # Email & in-app notification to Admins about the payment
         customer_name = request.user.username if request.user.is_authenticated else request.POST.get("name", "Guest")
-        for admin in User.objects.filter(profile__role="admin").exclude(email=""):
-            EmailService.send_notification(
-                subject=f"New Payment Received: {plan}",
-                message=f"A new payment of ₹{amount} for '{plan}' was recorded by {customer_name} via {method_label}.",
-                recipient_email=admin.email,
-                recipient_user=admin,
-                notification_type="AdminAlert"
+        for admin in User.objects.filter(profile__role="admin"):
+            create_notification(
+                user=admin,
+                title="💳 Payment Received",
+                message=f"Payment of {amount} {currency} received from {customer_name} for '{plan}'.",
+                notification_type="payment",
+                link="/transactions/",
             )
+            if admin.email:
+                EmailService.send_notification(
+                    subject=f"New Payment Received: {plan}",
+                    message=f"A new payment of {amount} {currency} for '{plan}' was recorded by {customer_name} via {method_label}.",
+                    recipient_email=admin.email,
+                    recipient_user=admin,
+                    notification_type="AdminAlert"
+                )
+
 
         if payment_method == "cash":
-            messages.success(request, f"Booking Confirmed! Please complete cash payment of ₹{amount} at the gym reception desk.")
+            messages.success(request, f"Booking Confirmed! Please complete cash payment of {amount} {currency} at the gym reception desk.")
         else:
             messages.success(request, f"Payment Successful! 🎉 Received via {method_label}. Welcome to your new fitness journey.")
         return redirect("payment_success")
@@ -865,7 +997,8 @@ def payment(request):
         try:
             import razorpay
             client = razorpay.Client(auth=(razorpay_key_id, razorpay_key_secret))
-            raw_p = str(price).replace("₹", "").replace(",", "").strip()
+            raw_p = str(price)
+            raw_p = re.sub(r'[^\d.]', '', raw_p).strip()
             amt_paise = int(Decimal(raw_p) * 100)
             order_data = client.order.create({
                 "amount": amt_paise,
@@ -879,6 +1012,7 @@ def payment(request):
     return render(request, "payment.html", {
         "plan": plan,
         "price": price,
+        "currency": currency,
         "razorpay_key_id": razorpay_key_id,
         "razorpay_currency": razorpay_currency,
         "razorpay_order_id": razorpay_order_id,
@@ -983,20 +1117,36 @@ def workout_plans(request):
             messages.error(request, "Please select one of your assigned clients.")
             return redirect("workout_plans")
 
-        title = request.POST.get("title", "").strip()
+        title = sanitize_text(request.POST.get("title", ""), max_len=100)
         if not title:
-            messages.error(request, "Please provide a workout title.")
+            messages.error(request, "Please provide a valid workout title.")
             return redirect("workout_plans")
+
+        description = sanitize_text(request.POST.get("description", ""))
+        duration = sanitize_text(request.POST.get("duration", "45 Minutes"), max_len=50) or "45 Minutes"
 
         WorkoutPlan.objects.create(
             trainer=request.user,
             client=client,
             title=title,
-            description=request.POST.get("description", "").strip(),
-            duration=request.POST.get("duration", "45 Minutes").strip() or "45 Minutes",
+            description=description,
+            duration=duration,
         )
+
+        notify_workout_assigned(
+            client_user=client,
+            trainer_name=request.user.get_full_name() or request.user.username,
+            plan_title=title,
+        )
+        alert_workout_assigned(
+            client_user=client,
+            trainer_name=request.user.get_full_name() or request.user.username,
+            plan_title=title,
+        )
+
         messages.success(request, "Workout plan created successfully!")
         return redirect("workout_plans")
+
 
     workouts = WorkoutPlan.objects.filter(
         trainer=request.user
@@ -1023,9 +1173,9 @@ def diet_plans(request):
             messages.error(request, "Please select one of your assigned clients.")
             return redirect("diet_plans")
 
-        breakfast = request.POST.get("breakfast", "").strip()
-        lunch = request.POST.get("lunch", "").strip()
-        dinner = request.POST.get("dinner", "").strip()
+        breakfast = sanitize_text(request.POST.get("breakfast", ""), max_len=200)
+        lunch = sanitize_text(request.POST.get("lunch", ""), max_len=200)
+        dinner = sanitize_text(request.POST.get("dinner", ""), max_len=200)
 
         if not breakfast and not lunch and not dinner:
             messages.error(request, "Please fill in at least one meal field for the diet plan.")
@@ -1038,8 +1188,19 @@ def diet_plans(request):
             lunch=lunch,
             dinner=dinner,
         )
+
+        notify_diet_assigned(
+            client_user=client,
+            trainer_name=request.user.get_full_name() or request.user.username,
+        )
+        alert_diet_assigned(
+            client_user=client,
+            trainer_name=request.user.get_full_name() or request.user.username,
+        )
+
         messages.success(request, "Diet plan saved successfully!")
         return redirect("diet_plans")
+
 
     diets = DietPlan.objects.filter(
         trainer=request.user
@@ -1066,25 +1227,46 @@ def schedule(request):
             messages.error(request, "Please select one of your assigned clients.")
             return redirect("schedule")
 
-        session_date = request.POST.get("session_date", "").strip()
-        session_time = request.POST.get("session_time", "").strip()
+        session_date_raw = request.POST.get("session_date", "").strip()
+        session_time_raw = request.POST.get("session_time", "").strip()
 
-        if not session_date or not session_time:
-            messages.error(request, "Please choose both a date and a time for the session.")
+        valid_d, date_val = validate_date_string(session_date_raw, "Session Date")
+        if not valid_d:
+            messages.error(request, date_val)
+            return redirect("schedule")
+
+        valid_t, time_val = validate_time_string(session_time_raw, "Session Time")
+        if not valid_t:
+            messages.error(request, time_val)
             return redirect("schedule")
 
         try:
             Schedule.objects.create(
                 trainer=request.user,
                 client=client,
-                session_date=session_date,
-                session_time=session_time,
+                session_date=date_val,
+                session_time=time_val,
             )
+
+            notify_schedule_created(
+                client_user=client,
+                trainer_name=request.user.get_full_name() or request.user.username,
+                date_str=session_date,
+                time_str=session_time,
+            )
+            alert_schedule_session(
+                client_user=client,
+                trainer_name=request.user.get_full_name() or request.user.username,
+                date_str=session_date,
+                time_str=session_time,
+            )
+
             messages.success(request, "Session scheduled successfully!")
         except Exception as e:
             messages.error(request, f"Could not schedule session: {str(e)}")
 
         return redirect("schedule")
+
 
     schedules = Schedule.objects.filter(
         trainer=request.user
@@ -1328,7 +1510,15 @@ def settings(request):
             request.user.last_name = request.POST.get("last_name", "")
             request.user.email = request.POST.get("email", "")
             request.user.save()
-            messages.success(request, "Profile updated successfully.")
+
+            prof = get_profile(request.user)
+            prof.phone_number = request.POST.get("phone_number", "").strip()
+            prof.sms_alerts_enabled = request.POST.get("sms_alerts_enabled") in ["on", "true", "1"]
+            prof.whatsapp_alerts_enabled = request.POST.get("whatsapp_alerts_enabled") in ["on", "true", "1"]
+            prof.save()
+
+            messages.success(request, "Profile & Notification settings updated successfully.")
+
 
         elif action == "password":
             old_password = request.POST.get("old_password", "")
@@ -1422,10 +1612,21 @@ def my_clients(request):
     if blocked:
         return blocked
 
-    clients = Client.objects.filter(
+    clients_qs = Client.objects.filter(
         trainer=request.user
-    ).select_related("client")
+    ).select_related("client", "client__profile")
+
+    clients = []
+    for c in clients_qs:
+        phone = getattr(getattr(c.client, "profile", None), "phone_number", "")
+        c.whatsapp_link = AlertService.generate_whatsapp_web_link(
+            phone,
+            f"Hi {c.client.username}, this is Coach {request.user.get_full_name() or request.user.username} from FitMaster AI!"
+        )
+        clients.append(c)
+
     return render(request, "my_clients.html", {"clients": clients})
+
 
 
 # ─── ADD CLIENT (Trainer) ─────────────────────────────────────────────────────
@@ -1484,10 +1685,12 @@ def edit_user(request, user_id):
         edited_user.is_active = request.POST.get("is_active") == "on"
         edited_user.save()
 
+        profile.phone_number = request.POST.get("phone_number", "").strip()
         role = request.POST.get("role", profile.role)
         if role in ["admin", "customer", "trainer"]:
             profile.role = role
-            profile.save(update_fields=["role"])
+        profile.save()
+
 
         if role == "trainer":
             TrainerDetail.objects.update_or_create(
@@ -1560,11 +1763,26 @@ def admin_packages(request):
             messages.success(request, "Package deleted successfully.")
             return redirect("admin_packages")
 
+        name = sanitize_text(request.POST.get("name", ""))
+        if not name:
+            messages.error(request, "Package name is required.")
+            return redirect("admin_packages")
+
+        valid_dur, dur_val = validate_positive_number(request.POST.get("duration_months"), "Duration Months", min_val=1, max_val=120)
+        if not valid_dur:
+            messages.error(request, dur_val)
+            return redirect("admin_packages")
+
+        valid_pr, pr_val = validate_positive_number(request.POST.get("price"), "Price", min_val=1, max_val=1000000)
+        if not valid_pr:
+            messages.error(request, pr_val)
+            return redirect("admin_packages")
+
         defaults = {
-            "name": request.POST.get("name", ""),
-            "duration_months": request.POST.get("duration_months", 1),
-            "price": request.POST.get("price", 0),
-            "description": request.POST.get("description", ""),
+            "name": name,
+            "duration_months": int(dur_val),
+            "price": int(pr_val),
+            "description": sanitize_text(request.POST.get("description", "")),
             "is_active": request.POST.get("is_active") == "on",
         }
 
@@ -1579,6 +1797,7 @@ def admin_packages(request):
             messages.success(request, "Package created successfully.")
 
         return redirect("admin_packages")
+
 
     packages = Package.objects.all().order_by("duration_months")
     return render(request, "admin_packages.html", {"packages": packages})
@@ -1635,6 +1854,15 @@ def notices(request):
             recipient_role=request.POST.get("recipient_role", "all"),
         )
 
+        # In-App Broadcast Notification
+        broadcast_role_notification(
+            role=notice.recipient_role,
+            title=f"📢 Notice: {notice.subject}",
+            message=notice.message,
+            notification_type="notice",
+            link="/notifications/",
+        )
+
         users = User.objects.exclude(email="")
         if notice.recipient_role != "all":
             users = users.filter(profile__role=notice.recipient_role)
@@ -1645,8 +1873,9 @@ def notices(request):
             notice.email_sent = True
             notice.save(update_fields=["email_sent"])
 
-        messages.success(request, f"Notice sent to {len(recipients)} recipient(s).")
+        messages.success(request, f"Notice published & sent to {len(recipients)} recipient(s).")
         return redirect("notices")
+
 
     return render(request, "notices.html", {
         "notices": Notice.objects.order_by("-created_at"),
@@ -1671,11 +1900,21 @@ def admin_products(request):
             messages.success(request, "Product deleted successfully.")
             return redirect("admin_products")
 
+        name = sanitize_text(request.POST.get("name", ""))
+        if not name:
+            messages.error(request, "Product name is required.")
+            return redirect("admin_products")
+
+        valid_pr, pr_val = validate_positive_number(request.POST.get("price"), "Price", min_val=0.01, max_val=1000000)
+        if not valid_pr:
+            messages.error(request, pr_val)
+            return redirect("admin_products")
+
         data = {
-            "name": request.POST.get("name", ""),
-            "price": request.POST.get("price", 0),
-            "description": request.POST.get("description", ""),
-            "image": request.POST.get("image", ""),
+            "name": name,
+            "price": pr_val,
+            "description": sanitize_text(request.POST.get("description", "")),
+            "image": sanitize_text(request.POST.get("image", "")),
         }
 
         if product_id:
@@ -1689,6 +1928,7 @@ def admin_products(request):
             messages.success(request, "Product added successfully.")
 
         return redirect("admin_products")
+
 
     products = Product.objects.all().order_by("-id")
     return render(request, "admin_products.html", {"products": products})
@@ -1724,7 +1964,10 @@ def assign_trainer(request):
         else:
             Client.objects.create(trainer=trainer, client=customer, goal=goal)
             
-            # Notify Trainer
+            # Real In-App Notification to both Customer and Trainer
+            notify_trainer_assignment(client_user=customer, trainer_user=trainer)
+
+            # Notify Trainer via Email
             if trainer.email:
                 EmailService.send_notification(
                     subject=f"New Client Assignment: {customer.username}",
@@ -1734,7 +1977,7 @@ def assign_trainer(request):
                     notification_type="Assignment"
                 )
                 
-            # Notify Customer
+            # Notify Customer via Email
             if customer.email:
                 EmailService.send_notification(
                     subject=f"Trainer Assigned: {trainer.username}",
@@ -1748,6 +1991,7 @@ def assign_trainer(request):
                 request,
                 f"{customer.username} assigned to {trainer.username} successfully.",
             )
+
 
         return redirect("assign_trainer")
 
@@ -1895,5 +2139,104 @@ def platform_sync_api(request):
             "sync_interval_seconds": 30
         }
     })
+
+
+# ─── NOTIFICATIONS ────────────────────────────────────────────────────────────
+
+@login_required(login_url="login")
+def notifications_view(request):
+    filter_type = request.GET.get("type", "all")
+    filter_status = request.GET.get("status", "all")
+
+    qs = Notification.objects.filter(user=request.user)
+    if filter_type != "all":
+        qs = qs.filter(notification_type=filter_type)
+    if filter_status == "unread":
+        qs = qs.filter(is_read=False)
+    elif filter_status == "read":
+        qs = qs.filter(is_read=True)
+
+    notifications = qs.order_by("-created_at")
+    unread_count = Notification.objects.filter(user=request.user, is_read=False).count()
+    profile = get_profile(request.user)
+    base_template = "dashboard_base.html" if request.user.is_authenticated else "base.html"
+
+    return render(request, "notifications.html", {
+        "notifications": notifications,
+        "unread_count": unread_count,
+        "filter_type": filter_type,
+        "filter_status": filter_status,
+        "profile": profile,
+        "base_template": base_template,
+    })
+
+
+@login_required(login_url="login")
+def api_notifications(request):
+    notifications = Notification.objects.filter(user=request.user).order_by("-created_at")[:15]
+    unread_count = Notification.objects.filter(user=request.user, is_read=False).count()
+
+    data = []
+    for n in notifications:
+        data.append({
+            "id": n.id,
+            "title": n.title,
+            "message": n.message,
+            "type": n.notification_type,
+            "link": n.link,
+            "is_read": n.is_read,
+            "icon": n.icon,
+            "color": n.color_theme,
+            "created_at": n.created_at.strftime("%b %d, %H:%M"),
+        })
+
+    return JsonResponse({
+        "success": True,
+        "unread_count": unread_count,
+        "notifications": data,
+    })
+
+
+@csrf_exempt
+@login_required(login_url="login")
+def api_mark_notification_read(request, notification_id):
+    if request.method in ["POST", "GET"]:
+        notif = get_object_or_404(Notification, id=notification_id, user=request.user)
+        notif.is_read = True
+        notif.save(update_fields=["is_read"])
+        unread_count = Notification.objects.filter(user=request.user, is_read=False).count()
+        return JsonResponse({
+            "success": True,
+            "unread_count": unread_count,
+            "link": notif.link,
+        })
+    return JsonResponse({"success": False, "error": "Invalid request method"}, status=400)
+
+
+@csrf_exempt
+@login_required(login_url="login")
+def api_mark_all_read(request):
+    if request.method in ["POST", "GET"]:
+        Notification.objects.filter(user=request.user, is_read=False).update(is_read=True)
+        return JsonResponse({
+            "success": True,
+            "unread_count": 0,
+            "message": "All notifications marked as read.",
+        })
+    return JsonResponse({"success": False, "error": "Invalid request method"}, status=400)
+
+
+@csrf_exempt
+@login_required(login_url="login")
+def api_clear_notifications(request):
+    if request.method in ["POST", "GET"]:
+        Notification.objects.filter(user=request.user).delete()
+        return JsonResponse({
+            "success": True,
+            "unread_count": 0,
+            "message": "All notifications cleared.",
+        })
+    return JsonResponse({"success": False, "error": "Invalid request method"}, status=400)
+
 
 

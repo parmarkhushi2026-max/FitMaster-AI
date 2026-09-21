@@ -479,4 +479,16 @@ RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID", "rzp_test_FitMasterDemo123")
 RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET", "FitMasterSecretKeyDemo")
 RAZORPAY_CURRENCY = "INR"
 
+# =========================================================
+# SMS & WHATSAPP GATEWAY INTEGRATION (Twilio & Gupshup)
+# =========================================================
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "")
+TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER", "")
+TWILIO_WHATSAPP_NUMBER = os.getenv("TWILIO_WHATSAPP_NUMBER", "whatsapp:+14155238886")
+
+GUPSHUP_API_KEY = os.getenv("GUPSHUP_API_KEY", "")
+GUPSHUP_APP_NAME = os.getenv("GUPSHUP_APP_NAME", "")
+
+
 
