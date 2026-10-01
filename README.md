@@ -33,9 +33,9 @@
 
 ---
 
-### 3. 📑 Complete Engineering Architecture & Algorithmic Blueprint
-*System topology, Entity-Relationship schemas, Finite State Machine hysteresis, and DFD Level 0/1 specifications.*
-![FitMaster Architecture Documentation](docs/screenshots/08_architecture_docs.png)
+### 3. 💬 24/7 AI Kinetic Fitness & Nutrition Chatbot
+*Interactive conversational fitness advisor offering instant personalized workout regimes, macro targets, dietary breakdowns, and supplement guidance with quick-action suggestion chips.*
+![FitMaster AI Chatbot](docs/screenshots/08_ai_chatbot.png)
 
 ---
 
