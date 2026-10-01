@@ -1,17 +1,18 @@
-# ⚡ FitMaster — Next-Gen Fitness & Gym Management Platform
+# ⚡ FitMaster AI — Next-Gen AI Kinetic Fitness & Computer Vision Coaching Platform
 
 <p align="center">
-  <img src="static/images/fitmaster_logo.svg" alt="FitMaster Logo" width="180">
+  <img src="static/images/fitmaster_logo.svg" alt="FitMaster AI Logo" width="180">
 </p>
 
 <p align="center">
-  <b>An AI-powered, 3D interactive fitness ecosystem designed for athletes, personal trainers, and gym administrators.</b>
+  <b>An AI-powered, real-time computer vision fitness ecosystem designed for athletes, personal trainers, and gym administrators.</b>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/Django-5.1%2B-092E20?style=for-the-badge&logo=django&logoColor=white" alt="Django">
-  <img src="https://img.shields.io/badge/Three.js-3D%20Visualizer-black?style=for-the-badge&logo=three.js&logoColor=white" alt="Three.js">
+  <img src="https://img.shields.io/badge/Django-6.0-092E20?style=for-the-badge&logo=django&logoColor=white" alt="Django">
+  <img src="https://img.shields.io/badge/Computer_Vision-MediaPipe_Pose-0071E3?style=for-the-badge&logo=google&logoColor=white" alt="MediaPipe">
+  <img src="https://img.shields.io/badge/AI_Chatbot-Google_Gemini-8E75C4?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Gemini">
   <img src="https://img.shields.io/badge/Payment-Razorpay%20%2B%20UPI-00BAF2?style=for-the-badge&logo=razorpay&logoColor=white" alt="Razorpay">
   <img src="https://img.shields.io/badge/Status-Production%20Ready-brightgreen?style=for-the-badge" alt="Status">
 </p>
@@ -20,37 +21,43 @@
 
 ## 📸 Visual Previews & Screenshots
 
-### 1. 🌐 Landing Page & 3D Interactive Hero
-*Ultra-modern dark theme with Three.js particle dynamics, responsive navigation, and dynamic counters.*
-![FitMaster Landing Page](docs/screenshots/01_homepage.png)
+### 1. 🌐 Landing Page & Fullscreen Cinematic Video Hero
+*Industrial Eleiko steel dark theme with autoplaying athletic workout video background, laser scanner, and live AI vision access.*
+![FitMaster AI Landing Page](docs/screenshots/01_homepage.png)
 
 ---
 
-### 2. 🏋️‍♂️ Dynamic Workout & Training Programs
+### 2. 🤖 Live AI Vision Pose Coach & Real-Time Rep Counter
+*Client-side Google MediaPipe neural network tracking 33 skeletal body landmarks, validating joint angles (Squats, Curls, Pushups), and announcing live coaching audio cues.*
+![FitMaster AI Vision Coach](docs/screenshots/07_ai_coach.png)
+
+---
+
+### 3. 📑 Complete Engineering Architecture & Algorithmic Blueprint
+*System topology, Entity-Relationship schemas, Finite State Machine hysteresis, and DFD Level 0/1 specifications.*
+![FitMaster Architecture Documentation](docs/screenshots/08_architecture_docs.png)
+
+---
+
+### 4. 🏋️‍♂️ Dynamic Workout & Training Programs
 *Comprehensive catalog of Strength, Cardio, CrossFit, and Yoga programs with animated interactions.*
 ![FitMaster Programs](docs/screenshots/02_programs.png)
 
 ---
 
-### 3. 💳 Membership Tiers & Razorpay / UPI Gateway
-*Flexible starter, pro, and elite memberships integrated with Razorpay Checkout, BHIM UPI QR scan, and instant invoice generation.*
+### 5. 💳 Membership Tiers & Global Multi-Currency
+*Flexible starter, pro, and elite memberships integrated with 7-country currency switcher (INR, USD, EUR, GBP, AED, CAD, AUD) and instant invoicing.*
 ![FitMaster Memberships](docs/screenshots/03_memberships.png)
 
 ---
 
-### 4. 📞 Live 24/7 Support & Contact Center
-*Interactive contact system featuring instant WhatsApp chat (`wa.me`), one-click call (`tel:`), email support, and Google Maps GPS navigation.*
-![FitMaster Contact Support](docs/screenshots/04_contact_support.png)
-
----
-
-### 5. 📊 Admin Command Center (Live Platform Synchronization)
+### 6. 📊 Admin Command Center (Live Platform Synchronization)
 *Executive analytics dashboard featuring real-time financial tracking, member management, package control, and live sync engine.*
 ![FitMaster Admin Dashboard](docs/screenshots/05_admin_dashboard.png)
 
 ---
 
-### 6. 🏃 Athlete & Member Dashboard
+### 7. 🏃 Athlete & Member Dashboard
 *Personalized progress metrics, assigned personal trainer routines, BMI tracking, nutrition plans, and workout logs.*
 ![FitMaster Member Dashboard](docs/screenshots/06_customer_dashboard.png)
 
