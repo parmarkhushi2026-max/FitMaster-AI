@@ -252,11 +252,109 @@
 
 .currency-toggle-btn {
     color: #30d158;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .lang-currency-divider {
     color: rgba(255, 255, 255, 0.25);
     font-size: 11px;
+}
+
+/* Currency Dropdown Menu */
+.currency-dropdown-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.currency-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: -10px;
+    min-width: 220px;
+    background: #121824;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.2);
+    padding: 6px;
+    z-index: 100000;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    animation: dropSlide 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.currency-dropdown-menu.show {
+    display: flex;
+}
+
+@keyframes dropSlide {
+    from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.currency-dropdown-header {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    padding: 6px 10px 4px;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 4px;
+}
+
+.currency-opt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: #f1f5f2;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: all 0.15s ease;
+    font-family: inherit;
+}
+
+.currency-opt:hover {
+    background: rgba(48, 209, 88, 0.15);
+    color: #30d158;
+}
+
+.currency-opt.active {
+    background: rgba(48, 209, 88, 0.2);
+    color: #30d158;
+    font-weight: 700;
+}
+
+.currency-opt-flag {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.currency-opt-name {
+    flex: 1;
+    font-size: 12px;
+}
+
+.currency-opt-curr {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 700;
+}
+
+.currency-opt.active .currency-opt-curr {
+    color: #30d158;
 }
 
 /* ─── LIGHT MODE NAVBAR REFINEMENTS ─── */
@@ -276,11 +374,44 @@
 }
 
 [data-theme="light"] .currency-toggle-btn {
-    color: #30d158;
+    color: #16a34a;
 }
 
 [data-theme="light"] .lang-currency-divider {
     color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .currency-dropdown-menu {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .currency-dropdown-header {
+    color: #64748b;
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .currency-opt {
+    color: #0f172a;
+}
+
+[data-theme="light"] .currency-opt:hover {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+[data-theme="light"] .currency-opt.active {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+[data-theme="light"] .currency-opt-curr {
+    color: #64748b;
+}
+
+[data-theme="light"] .currency-opt.active .currency-opt-curr {
+    color: #15803d;
 }
 
 [data-theme="light"] .nav-links a {
@@ -569,3 +700,41 @@
     background: #0071e3;
     color: #fff;
 }
+
+/* AI Vision Coach Nav Link & Neon Glow Badge */
+.nav-ai-coach-link {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 5px;
+    font-weight: 700 !important;
+}
+
+.nav-badge-neon {
+    display: inline-block;
+    padding: 1px 6px;
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: #30d158;
+    background: rgba(48, 209, 88, 0.15);
+    border: 1px solid rgba(48, 209, 88, 0.4);
+    border-radius: 6px;
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: neonBadgePulse 2s infinite ease-in-out;
+}
+
+[data-theme="light"] .nav-badge-neon {
+    background: rgba(21, 128, 61, 0.12);
+    border-color: #15803d;
+    color: #15803d;
+}
+
+@keyframes neonBadgePulse {
+    0%, 100% {
+        box-shadow: 0 0 4px rgba(48, 209, 88, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 10px rgba(48, 209, 88, 0.6);
+    }
+}

@@ -1,14 +1,15 @@
 /**
- * FitMaster — Universal Chatbot Controller
- * Handles real-time intelligent conversations across all pages
+ * FitMaster AI — Interactive Chatbot Controller
+ * Full-featured fitness assistant with quick-chips, smart markdown rendering & session memory.
  */
 
-(function() {
+(function () {
     'use strict';
 
     function initChatbot() {
         const toggleBtn = document.getElementById('chatbot-toggle-btn');
         const closeBtn = document.getElementById('chatbot-close-btn');
+        const clearBtn = document.getElementById('chatbot-clear-btn');
         const chatWindow = document.getElementById('chatbot-window');
         const input = document.getElementById('chatbot-input');
         const sendBtn = document.getElementById('chatbot-send-btn');
@@ -22,27 +23,40 @@
         if (toggleBtn.dataset.initialized === 'true') return;
         toggleBtn.dataset.initialized = 'true';
 
-        function toggleChat() {
-            const isOpen = chatWindow.style.display === 'flex';
-            if (isOpen) {
-                chatWindow.style.display = 'none';
-                toggleBtn.setAttribute('aria-expanded', 'false');
-            } else {
+        const iconClosed = toggleBtn.querySelector('.chatbot-icon-closed');
+        const iconOpen = toggleBtn.querySelector('.chatbot-icon-open');
+
+        function toggleChat(forceOpen) {
+            const isCurrentlyOpen = chatWindow.style.display === 'flex';
+            const shouldOpen = forceOpen !== undefined ? forceOpen : !isCurrentlyOpen;
+
+            if (shouldOpen) {
                 chatWindow.style.display = 'flex';
                 toggleBtn.setAttribute('aria-expanded', 'true');
-                setTimeout(() => input.focus(), 50);
+                if (iconClosed) iconClosed.style.display = 'none';
+                if (iconOpen) iconOpen.style.display = 'inline-block';
+                setTimeout(() => {
+                    input.focus();
+                    messagesBox.scrollTop = messagesBox.scrollHeight;
+                }, 100);
+            } else {
+                chatWindow.style.display = 'none';
+                toggleBtn.setAttribute('aria-expanded', 'false');
+                if (iconClosed) iconClosed.style.display = 'inline-block';
+                if (iconOpen) iconOpen.style.display = 'none';
             }
         }
 
         function formatMessageText(text) {
             if (!text) return '';
-            // Basic markdown formatting: bold **text**, italics *text*, bullet points
             let formatted = text
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/\n\n/g, '<br><br>')
                 .replace(/\n/g, '<br>');
             return formatted;
         }
@@ -81,12 +95,14 @@
             return match ? match[1] : '';
         }
 
-        async function sendMessage() {
-            const text = input.value.trim();
+        async function sendMessage(textToSend) {
+            const text = (textToSend || input.value).trim();
             if (!text) return;
 
             addMessage(text, 'user');
-            input.value = '';
+            if (!textToSend) {
+                input.value = '';
+            }
             addTypingIndicator();
 
             try {
@@ -107,55 +123,79 @@
                 } else if (data && data.error) {
                     addMessage('⚠️ ' + data.error, 'bot');
                 } else {
-                    addMessage('Received empty response from assistant.', 'bot');
+                    addMessage('I received an empty response. Please try rephrasing.', 'bot');
                 }
             } catch (err) {
                 removeTypingIndicator();
-                addMessage("I'm having a brief sync issue. Please ask again in a moment.", 'bot');
+                addMessage("⚡ I'm having a brief sync issue. Please try again in a moment.", 'bot');
                 console.error('FitMaster Chatbot Error:', err);
             }
         }
 
-        // Event listeners
-        toggleBtn.addEventListener('click', function(e) {
+        // Handle Quick Chips clicks
+        messagesBox.addEventListener('click', function (e) {
+            const chip = e.target.closest('.quick-chip');
+            if (chip) {
+                const query = chip.getAttribute('data-query') || chip.textContent.trim();
+                sendMessage(query);
+            }
+        });
+
+        // Toggle button
+        toggleBtn.addEventListener('click', function (e) {
             e.stopPropagation();
             toggleChat();
         });
 
+        // Close button
         if (closeBtn) {
-            closeBtn.addEventListener('click', function(e) {
+            closeBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
-                toggleChat();
+                toggleChat(false);
             });
         }
 
-        sendBtn.addEventListener('click', function(e) {
+        // Clear chat button
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const welcomeMsg = messagesBox.querySelector('.welcome-msg');
+                messagesBox.innerHTML = '';
+                if (welcomeMsg) {
+                    messagesBox.appendChild(welcomeMsg.cloneNode(true));
+                } else {
+                    addMessage("👋 Chat history cleared! How can I help you with your workouts or diet today?", "bot");
+                }
+            });
+        }
+
+        // Send button
+        sendBtn.addEventListener('click', function (e) {
             e.preventDefault();
             sendMessage();
         });
 
-        input.addEventListener('keypress', function(e) {
+        // Enter key to send
+        input.addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 sendMessage();
             }
         });
 
-        // Close when clicking outside on mobile/desktop
-        document.addEventListener('click', function(e) {
+        // Close on clicking outside
+        document.addEventListener('click', function (e) {
             if (chatWindow.style.display === 'flex' &&
                 !chatWindow.contains(e.target) &&
                 !toggleBtn.contains(e.target)) {
-                chatWindow.style.display = 'none';
-                toggleBtn.setAttribute('aria-expanded', 'false');
+                toggleChat(false);
             }
         });
 
         // Escape key to close
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && chatWindow.style.display === 'flex') {
-                chatWindow.style.display = 'none';
-                toggleBtn.setAttribute('aria-expanded', 'false');
+                toggleChat(false);
             }
         });
     }

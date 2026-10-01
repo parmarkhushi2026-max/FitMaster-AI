@@ -1,1 +1,68 @@
-{# Chatbot widget removed as per user request #}
+{% load static %}
+<!-- ================= FITMASTER AI CHATBOT WIDGET ================= -->
+<div id="fitmaster-chatbot" class="fitmaster-chatbot-container" aria-label="FitMaster AI Assistant">
+    <!-- Chatbot Floating Launcher Button -->
+    <button id="chatbot-toggle-btn" class="chatbot-toggle-btn" aria-label="Open FitMaster AI Assistant" aria-expanded="false" title="Chat with FitMaster AI Coach">
+        <span class="chatbot-pulse-ring"></span>
+        <span class="chatbot-icon-closed">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </span>
+        <span class="chatbot-icon-open" style="display:none;">
+            <i class="fa-solid fa-xmark"></i>
+        </span>
+        <span class="chatbot-badge-text">AI Coach</span>
+    </button>
+
+    <!-- Chatbot Window -->
+    <div id="chatbot-window" class="chatbot-window" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="chatbot-title">
+        <!-- Header -->
+        <div class="chatbot-header">
+            <div class="chatbot-header-info">
+                <div class="chatbot-avatar">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="chatbot-header-text">
+                    <h4 id="chatbot-title">FitMaster AI</h4>
+                    <span class="chatbot-online-indicator">
+                        <span class="status-pulse-dot"></span> 24/7 Kinetic Coach
+                    </span>
+                </div>
+            </div>
+            <div class="chatbot-header-actions">
+                <button type="button" id="chatbot-clear-btn" class="chatbot-action-btn" title="Clear Chat" aria-label="Clear chat">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+                <button type="button" id="chatbot-close-btn" class="chatbot-close-btn" title="Close" aria-label="Close chat">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Messages Box -->
+        <div id="chatbot-messages" class="chatbot-messages" aria-live="polite">
+            <div class="chat-message bot welcome-msg">
+                <div class="msg-bubble">
+                    <strong>👋 Hello {% if request.user.is_authenticated %}{{ request.user.first_name|default:request.user.username }}{% else %}Athlete{% endif %}!</strong><br>
+                    I am <strong>FitMaster AI</strong>, your personal kinetic training & nutrition coach. What goal are we crushing today?
+                    
+                    <div class="chatbot-quick-chips">
+                        <button type="button" class="quick-chip" data-query="Chest workout protocol">💪 Chest Workout</button>
+                        <button type="button" class="quick-chip" data-query="Best diet for fat loss">🥗 Fat Loss Diet</button>
+                        <button type="button" class="quick-chip" data-query="Arm and Biceps hypertrophy">⚡ Arm Growth</button>
+                        <button type="button" class="quick-chip" data-query="High protein vegetarian sources">🌱 Veg Protein</button>
+                        <button type="button" class="quick-chip" data-query="Creatine and supplement guide">💊 Supplements</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chatbot-input-area">
+            {% csrf_token %}
+            <input type="text" id="chatbot-input" placeholder="Ask about workouts, diet, macros..." autocomplete="off" aria-label="Chatbot message input">
+            <button type="button" id="chatbot-send-btn" class="chatbot-send-btn" title="Send" aria-label="Send message">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+</div>

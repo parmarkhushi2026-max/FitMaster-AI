@@ -38,12 +38,13 @@
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{% static 'css/theme.css' %}?v=11">
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}?v=11">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}?v=12">
     <link rel="stylesheet" href="{% static 'css/home.css' %}?v=11">
     <link rel="stylesheet" href="{% static 'css/membership.css' %}?v=11">
     <link rel="stylesheet" href="{% static 'css/auth.css' %}?v=11">
     <link rel="stylesheet" href="{% static 'css/theme_toggle.css' %}?v=11">
     <link rel="stylesheet" href="{% static 'css/animations.css' %}?v=11">
+    <link rel="stylesheet" href="{% static 'css/chatbot.css' %}?v=12">
 
     {% block extra_css %}
     {% endblock %}
@@ -66,7 +67,7 @@
                 <div class="brand-icon-emblem">
                     <img src="{% static 'images/fitmaster_logo.svg' %}" alt="FitMaster" style="width:30px;height:30px;display:block;">
                 </div>
-                <span class="brand-text-main">FitMaster</span>
+                <span class="brand-text-main">FitMaster <span style="color:#0071e3;font-weight:900;">AI</span></span>
             </a>
         </div>
 
@@ -91,6 +92,11 @@
         <!-- Menu -->
         <ul class="nav-links" id="navLinks">
             <li><a href="{% url 'home' %}">Home</a></li>
+            <li>
+                <a href="{% url 'ai_coach' %}" class="nav-ai-coach-link">
+                    <i class="fa-solid fa-bolt" style="color: #30d158; font-size: 11px;"></i> AI Coach <span class="nav-badge-neon">VISION</span>
+                </a>
+            </li>
             <li><a href="{% url 'features' %}">Features</a></li>
             <li><a href="{% url 'programs' %}">Programs</a></li>
             <li><a href="{% url 'trainers' %}">Trainers</a></li>
@@ -106,10 +112,51 @@
                     <span id="currentLangLabel">🇬🇧 EN</span>
                 </button>
                 <span class="lang-currency-divider">|</span>
-                <!-- Country / Region & Currency Selector (US 🇺🇸 / IN 🇮🇳 / UK 🇬🇧 / UAE 🇦🇪) -->
-                <button type="button" class="currency-toggle-btn" onclick="window.FitMasterCurrency.cycleCountry()" title="Select Country & Currency (US 🇺🇸, India 🇮🇳, UK 🇬🇧, UAE 🇦🇪)">
-                    <span id="currentCurrencyLabel">🇺🇸 US ($)</span>
-                </button>
+                <!-- Country / Region & Currency Selector Dropdown -->
+                <div class="currency-dropdown-wrap" id="currencyDropdownWrap">
+                    <button type="button" class="currency-toggle-btn" id="currencyToggleBtn" aria-haspopup="true" aria-expanded="false" title="Click to choose Country & Currency">
+                        <span id="currentCurrencyLabel">🇮🇳 IN (₹)</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 8px; margin-left: 2px; opacity: 0.8;"></i>
+                    </button>
+                    <div class="currency-dropdown-menu" id="currencyDropdownMenu" role="menu">
+                        <div class="currency-dropdown-header">Select Country & Currency</div>
+                        <button type="button" class="currency-opt" data-country="IN">
+                            <span class="currency-opt-flag">🇮🇳</span>
+                            <span class="currency-opt-name">India</span>
+                            <span class="currency-opt-curr">₹ INR</span>
+                        </button>
+                        <button type="button" class="currency-opt" data-country="US">
+                            <span class="currency-opt-flag">🇺🇸</span>
+                            <span class="currency-opt-name">United States</span>
+                            <span class="currency-opt-curr">$ USD</span>
+                        </button>
+                        <button type="button" class="currency-opt" data-country="UK">
+                            <span class="currency-opt-flag">🇬🇧</span>
+                            <span class="currency-opt-name">United Kingdom</span>
+                            <span class="currency-opt-curr">£ GBP</span>
+                        </button>
+                        <button type="button" class="currency-opt" data-country="UAE">
+                            <span class="currency-opt-flag">🇦🇪</span>
+                            <span class="currency-opt-name">UAE</span>
+                            <span class="currency-opt-curr">AED</span>
+                        </button>
+                        <button type="button" class="currency-opt" data-country="EU">
+                            <span class="currency-opt-flag">🇪🇺</span>
+                            <span class="currency-opt-name">Europe</span>
+                            <span class="currency-opt-curr">€ EUR</span>
+                        </button>
+                        <button type="button" class="currency-opt" data-country="CA">
+                            <span class="currency-opt-flag">🇨🇦</span>
+                            <span class="currency-opt-name">Canada</span>
+                            <span class="currency-opt-curr">C$ CAD</span>
+                        </button>
+                        <button type="button" class="currency-opt" data-country="AU">
+                            <span class="currency-opt-flag">🇦🇺</span>
+                            <span class="currency-opt-name">Australia</span>
+                            <span class="currency-opt-curr">A$ AUD</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- ☀️🌙 Theme Toggle Button -->
@@ -153,7 +200,7 @@
                     <div class="brand-icon-emblem">
                         <i class="fa-solid fa-dumbbell"></i>
                     </div>
-                    <span class="brand-text-main">FitMaster</span>
+                    <span class="brand-text-main">FitMaster <span style="color:#0071e3;font-weight:900;">AI</span></span>
                 </a>
             </div>
             <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
@@ -163,12 +210,70 @@
         <nav class="mobile-nav">
             <ul class="mobile-nav-links">
                 <li><a href="{% url 'home' %}"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="{% url 'ai_coach' %}" style="color: #30d158; font-weight: 700;"><i class="fa-solid fa-bolt"></i> AI Vision Coach <span class="nav-badge-neon" style="font-size: 9px; padding: 2px 6px;">NEW</span></a></li>
                 <li><a href="{% url 'features' %}"><i class="fa-solid fa-star"></i> Features</a></li>
                 <li><a href="{% url 'programs' %}"><i class="fa-solid fa-dumbbell"></i> Programs</a></li>
                 <li><a href="{% url 'trainers' %}"><i class="fa-solid fa-user-tie"></i> Trainers</a></li>
                 <li><a href="{% url 'contact' %}"><i class="fa-solid fa-envelope"></i> Contact</a></li>
             </ul>
         </nav>
+        <!-- Mobile Region & Currency Selector -->
+        <div style="padding: 12px 18px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--text-muted, #94a3b8);">Country & Currency:</span>
+            <div class="currency-dropdown-wrap">
+                <button type="button" class="currency-toggle-btn" aria-haspopup="true" aria-expanded="false" style="padding: 5px 12px; border-radius: 14px; background: rgba(255,255,255,0.08); font-size: 12px;">
+                    <span class="currentCurrencyLabel">🇮🇳 IN (₹)</span>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 8px;"></i>
+                </button>
+                <div class="currency-dropdown-menu" role="menu">
+                    <div class="currency-dropdown-header">Select Country & Currency</div>
+                    <button type="button" class="currency-opt" data-country="IN">
+                        <span class="currency-opt-flag">🇮🇳</span>
+                        <span class="currency-opt-name">India</span>
+                        <span class="currency-opt-curr">₹ INR</span>
+                    </button>
+                    <button type="button" class="currency-opt" data-country="US">
+                        <span class="currency-opt-flag">🇺🇸</span>
+                        <span class="currency-opt-name">United States</span>
+                        <span class="currency-opt-curr">$ USD</span>
+                    </button>
+                    <button type="button" class="currency-opt" data-country="UK">
+                        <span class="currency-opt-flag">🇬🇧</span>
+                        <span class="currency-opt-name">United Kingdom</span>
+                        <span class="currency-opt-curr">£ GBP</span>
+                    </button>
+                    <button type="button" class="currency-opt" data-country="UAE">
+                        <span class="currency-opt-flag">🇦🇪</span>
+                        <span class="currency-opt-name">UAE</span>
+                        <span class="currency-opt-curr">AED</span>
+                    </button>
+                    <button type="button" class="currency-opt" data-country="EU">
+                        <span class="currency-opt-flag">🇪🇺</span>
+                        <span class="currency-opt-name">Europe</span>
+                        <span class="currency-opt-curr">€ EUR</span>
+                    </button>
+                    <button type="button" class="currency-opt" data-country="CA">
+                        <span class="currency-opt-flag">🇨🇦</span>
+                        <span class="currency-opt-name">Canada</span>
+                        <span class="currency-opt-curr">C$ CAD</span>
+                    </button>
+                    <button type="button" class="currency-opt" data-country="AU">
+                        <span class="currency-opt-flag">🇦🇺</span>
+                        <span class="currency-opt-name">Australia</span>
+                        <span class="currency-opt-curr">A$ AUD</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Language Toggle -->
+        <div style="padding: 10px 18px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--text-muted, #94a3b8);">Language / भाषा:</span>
+            <button type="button" class="lang-toggle-btn" onclick="window.FitMasterI18n.setLanguage(window.FitMasterI18n.currentLang === 'en' ? 'hi' : 'en')" style="padding: 5px 12px; border-radius: 14px; background: rgba(255,255,255,0.08); font-size: 12px; font-weight: 700;">
+                <span class="currentLangLabel">🇬🇧 EN</span>
+            </button>
+        </div>
+
         <div class="mobile-menu-actions">
             {% if user.is_authenticated %}
                 <div style="display: flex; justify-content: center; margin-bottom: 16px;">
@@ -223,7 +328,7 @@ setTimeout(() => {
             <!-- Col 1: Brand & Socials -->
             <div class="footer-col">
                 <div class="footer-brand">
-                    💪 FitMaster
+                    💪 FitMaster <span style="color:#0071e3;font-weight:900;">AI</span>
                 </div>
                 <p class="footer-bio">
                     Empowering your strength, health, and physique transformation with certified personal trainers and personalized workout plans.
@@ -276,7 +381,7 @@ setTimeout(() => {
         <!-- Footer Bottom Bar -->
         <div class="footer-bottom">
             <p class="footer-bottom-copy">
-                © 2026 FitMaster | Fitness Platform. All Rights Reserved.
+                © 2026 FitMaster AI | Fitness Platform. All Rights Reserved.
             </p>
             <ul class="footer-bottom-links">
                 <li><a href="{% url 'contact' %}">Privacy Policy</a></li>
@@ -380,7 +485,11 @@ setTimeout(() => {
 <!-- Global Kinetic Animations Script -->
 <script src="{% static 'js/animations.js' %}"></script>
 <!-- FitMaster Internationalization, Multi-Currency, Microsoft AI Voice & Cursor Engine -->
-<script src="{% static 'js/i18n_currency_voice.js' %}?v=2"></script>
+<script src="{% static 'js/i18n_currency_voice.js' %}?v=3"></script>
+
+<!-- FitMaster AI Chatbot Widget -->
+{% include 'includes/chatbot.html' %}
+<script src="{% static 'js/chatbot.js' %}?v=12"></script>
 
 </body>
 

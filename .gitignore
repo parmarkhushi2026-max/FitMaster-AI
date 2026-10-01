@@ -37,3 +37,7 @@ Thumbs.db
 
 # Submodules / third-party tools
 gemini-web2api/
+
+# Archives
+*.zip
+

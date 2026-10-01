@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Live AI Vision Pose Coach & Rep Counter | FitMaster AI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/ai_coach.css' %}?v=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="ai-coach-page">
+    <div class="coach-container">
+
+        <!-- Header -->
+        <header class="coach-header">
+            <div class="coach-eyebrow">
+                <span class="pulse-dot"></span>
+                <span>FitMaster Kinetic Computer Vision Engine</span>
+            </div>
+            <h1 class="coach-title">Live AI Vision Pose Coach & Rep Counter</h1>
+            <p class="coach-desc">
+                Step in front of your camera. Our client-side neural network tracks your skeletal joints in real-time, validates biomechanical posture angles, counts clean reps, and announces live kinetic coaching audio.
+            </p>
+        </header>
+
+        <!-- Exercise Selector Pills -->
+        <div class="exercise-selector-bar">
+            <button type="button" class="exercise-pill active" data-exercise="squats">
+                <i class="fa-solid fa-person-running"></i>
+                <span>Squats</span>
+                <span class="pill-target">Legs & Glutes</span>
+            </button>
+            <button type="button" class="exercise-pill" data-exercise="curls">
+                <i class="fa-solid fa-dumbbell"></i>
+                <span>Bicep Curls</span>
+                <span class="pill-target">Arms & Biceps</span>
+            </button>
+            <button type="button" class="exercise-pill" data-exercise="pushups">
+                <i class="fa-solid fa-hands-pushing"></i>
+                <span>Push-Ups</span>
+                <span class="pill-target">Chest & Triceps</span>
+            </button>
+            <button type="button" class="exercise-pill" data-exercise="jacks">
+                <i class="fa-solid fa-bolt"></i>
+                <span>Jumping Jacks</span>
+                <span class="pill-target">Cardio & HIIT</span>
+            </button>
+        </div>
+
+        <!-- Main Interactive Arena -->
+        <div class="coach-arena">
+
+            <!-- Left: Vision Camera Viewport Card -->
+            <div class="viewport-card">
+
+                <div class="viewport-media-wrap">
+                    <!-- Top HUD Badges & Action Buttons -->
+                    <div class="viewport-overlay-top">
+                        <div class="viewport-badge" id="viewportLiveBadge">
+                            <span class="pulse-dot"></span> CAMERA OFF
+                        </div>
+                        <div class="viewport-controls-top">
+                            <button type="button" class="vp-btn" id="btnToggleMirror" title="Toggle Mirror Cam">
+                                <i class="fa-solid fa-arrows-left-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Video Feed -->
+                    <video id="coachVideo" autoplay playsinline muted></video>
+
+                    <!-- Real-time Skeleton Overlay Canvas -->
+                    <canvas id="coachCanvas"></canvas>
+
+                    <!-- Camera Placeholder when inactive -->
+                    <div class="camera-placeholder-overlay" id="camPlaceholder">
+                        <div class="cam-icon-glow">
+                            <i class="fa-solid fa-camera"></i>
+                        </div>
+                        <div class="cam-placeholder-title">AI Vision Ready for Athlete</div>
+                        <p class="cam-placeholder-sub">
+                            Position yourself so your body is clearly visible in the camera frame. Or click <strong>Try Demo Mode</strong> to test the biomechanical AI counter instantly!
+                        </p>
+                        <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+                            <button type="button" class="btn-coach-start" onclick="document.getElementById('btnStartCoach').click()">
+                                <i class="fa-solid fa-video"></i> Start Camera
+                            </button>
+                            <button type="button" class="btn-coach-demo" onclick="document.getElementById('btnDemoMode').click()">
+                                <i class="fa-solid fa-play"></i> Try Demo Simulation
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Live Posture Guidance Banner -->
+                    <div class="viewport-feedback-banner" id="feedbackBanner">
+                        <div class="feedback-left">
+                            <div class="feedback-icon">
+                                <i class="fa-solid fa-wave-square"></i>
+                            </div>
+                            <div class="feedback-content">
+                                <h4 id="feedbackTitle">Stand in Frame</h4>
+                                <p id="feedbackDesc">Ready to begin tracking your reps.</p>
+                            </div>
+                        </div>
+                        <div class="feedback-state-badge up" id="feedbackBadge">Ready</div>
+                    </div>
+                </div>
+
+                <!-- Bottom Action Controls -->
+                <div class="viewport-action-bar">
+                    <div class="coach-main-btns">
+                        <button type="button" class="btn-coach-start" id="btnStartCoach">
+                            <i class="fa-solid fa-camera"></i> Start Camera
+                        </button>
+                        <button type="button" class="btn-coach-demo" id="btnDemoMode">
+                            <i class="fa-solid fa-play"></i> Try Demo Mode
+                        </button>
+                    </div>
+
+                    <div style="display:flex; gap:8px;">
+                        <button type="button" class="btn-coach-reset" id="btnResetCoach" title="Reset Session Reps">
+                            <i class="fa-solid fa-arrow-rotate-left"></i> Reset
+                        </button>
+                        <button type="button" class="btn-coach-demo" id="btnFinishWorkout" style="background: rgba(48,209,88,0.15); border-color: rgba(48,209,88,0.4); color: #30d158;">
+                            <i class="fa-solid fa-trophy"></i> Finish
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right: Kinetic HUD Telemetry Dashboard -->
+            <aside class="hud-panel">
+
+                <!-- Big Rep Counter -->
+                <div class="hud-card-rep">
+                    <div class="rep-label">KINETIC REPS COMPLETED</div>
+                    <div class="rep-display-wrap">
+                        <div class="rep-number" id="repNumDisplay">0</div>
+                    </div>
+                    <div class="rep-target-note">Target: 15 Clean Reps</div>
+
+                    <div class="rep-progress-track">
+                        <div class="rep-progress-fill" id="repProgressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Biometrics 4-Grid -->
+                <div class="hud-metrics-grid">
+                    <!-- Joint Angle -->
+                    <div class="hud-metric-card">
+                        <div class="metric-header">
+                            <span id="angleJointName">Knee Angle</span>
+                            <i class="fa-solid fa-compass-drafting color-angle"></i>
+                        </div>
+                        <div class="metric-value" id="currentAngleDisplay">180°</div>
+                        <div class="metric-sub">Depth Target: &lt;95°</div>
+                    </div>
+
+                    <!-- Calories Burned -->
+                    <div class="hud-metric-card">
+                        <div class="metric-header">
+                            <span>Calories</span>
+                            <i class="fa-solid fa-fire color-cal"></i>
+                        </div>
+                        <div class="metric-value" id="caloriesVal">0.0</div>
+                        <div class="metric-sub">Active Burn (kcal)</div>
+                    </div>
+
+                    <!-- Workout Time -->
+                    <div class="hud-metric-card">
+                        <div class="metric-header">
+                            <span>Elapsed</span>
+                            <i class="fa-solid fa-stopwatch color-time"></i>
+                        </div>
+                        <div class="metric-value" id="timeVal">00:00</div>
+                        <div class="metric-sub">Active Session</div>
+                    </div>
+
+                    <!-- Form Accuracy -->
+                    <div class="hud-metric-card">
+                        <div class="metric-header">
+                            <span>Form Score</span>
+                            <i class="fa-solid fa-shield-halved color-form"></i>
+                        </div>
+                        <div class="metric-value" id="formScoreVal">100%</div>
+                        <div class="metric-sub">Biomechanical Grade</div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Joint Angle Visual Meter -->
+                <div class="angle-meter-card">
+                    <div class="angle-meter-title">
+                        <span>Range of Motion (ROM)</span>
+                        <span style="color:var(--coach-primary); font-size:11.5px; font-weight:700;">Green = Optimal</span>
+                    </div>
+                    <div class="angle-bar-wrap">
+                        <div class="angle-bar-fill" id="angleBarFill" style="width: 100%;"></div>
+                    </div>
+                    <div class="angle-markers">
+                        <span>0° (Full Flex)</span>
+                        <span>90° (Parallel)</span>
+                        <span>180° (Lockout)</span>
+                    </div>
+                </div>
+
+                <!-- Voice & Sound Engine Toggles -->
+                <div class="coach-settings-card">
+                    <div class="setting-row">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <i class="fa-solid fa-bullhorn" style="color:#0071e3;"></i>
+                            <span>AI Voice Coach Callouts</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggleVoice" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <i class="fa-solid fa-bell" style="color:#30d158;"></i>
+                            <span>Kinetic Audio Rep Chimes</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggleSound" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Kinetic Form Advice Card -->
+                <div style="background:var(--coach-surface); border:1px solid var(--coach-border); border-radius:18px; padding:16px 18px; font-size:12.5px; line-height:1.55; color:var(--coach-text-muted);">
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px; color:var(--coach-text); font-weight:800; font-size:13px;">
+                        <i class="fa-solid fa-lightbulb" style="color:#ff9f0a;"></i> Biomechanical Coaching Tips
+                    </div>
+                    <div>
+                        • Maintain a 6 to 8 foot distance from your webcam.<br>
+                        • Ensure good lighting so your joints and limbs are clearly outlined.<br>
+                        • Achieve full range of motion on each repetition for accurate counting.
+                    </div>
+                </div>
+
+            </aside>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= WORKOUT SUMMARY MODAL ================= -->
+<div class="workout-modal-overlay" id="workoutSummaryModal">
+    <div class="workout-modal-card">
+        <div class="modal-trophy">
+            <i class="fa-solid fa-trophy"></i>
+        </div>
+        <h3 class="modal-title">Workout Crushed!</h3>
+        <p class="modal-sub">Incredible kinetic intensity. Here is your session telemetry:</p>
+
+        <div class="modal-stats-grid">
+            <div class="modal-stat-box">
+                <div class="modal-stat-val" id="modalTotalReps">0</div>
+                <div class="modal-stat-lbl">Total Reps</div>
+            </div>
+            <div class="modal-stat-box">
+                <div class="modal-stat-val" id="modalTotalKcal">0.0</div>
+                <div class="modal-stat-lbl">Calories (kcal)</div>
+            </div>
+            <div class="modal-stat-box">
+                <div class="modal-stat-val" id="modalTotalTime">00:00</div>
+                <div class="modal-stat-lbl">Total Time</div>
+            </div>
+        </div>
+
+        <div class="modal-btns">
+            <button type="button" class="btn-modal-primary" onclick="closeWorkoutModal()">
+                <i class="fa-solid fa-check"></i> Great Job!
+            </button>
+            <a href="{% url 'programs' %}" class="btn-modal-close" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
+                Explore Programs
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Google MediaPipe Pose CDN Scripts with Fallback -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+
+<!-- FitMaster AI Coach Controller -->
+<script src="{% static 'js/ai_coach.js' %}?v=1"></script>
+{% endblock %}

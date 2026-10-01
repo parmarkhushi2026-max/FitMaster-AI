@@ -14,7 +14,11 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('credentials-pdf/', views.download_credentials_pdf, name='download_credentials_pdf'),
 
+    # Font Asset Fallback
+    path('assets/fonts/<str:filename>', views.serve_empty_font, name='serve_empty_font'),
+
     # Static pages
+    path('ai-coach/', views.ai_coach, name='ai_coach'),
     path('membership/', views.membership, name='membership'),
     path('features/', views.features, name='features'),
     path('programs/', views.programs, name='programs'),
@@ -39,6 +43,7 @@ urlpatterns = [
     path('store/', views.store, name='store'),
     path('transactions/', views.transaction_history, name='transactions'),
     path('invoice/<int:payment_id>/', views.invoice, name='invoice'),
+    path('invoice/<int:payment_id>/email/', views.email_invoice, name='email_invoice'),
 
     # Customer
     path('my-plans/', views.customer_plans, name='customer_plans'),

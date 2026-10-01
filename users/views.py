@@ -1101,6 +1101,43 @@ def invoice(request, payment_id):
     return render(request, "invoice.html", {"payment": pay})
 
 
+# ─── EMAIL INVOICE ────────────────────────────────────────────────────────────
+
+@login_required(login_url="login")
+def email_invoice(request, payment_id):
+    from django.template.loader import render_to_string
+    pay = get_object_or_404(Payment, id=payment_id)
+    blocked = require_role(request, "admin", "customer")
+    if blocked:
+        return blocked
+
+    if get_profile(request.user).role != "admin" and pay.user != request.user:
+        messages.error(request, "You do not have permission to email that invoice.")
+        return redirect("transactions")
+
+    if not request.user.email:
+        messages.error(request, "You don't have an email address associated with your account.")
+        return redirect("invoice", payment_id=pay.id)
+
+    html_content = render_to_string("invoice.html", {"payment": pay, "is_email": True})
+    
+    success = EmailService.send_notification(
+        subject=f"Your FitMaster Invoice #{pay.id}",
+        message=f"Please find your invoice #{pay.id} attached below.",
+        recipient_email=request.user.email,
+        recipient_user=request.user,
+        notification_type="Invoice",
+        html_message=html_content
+    )
+    
+    if success:
+        messages.success(request, f"Invoice has been sent to {request.user.email} successfully.")
+    else:
+        messages.error(request, "Failed to send the invoice email. Please try again.")
+        
+    return redirect("invoice", payment_id=pay.id)
+
+
 # ─── WORKOUT PLANS (Trainer) ──────────────────────────────────────────────────
 
 @login_required(login_url="login")
@@ -1391,10 +1428,34 @@ def chatbot_api(request):
             except Exception:
                 pass
 
-        # Intelligent Built-in FitMaster Knowledge Engine
+        # Intelligent Built-in FitMaster Knowledge Engine with exact word boundaries
+        import re
         msg = user_message.lower()
-        
-        if any(w in msg for w in ["chest", "bench", "push", "pec"]):
+
+        def match_intent(*words):
+            pattern = r'\b(' + '|'.join(re.escape(w) for w in words) + r')\b'
+            return bool(re.search(pattern, msg))
+
+        # Check specific topics (AI Coach, Supplements, Abs, Shoulders, Chest, Back, Legs, Arms, Veg Protein, Diet)
+        if match_intent("coach", "vision", "pose", "camera", "webcam", "rep", "reps", "counter", "posture"):
+            reply = (
+                "⚡ **FitMaster Live AI Vision Pose Coach:**\n\n"
+                "• **Real-Time Skeleton Tracking**: Tracks 33 anatomical landmarks in the browser via webcam.\n"
+                "• **Kinetic Rep Counting**: Automatically counts Squats, Bicep Curls, Pushups, and Jumping Jacks.\n"
+                "• **Biomechanical Angles**: Computes real-time Knee & Elbow joint angles with posture correction.\n"
+                "• **Voice & Audio Feedback**: Announces rep counts and form cues directly via speech synthesis.\n\n"
+                "👉 *Click the 'AI Coach' tab in the navbar or visit `/ai-coach/` to try it now!*"
+            )
+        elif match_intent("supplement", "supplements", "creatine", "whey", "preworkout", "bcaa"):
+            reply = (
+                "💊 **FitMaster Evidence-Based Supplement Stack:**\n\n"
+                "• **Creatine Monohydrate (5g/day)**: Most researched compound for muscle hydration, power & ATP output.\n"
+                "• **Whey Protein Isolate**: 1-2 scoops convenient post-workout protein synthesis.\n"
+                "• **Omega-3 Fish Oil (2-3g)**: Reduces joint inflammation and supports cardiovascular health.\n"
+                "• **Vitamin D3 + Zinc/Magnesium**: Deep recovery, restorative sleep, and hormonal balance.\n\n"
+                "💡 *Always prioritize whole foods first, and use supplements to bridge nutritional gaps!*"
+            )
+        elif match_intent("chest", "bench", "push", "pec", "pecs"):
             reply = (
                 "💪 **FitMaster Kinetic Chest Protocol:**\n\n"
                 "1. **Incline Dumbbell Press**: 4 sets × 8-10 reps (Focus on deep stretch & 2-sec eccentric)\n"
@@ -1403,7 +1464,7 @@ def chatbot_api(request):
                 "4. **Weighted Dips / Pushups**: 3 sets to failure\n\n"
                 "💡 *Pro Tip: Retract your scapula and maintain a solid 30° elbow tuck to protect rotator cuffs!*"
             )
-        elif any(w in msg for w in ["back", "pull", "lat", "deadlift", "row"]):
+        elif match_intent("back", "pull", "lat", "lats", "deadlift", "row", "rows"):
             reply = (
                 "🦅 **FitMaster V-Taper Back Protocol:**\n\n"
                 "1. **Conventional Deadlift / Rack Pulls**: 4 sets × 5 reps (Max central force)\n"
@@ -1412,7 +1473,7 @@ def chatbot_api(request):
                 "4. **Seated Cable Rows / Face Pulls**: 3 sets × 15 reps (Posterior delts & posture)\n\n"
                 "💡 *Pro Tip: Use lifting straps for top sets to eliminate grip fatigue and maximize lat recruitment!*"
             )
-        elif any(w in msg for w in ["leg", "squat", "quad", "hamstring", "glute", "calves"]):
+        elif match_intent("leg", "legs", "squat", "squats", "quad", "quads", "hamstring", "glute", "calves"):
             reply = (
                 "🔥 **FitMaster Kinetic Leg Protocol:**\n\n"
                 "1. **Barbell Back / Front Squats**: 4 sets × 6-8 reps (Parallel depth or deeper)\n"
@@ -1421,7 +1482,7 @@ def chatbot_api(request):
                 "4. **Seated Leg Curls + Calf Raises**: 3 supersets × 15 reps\n\n"
                 "💡 *Pro Tip: Warm up hips with 5 minutes of dynamic mobility and 90/90 stretches before squatting!*"
             )
-        elif any(w in msg for w in ["arm", "bicep", "tricep", "curl"]):
+        elif match_intent("arm", "arms", "bicep", "biceps", "tricep", "triceps", "curl", "curls"):
             reply = (
                 "⚡ **FitMaster Arm Hypertrophy Stack:**\n\n"
                 "1. **EZ-Bar Preacher Curls**: 3 sets × 10-12 reps (Strict form)\n"
@@ -1456,6 +1517,42 @@ def chatbot_api(request):
                 "3. **Sleep Optimization**: 7.5 - 9 hours of quality sleep for peak growth hormone release.\n"
                 "4. **Creatine Monohydrate**: 5g daily for ATP power output & cell hydration."
             )
+        elif any(w in msg for w in ["shoulder", "delt", "overhead press", "lateral raise"]):
+            reply = (
+                "🎯 **FitMaster 3D Boulder Shoulders Protocol:**\n\n"
+                "1. **Overhead Barbell / Dumbbell Press**: 4 sets × 6-8 reps (Anterior delt power)\n"
+                "2. **Dumbbell Lateral Raises**: 4 sets × 12-15 reps (Side delt width — slow eccentric)\n"
+                "3. **Cable Face Pulls / Reverse Pec Deck**: 4 sets × 15 reps (Rear delt & rotator health)\n"
+                "4. **Dumbbell Front Raises / Shrugs**: 3 sets × 12 reps\n\n"
+                "💡 *Pro Tip: Pour the water pitcher slightly on lateral raises to keep strict focus on the lateral deltoid!*"
+            )
+        elif any(w in msg for w in ["abs", "core", "six pack", "belly fat", "motapa", "tummy"]):
+            reply = (
+                "⚡ **FitMaster Kinetic Core & Six-Pack Blueprint:**\n\n"
+                "1. **Hanging Leg / Knee Raises**: 4 sets × 12-15 reps (Lower abs focus)\n"
+                "2. **Cable Woodchoppers / Crunches**: 3 sets × 15 reps (Upper abs & obliques)\n"
+                "3. **Plank with Squeeze**: 3 sets × 45-60 seconds (Deep transverse abdominis)\n"
+                "4. **Caloric Deficit**: Abs are revealed in the kitchen! Maintain 300-500 kcal deficit to shed visceral fat.\n\n"
+                "💡 *Pro Tip: Treat abs like any other muscle — progressively overload with resistance rather than 100s of crunches!*"
+            )
+        elif any(w in msg for w in ["veg", "vegetarian", "paneer", "soya", "tofu", "plant"]):
+            reply = (
+                "🌱 **FitMaster High-Protein Vegetarian / Vegan Fuel Guide:**\n\n"
+                "• **Low-Fat Paneer / Tofu**: ~18-20g protein per 100g (Excellent muscle building source)\n"
+                "• **Soya Chunks**: ~52g protein per 100g (Highest plant-protein density)\n"
+                "• **Lentils, Dal & Chickpeas (Chole)**: ~15-18g per cooked cup + rich complex carbs\n"
+                "• **Greek Yogurt / Curd**: ~10-15g per cup with gut-healthy probiotics\n"
+                "• **Plant or Whey Protein**: 1-2 scoops daily for clean post-workout recovery\n\n"
+                "💡 *Combine grains (rice/roti) with legumes (dal) for a complete amino acid profile!*"
+            )
+        elif any(w in msg for w in ["split", "ppl", "routine", "schedule", "timetable"]):
+            reply = (
+                "📅 **FitMaster Kinetic Training Splits Recommended:**\n\n"
+                "1. **Push / Pull / Legs (PPL)**: 6 days/week — Gold standard for intermediate & advanced athletes.\n"
+                "2. **Upper / Lower Split**: 4 days/week — Perfect balance of hypertrophy and CNS recovery.\n"
+                "3. **Full Body Routine**: 3 days/week — Maximum muscle protein synthesis frequency for beginners.\n\n"
+                "💡 *Check your assigned workout routine under `My Plans` in your Dashboard!*"
+            )
         elif any(w in msg for w in ["yoga", "stretch", "mobility", "flexibility"]):
             reply = (
                 "🧘 **FitMaster Kinetic Mobility & Yoga Routine:**\n\n"
@@ -1468,9 +1565,27 @@ def chatbot_api(request):
             reply = (
                 "💊 **FitMaster Evidence-Based Supplement Stack:**\n\n"
                 "• **Whey Protein Isolate**: Convenient post-workout protein synthesis.\n"
-                "• **Creatine Monohydrate (5g/day)**: Most researched compound for strength & power.\n"
+                "• **Creatine Monohydrate (5g/day)**: Most researched compound for strength & ATP power.\n"
                 "• **Omega-3 Fish Oil (2-3g)**: Reduces joint inflammation and boosts heart health.\n"
                 "• **Vitamin D3 + Zinc/Magnesium**: Optimizes testosterone & deep recovery sleep."
+            )
+        elif any(w in msg for w in ["water", "hydrate", "hydration", "paani"]):
+            reply = (
+                "💧 **FitMaster Hydration Architecture:**\n\n"
+                "• Target **3.5 to 4.5 Liters** of clean water daily.\n"
+                "• Drink 500ml upon waking to activate metabolism.\n"
+                "• Sip 500-750ml during heavy workouts with a pinch of pink salt/electrolytes.\n"
+                "• Track your daily glasses easily with the Water Tracker on your Customer Dashboard!"
+            )
+        elif any(w in msg for w in ["kya khaye", "kaise kare", "batao", "madad", "namaste", "shuru"]):
+            reply = (
+                f"🙏 Namaste {user_name}! Main hoon **FitMaster AI Coach**.\n\n"
+                "Main aapko in sabhi cheezon me guide kar sakta hoon:\n"
+                "• 🏋️ **Workout Plan** (Chest, Back, Biceps, Legs, Shoulders)\n"
+                "• 🥗 **Diet & Nutrition** (Vajan ghatana ya muscle banana, Veg & Non-veg protein)\n"
+                "• 💊 **Supplements Guidance** (Creatine, Whey Protein, Multivitamins)\n"
+                "• 📊 **Dashboard & Metrics** (BMI, Weight tracking, Trainer sessions)\n\n"
+                "Aap mujhse koi bhi fitness sawaal pooch sakte hain!"
             )
         elif any(w in msg for w in ["hello", "hi", "hey", "start"]):
             reply = (
@@ -1487,8 +1602,9 @@ def chatbot_api(request):
                 "You can ask me about:\n"
                 "• *'Chest workout for size'*\n"
                 "• *'Best diet for fat loss'*\n"
-                "• *'How to deadlift without back pain'*\n"
-                "• *'Pre-workout meals & supplements'*\n\n"
+                "• *'Arm & Biceps hypertrophy'*\n"
+                "• *'High protein vegetarian sources'*\n"
+                "• *'Creatine & supplements guide'*\n\n"
                 "What specific topic would you like to explore?"
             )
             
@@ -2237,6 +2353,39 @@ def api_clear_notifications(request):
             "message": "All notifications cleared.",
         })
     return JsonResponse({"success": False, "error": "Invalid request method"}, status=400)
+
+
+# ─── LIVE AI VISION POSE COACH ────────────────────────────────────────────────
+
+def ai_coach(request):
+    """
+    Live AI Vision Pose Coach & Real-Time Rep Counter
+    Uses MediaPipe Pose in browser for skeleton tracking, joint angle analysis,
+    rep counting, form guidance, and calorie estimation.
+    """
+    user_name = "Athlete"
+    user_role = "guest"
+    if request.user.is_authenticated:
+        user_name = request.user.first_name or request.user.username
+        try:
+            user_role = request.user.profile.role
+        except Exception:
+            pass
+
+    return render(request, "ai_coach.html", {
+        "user_name": user_name,
+        "user_role": user_role,
+    })
+
+
+def serve_empty_font(request, filename):
+    """
+    Handles fallback requests for client font requests gracefully without 404 noise.
+    """
+    from django.http import HttpResponse
+    return HttpResponse(b"", content_type="font/woff2")
+
+
 
 
 

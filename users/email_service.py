@@ -28,6 +28,7 @@ class EmailService:
         recipient_email,
         recipient_user=None,
         notification_type="General",
+        html_message=None,
     ):
         """
         Send an email and save the notification in the database.
@@ -76,6 +77,7 @@ class EmailService:
                 from_email=from_email,
                 recipient_list=[recipient_email],
                 fail_silently=False,
+                html_message=html_message,
             )
 
             # -------------------------------------------------
