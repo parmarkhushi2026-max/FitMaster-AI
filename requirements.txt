@@ -6,6 +6,6 @@ dj-database-url>=2.2.0
 waitress>=3.0.0
 gunicorn>=22.0.0; sys_platform != 'win32'
 psycopg2-binary>=2.9.9
-django-csp>=4.1
+django-csp>=4.0
 reportlab>=4.0.0
 razorpay>=2.0.0
