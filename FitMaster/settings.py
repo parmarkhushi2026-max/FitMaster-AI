@@ -1,3 +1,4 @@
+
 import os
 from pathlib import Path
 
@@ -23,30 +24,58 @@ load_dotenv(BASE_DIR / ".env")
 # SECURITY & CORE SETTINGS
 # =========================================================
 
+# Secret key is safely loaded from environment variables (fallback for local dev only)
 SECRET_KEY = os.getenv(
     "SECRET_KEY",
     "django-insecure-change-this-secret-key"
 )
 
-DEBUG = os.getenv("DEBUG", "True").lower() in ("true", "1", "t")
+# DEBUG is False by default for production safety; enable via DEBUG=True in local .env
+DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t")
 
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.getenv(
-        "ALLOWED_HOSTS",
-        "127.0.0.1,localhost,testserver"
-    ).split(",")
-    if host.strip()
-]
+# Parse ALLOWED_HOSTS from environment variable safely
+allowed_hosts_env = os.getenv("ALLOWED_HOSTS", "")
+if allowed_hosts_env:
+    ALLOWED_HOSTS = [h.strip() for h in allowed_hosts_env.split(",") if h.strip()]
+else:
+    ALLOWED_HOSTS = [
+        "127.0.0.1",
+        "localhost",
+        "testserver",
+    ]
 
-CSRF_TRUSTED_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv(
-        "CSRF_TRUSTED_ORIGINS",
-        "http://127.0.0.1:8000,http://localhost:8000"
-    ).split(",")
-    if origin.strip()
-]
+# Render domain support: automatically add Render domain and wildcard .onrender.com
+render_external_hostname = os.getenv("RENDER_EXTERNAL_HOSTNAME")
+if render_external_hostname and render_external_hostname not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(render_external_hostname)
+
+for host in ["fitmaster-ai-hj2c.onrender.com", ".onrender.com"]:
+    if host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(host)
+
+# CSRF Trusted Origins for HTTPS on Render and localhost
+csrf_trusted_origins_env = os.getenv("CSRF_TRUSTED_ORIGINS", "")
+if csrf_trusted_origins_env:
+    CSRF_TRUSTED_ORIGINS = [
+        origin.strip() for origin in csrf_trusted_origins_env.split(",") if origin.strip()
+    ]
+else:
+    CSRF_TRUSTED_ORIGINS = [
+        "http://127.0.0.1:8000",
+        "http://localhost:8000",
+    ]
+
+if render_external_hostname:
+    render_origin = f"https://{render_external_hostname}"
+    if render_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(render_origin)
+
+for origin in [
+    "https://fitmaster-ai-hj2c.onrender.com",
+    "https://*.onrender.com",
+]:
+    if origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(origin)
 
 
 # =========================================================

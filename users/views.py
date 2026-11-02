@@ -1587,7 +1587,9 @@ def chatbot_api(request):
                 "• 📊 **Dashboard & Metrics** (BMI, Weight tracking, Trainer sessions)\n\n"
                 "Aap mujhse koi bhi fitness sawaal pooch sakte hain!"
             )
-        elif any(w in msg for w in ["hello", "hi", "hey", "start"]):
+        elif match_intent("hello", "hi", "hey"):
+            reply = "Hi! How can I help you today?"
+        elif any(w in msg for w in ["start"]):
             reply = (
                 f"👋 Hello {user_name}! I am **FitMaster**, your 24/7 Kinetic Coach.\n\n"
                 "I can assist you with:\n"
