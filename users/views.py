@@ -93,6 +93,54 @@ def ensure_default_packages():
             obj.save()
 
 
+def ensure_default_accounts():
+    """Ensure standard demo/admin accounts exist in database upon deployment."""
+    try:
+        # Default Admin
+        admin_u = User.objects.filter(username="admin").first()
+        if not admin_u:
+            admin_u = User.objects.create_superuser(
+                username="admin",
+                email="admin@fitmaster.ai",
+                password="admin123"
+            )
+        elif not admin_u.check_password("admin123"):
+            admin_u.set_password("admin123")
+            admin_u.is_superuser = True
+            admin_u.is_staff = True
+            admin_u.save()
+        Profile.objects.update_or_create(user=admin_u, defaults={"role": "admin"})
+
+        # Default Trainer
+        trainer_u = User.objects.filter(username="trainer").first()
+        if not trainer_u:
+            trainer_u = User.objects.create_user(
+                username="trainer",
+                email="trainer@fitmaster.ai",
+                password="trainer123"
+            )
+            TrainerDetail.objects.get_or_create(user=trainer_u, defaults={"category": "gym"})
+        elif not trainer_u.check_password("trainer123"):
+            trainer_u.set_password("trainer123")
+            trainer_u.save()
+        Profile.objects.update_or_create(user=trainer_u, defaults={"role": "trainer"})
+
+        # Default Customer
+        customer_u = User.objects.filter(username="customer").first()
+        if not customer_u:
+            customer_u = User.objects.create_user(
+                username="customer",
+                email="customer@fitmaster.ai",
+                password="customer123"
+            )
+        elif not customer_u.check_password("customer123"):
+            customer_u.set_password("customer123")
+            customer_u.save()
+        Profile.objects.update_or_create(user=customer_u, defaults={"role": "customer"})
+    except Exception:
+        pass
+
+
 def get_profile(user):
     profile, _ = Profile.objects.get_or_create(user=user)
     if user.is_superuser and profile.role != "admin":
@@ -127,6 +175,7 @@ def get_trainer_client_or_none(request):
 
 def home(request):
     ensure_default_packages()
+    ensure_default_accounts()
     packages = Package.objects.filter(is_active=True).order_by("duration_months")
     return render(request, "home.html", {
         "packages": packages,
@@ -235,6 +284,7 @@ def signup(request):
 # ─── LOGIN ────────────────────────────────────────────────────────────────────
 
 def user_login(request):
+    ensure_default_accounts()
     if request.user.is_authenticated:
         return redirect("dashboard")
 
