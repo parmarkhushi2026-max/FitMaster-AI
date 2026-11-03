@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{% static 'css/theme_toggle.css' %}?v=11">
     <link rel="stylesheet" href="{% static 'css/animations.css' %}?v=11">
     <link rel="stylesheet" href="{% static 'css/chatbot.css' %}?v=12">
+    <link rel="stylesheet" href="{% static 'css/responsiv.css' %}?v=13">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -173,8 +174,21 @@
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const main = document.getElementById('dashMain');
-    sidebar.classList.toggle('collapsed');
-    main.classList.toggle('expanded');
+    if (window.innerWidth <= 768) {
+        sidebar.classList.toggle('mobile-open');
+        let backdrop = document.getElementById('sidebarBackdrop');
+        if (!backdrop) {
+            backdrop = document.createElement('div');
+            backdrop.id = 'sidebarBackdrop';
+            backdrop.className = 'sidebar-backdrop';
+            backdrop.onclick = toggleSidebar;
+            document.body.appendChild(backdrop);
+        }
+        backdrop.classList.toggle('active', sidebar.classList.contains('mobile-open'));
+    } else {
+        sidebar.classList.toggle('collapsed');
+        main.classList.toggle('expanded');
+    }
 }
 setTimeout(() => {
     document.querySelectorAll('.msg').forEach(el => {

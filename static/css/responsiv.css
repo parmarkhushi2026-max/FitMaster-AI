@@ -1,227 +1,739 @@
-@media(max-width:992px){
+/* ==========================================================================
+   FITMASTER AI — ULTIMATE RESPONSIVE & MOBILE ENGINE
+   Calibrated for iPhones, iPads, Android devices, and Small Tablets.
+   Guarantees 0% horizontal overflow, flawless touch ergonomics, and fluid layout.
+   ========================================================================== */
 
-.hero-container{
-
-grid-template-columns:1fr;
-
-text-align:center;
-
+/* ─── 0. GLOBAL VIEWPORT & OVERFLOW PROTECTION ─────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box !important;
 }
 
-.hero-buttons{
-
-justify-content:center;
-
+html, body {
+    max-width: 100vw !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+    position: relative;
+    -webkit-text-size-adjust: 100%;
 }
 
-.nav-links{
-
-display:none;
-
+img, video, canvas, iframe, svg {
+    max-width: 100% !important;
+    height: auto;
 }
 
-.hero-left h1{
-
-font-size:50px;
-
-line-height:60px;
-
+.container,
+.scandi-container,
+.stitch-container,
+.dashboard-container {
+    width: 100% !important;
+    max-width: 1240px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box !important;
 }
 
-}
-/*=========================
-PART 2 RESPONSIVE
-=========================*/
+/* ─── 1. NAVBAR & MOBILE HEADER ERGONOMICS (max-width: 992px) ─────────────── */
+@media (max-width: 992px) {
+    .navbar {
+        padding: 8px 0 !important;
+    }
 
-@media(max-width:992px){
+    .nav {
+        width: 100% !important;
+        padding: 0 16px !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+    }
 
-.logo-slider{
+    .nav-links {
+        display: none !important;
+    }
 
-grid-template-columns:repeat(2,1fr);
+    .mobile-menu-toggle {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-width: 42px;
+        height: 38px;
+        padding: 0 12px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        z-index: 1000000;
+    }
 
-}
+    .menu-label {
+        display: inline !important;
+    }
 
-.stats-grid{
+    .brand-link {
+        gap: 6px !important;
+    }
 
-grid-template-columns:repeat(2,1fr);
+    .brand-text-main {
+        font-size: 1.15rem !important;
+    }
 
-}
-
-.partner-grid{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
-}
-
-
-@media(max-width:576px){
-
-.logo-slider{
-
-grid-template-columns:1fr;
-
-}
-
-.stats-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.partner-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.section-title{
-
-font-size:32px;
-
+    .brand-icon-emblem img {
+        width: 26px !important;
+        height: 26px !important;
+    }
 }
 
-.trusted-title{
+/* Compact Mobile Navbar (max-width: 768px) */
+@media (max-width: 768px) {
+    .nav {
+        padding: 0 12px !important;
+    }
 
-font-size:22px;
+    .brand-text-main {
+        font-size: 1.05rem !important;
+        letter-spacing: -0.2px !important;
+    }
 
+    /* In topbar, hide bulky language/currency pill & auth text buttons so header never overflows */
+    .nav-btn .lang-currency-pill {
+        display: none !important;
+    }
+
+    .nav-btn .login,
+    .nav-btn .signup {
+        display: none !important;
+    }
+
+    .nav-btn {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+
+    .theme-toggle-btn {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    /* Mobile Drawer */
+    .mobile-menu-panel {
+        width: 85vw !important;
+        max-width: 320px !important;
+        height: 100vh !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .mobile-nav-links a {
+        padding: 12px 14px !important;
+        font-size: 14.5px !important;
+        border-radius: 10px !important;
+    }
 }
 
-}
-/*=========================
-PROGRAM RESPONSIVE
-=========================*/
+/* ─── 2. SCANDINAVIAN HERO SECTION (max-width: 992px & 768px) ─────────────── */
+@media (max-width: 992px) {
+    .scandi-hero-section {
+        min-height: auto !important;
+        padding: 85px 0 35px !important;
+    }
 
-@media(max-width:992px){
+    .scandi-hero-grid {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+        padding: 24px 0 !important;
+    }
 
-.program-grid{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
-}
-
-@media(max-width:576px){
-
-.program-grid{
-
-grid-template-columns:1fr;
-
+    .scandi-telemetry-bar {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+        padding: 18px 16px !important;
+    }
 }
 
-.program-card{
+@media (max-width: 576px) {
+    .scandi-hero-section {
+        padding: 72px 0 24px !important;
+    }
 
-padding:30px;
+    .scandi-hero-title {
+        font-size: clamp(26px, 8.5vw, 36px) !important;
+        line-height: 1.15 !important;
+        letter-spacing: -0.02em !important;
+        margin-bottom: 14px !important;
+    }
 
+    .scandi-hero-desc {
+        font-size: 14px !important;
+        line-height: 1.55 !important;
+        margin-bottom: 22px !important;
+    }
+
+    /* Full-width Stacked Hero Buttons for Easy Thumb Tapping */
+    .scandi-hero-grid div:first-child > div[style*="display:flex"] {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 10px !important;
+    }
+
+    .scandi-btn-primary,
+    .scandi-btn-secondary {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 13px 18px !important;
+        font-size: 12px !important;
+        border-radius: 8px !important;
+    }
+
+    .scandi-card-preview {
+        padding: 12px !important;
+        border-radius: 12px !important;
+        margin-top: 10px !important;
+    }
+
+    .scandi-img-frame {
+        aspect-ratio: 16 / 10 !important;
+        border-radius: 10px !important;
+    }
+
+    /* Video HUD Controls on Small Phone Screens */
+    .scandi-img-frame div[style*="top:10px"] {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+    }
+
+    .hero-vid-pill {
+        padding: 3px 7px !important;
+        font-size: 9.5px !important;
+    }
+
+    .scandi-telemetry-bar {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+        padding: 16px 14px !important;
+    }
+
+    .scandi-stat-item {
+        gap: 12px !important;
+    }
 }
 
-.program-card h3{
+/* ─── 3. SPOTLIGHT AI COACH BANNER (Section 1.5) ────────────────────────────── */
+@media (max-width: 768px) {
+    .stitch-section[style*="padding: 24px 20px 10px"] {
+        padding: 14px 12px !important;
+    }
 
-font-size:24px;
+    .stitch-section[style*="padding: 24px 20px 10px"] > .stitch-container > div {
+        flex-direction: column !important;
+        text-align: center !important;
+        padding: 20px 16px !important;
+        gap: 16px !important;
+    }
 
+    .stitch-section[style*="padding: 24px 20px 10px"] h3 {
+        font-size: 20px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .stitch-section[style*="padding: 24px 20px 10px"] a.btn-stitch-primary {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 12px 20px !important;
+    }
 }
 
-.section-subtitle{
-
-font-size:17px;
-
+/* ─── 4. SMART BMI & CALORIE CALCULATOR (Section 2) ────────────────────────── */
+@media (max-width: 900px) {
+    .calc-box-glass {
+        grid-template-columns: 1fr !important;
+        padding: 18px 14px !important;
+        gap: 20px !important;
+        border-radius: 16px !important;
+    }
 }
 
-}
-/*=========================
-PART 3 RESPONSIVE
-=========================*/
+@media (max-width: 576px) {
+    .bmi-engine-section {
+        padding: 28px 12px !important;
+    }
 
-@media(max-width:992px){
+    .calc-box-glass div[style*="grid-template-columns:1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
 
-.why-grid,
-.ai-grid,
-.package-grid{
+    .calc-field-group label {
+        font-size: 11px !important;
+    }
 
-grid-template-columns:repeat(2,1fr);
+    .calc-input-dark {
+        font-size: 15px !important;
+        padding: 10px 14px !important;
+    }
 
-}
+    .calc-summary-card {
+        padding: 18px 14px !important;
+        border-radius: 14px !important;
+    }
 
-}
+    #bmiValDisplay {
+        font-size: 36px !important;
+    }
 
-@media(max-width:576px){
-
-.why-grid,
-.ai-grid,
-.package-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.package-card{
-
-padding:35px;
-
-}
-
-}
-/*=========================
-PART 4
-=========================*/
-
-@media(max-width:992px){
-
-.trainer-grid,
-.testimonial-grid{
-
-grid-template-columns:repeat(2,1fr);
-
+    .calc-summary-card a.btn-stitch-primary {
+        width: 100% !important;
+        padding: 12px 14px !important;
+        font-size: 12.5px !important;
+    }
 }
 
+/* ─── 5. PHILOSOPHY & BLUEPRINT TIMELINE (Sections 3 & 4) ──────────────────── */
+@media (max-width: 992px) {
+    .paradigm-split {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+
+    .paradigm-img-box {
+        min-height: 250px !important;
+        border-radius: 14px !important;
+    }
 }
 
-@media(max-width:576px){
+@media (max-width: 768px) {
+    .timeline-track-wrap {
+        padding-left: 24px !important;
+    }
 
-.trainer-grid,
-.testimonial-grid{
+    .timeline-center-line {
+        left: 10px !important;
+    }
 
-grid-template-columns:1fr;
+    .timeline-row,
+    .timeline-row.reverse {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        margin-bottom: 28px !important;
+    }
 
+    .timeline-node-pill {
+        left: 10px !important;
+        transform: translateX(-50%) !important;
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 11px !important;
+    }
+
+    .timeline-content-side {
+        width: 100% !important;
+        padding: 0 !important;
+        margin-bottom: 12px !important;
+    }
+
+    .timeline-content-side h3 {
+        font-size: 17px !important;
+    }
+
+    .timeline-media-side {
+        width: 100% !important;
+        height: 160px !important;
+        border-radius: 12px !important;
+    }
 }
 
+/* ─── 6. ATHLETE TRANSFORMATIONS & FILTERS (Section 5) ──────────────────────── */
+@media (max-width: 768px) {
+    .transform-filters {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        gap: 8px !important;
+        padding-bottom: 10px !important;
+        margin-bottom: 18px !important;
+        justify-content: flex-start !important;
+        scrollbar-width: none;
+    }
+
+    .transform-filters::-webkit-scrollbar {
+        display: none;
+    }
+
+    .transform-filter-btn {
+        flex-shrink: 0 !important;
+        padding: 8px 16px !important;
+        font-size: 12px !important;
+        white-space: nowrap !important;
+    }
+
+    .transform-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .transform-card {
+        padding: 16px !important;
+        border-radius: 14px !important;
+    }
 }
-/*=========================
-PART 5
-=========================*/
 
-@media(max-width:992px){
+/* ─── 7. MEMBERSHIP PLANS & PRICING (Section 6 & membership.html) ──────────── */
+@media (max-width: 900px) {
+    .pkg-grid,
+    .plan-grid {
+        grid-template-columns: 1fr !important;
+        max-width: 440px !important;
+        margin: 0 auto !important;
+        gap: 22px !important;
+    }
 
-.bmi-container,
-.contact-grid,
-.footer{
+    .pkg-card,
+    .plan-card {
+        width: 100% !important;
+        padding: 28px 20px !important;
+        border-radius: 18px !important;
+    }
 
-grid-template-columns:1fr;
+    .pkg-title,
+    .plan-card h1 {
+        font-size: 22px !important;
+    }
 
+    .btn-pkg-buy,
+    .buy-btn {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 13px 20px !important;
+        font-size: 13.5px !important;
+        border-radius: 10px !important;
+    }
 }
 
-.store-grid{
+/* ─── 8. FOOTER RESPONSIVE PERFECTION ──────────────────────────────────────── */
+@media (max-width: 900px) {
+    .footer {
+        padding: 40px 0 20px !important;
+    }
 
-grid-template-columns:repeat(2,1fr);
+    .footer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+        text-align: center !important;
+    }
 
+    .footer-col {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .footer-bio {
+        max-width: 420px;
+        margin: 0 auto 14px !important;
+    }
+
+    .footer-socials {
+        justify-content: center !important;
+    }
+
+    .footer-col-links {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+
+    .newsletter-form {
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 380px !important;
+        margin: 12px auto 0 !important;
+        gap: 8px !important;
+    }
+
+    .newsletter-form input,
+    .newsletter-form button {
+        width: 100% !important;
+        border-radius: 8px !important;
+        height: 44px !important;
+    }
+
+    .payment-badges {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        margin-top: 14px !important;
+    }
+
+    .footer-bottom {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 12px !important;
+        padding-top: 20px !important;
+    }
+
+    .footer-bottom-links {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        gap: 14px !important;
+    }
 }
 
+/* ─── 9. AUTH PAGES (Login, Signup, Forgot Password) ───────────────────────── */
+@media (max-width: 768px) {
+    .login-section {
+        padding: 85px 14px 40px !important;
+        min-height: 100vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .login-container {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+        max-width: 460px !important;
+        margin: 0 auto !important;
+    }
+
+    .login-left {
+        display: none !important;
+    }
+
+    .login-card {
+        padding: 26px 18px !important;
+        border-radius: 18px !important;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6) !important;
+    }
+
+    .login-card h2 {
+        font-size: 22px !important;
+        text-align: center !important;
+    }
+
+    .login-card .subtitle {
+        text-align: center !important;
+        font-size: 13px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .input-box input,
+    .input-box select {
+        font-size: 15px !important;
+        height: 46px !important;
+        border-radius: 10px !important;
+    }
+
+    .btn-login,
+    .btn-submit {
+        height: 48px !important;
+        font-size: 15px !important;
+        border-radius: 10px !important;
+    }
 }
 
-@media(max-width:576px){
+/* ─── 10. DASHBOARD LAYOUT & SIDEBAR (Customer, Trainer, Admin) ─────────────── */
+@media (max-width: 768px) {
+    .dash-layout {
+        overflow-x: hidden !important;
+        width: 100% !important;
+    }
 
-.store-grid{
+    .dash-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        width: 280px !important;
+        max-width: 85vw !important;
+        z-index: 100000 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: none !important;
+    }
 
-grid-template-columns:1fr;
+    .dash-sidebar.mobile-open {
+        transform: translateX(0) !important;
+        box-shadow: 12px 0 45px rgba(0, 0, 0, 0.75) !important;
+    }
 
+    /* Dimmed Backdrop for Mobile Sidebar */
+    .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 99999;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .sidebar-backdrop.active {
+        display: block;
+        opacity: 1;
+    }
+
+    .dash-main {
+        margin-left: 0 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .dash-topbar {
+        padding: 10px 14px !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .page-title {
+        font-size: 16px !important;
+    }
+
+    .breadcrumb-txt {
+        display: none !important;
+    }
+
+    .topbar-right {
+        gap: 6px !important;
+    }
+
+    .dash-content {
+        padding: 14px 12px !important;
+    }
+
+    .stats-grid,
+    .dashboard-cards {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    .stat-card,
+    .card {
+        padding: 16px 14px !important;
+        border-radius: 14px !important;
+    }
+
+    .stat-val,
+    .card h2 {
+        font-size: 24px !important;
+    }
+
+    .grid-2,
+    .grid-3 {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+
+    /* Horizontal scroll for wide data tables so page never breaks */
+    .table-responsive,
+    .card-table,
+    table {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
 }
 
-.bmi-card h1{
-
-font-size:55px;
-
+@media (max-width: 480px) {
+    .stats-grid,
+    .dashboard-cards {
+        grid-template-columns: 1fr !important;
+    }
 }
 
+/* ─── 11. AI VISION POSE COACH PAGE (ai_coach.html) ────────────────────────── */
+@media (max-width: 900px) {
+    .coach-arena {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .viewport-card {
+        border-radius: 16px !important;
+    }
+
+    .viewport-media-wrap {
+        aspect-ratio: 4 / 3 !important;
+    }
+
+    .hud-controls-bar {
+        flex-wrap: wrap !important;
+        padding: 12px 14px !important;
+        gap: 10px !important;
+        justify-content: center !important;
+    }
+
+    .btn-coach-action {
+        flex: 1;
+        min-width: 130px;
+        padding: 10px 14px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* ─── 12. STORE & E-COMMERCE (store.html) ──────────────────────────────────── */
+@media (max-width: 768px) {
+    .store-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    .store-card {
+        padding: 14px 10px !important;
+        border-radius: 12px !important;
+    }
+
+    .store-card img {
+        height: 120px !important;
+    }
+
+    .store-card h3 {
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .store-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ─── 13. CHATBOT WIDGET PHONE DOCKING (chatbot.css) ───────────────────────── */
+@media (max-width: 576px) {
+    #fitmaster-chatbot {
+        bottom: 14px !important;
+        right: 14px !important;
+    }
+
+    .chatbot-fab {
+        width: 48px !important;
+        height: 48px !important;
+    }
+
+    .chatbot-window {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100% !important;
+        max-width: 100vw !important;
+        max-height: 100vh !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+    }
 }
